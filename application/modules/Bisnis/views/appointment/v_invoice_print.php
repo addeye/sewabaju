@@ -45,7 +45,7 @@
         }
         .logo-invoice img {
             width: 300px;
-            background-color: white;
+            background-color: white !important;
         }
         hr.style1{
             border-top: 1px solid #8c8b8b;
@@ -65,16 +65,18 @@
 <div class="container-fluid">
     <div class="row">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-xs-12">
                 <div class="pull-left">
                     <div class="logo-invoice">
                         <img src="<?=base_url('uploads/logo/'.$company->logo)?>">
                     </div>
                 </div>
                 <div class="border-invoice">
-                    <div class="label-invoice"><span>Customer Invoice</span></div>
+                    <div class="col-xs-2 pull-right">
+                        <div class="label-invoice"><span>Customer Invoice</span></div>
+                    </div>
                     <div class="row">
-                        <label class="col-md-12">
+                        <label class="col-xs-12">
                             <b>PERSONAL INFORMATION -</b>
                         </label>
                     </div>

@@ -8,9 +8,14 @@
 ?>
 <style>
     .border-invoice {
+        /*border-style: solid;*/
+        margin: 0px 0px 0px;
+        padding: 50px;
+    }
+    .border-invoice-out {
         border-style: solid;
         margin: 48px 110px 0px;
-        padding: 50px;
+        /*padding: 50px;*/
     }
     .no-border-invoice {
         margin: 5px;
@@ -22,10 +27,7 @@
         width: 150px;
         font-size: 20px;
         text-align: center;
-        float: right;
-        position: absolute;
-        margin-left: 775px;
-        margin-top: -53px;
+        /*position: absolute;*/
     }
     .label-invoice span{
         color: #939396;
@@ -54,7 +56,7 @@
 
 <div class="">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-xs-12">
             <div class="row hidden-print all-button pull-right">
 
                 <div class="col-xs-12">
@@ -82,36 +84,39 @@
             </div>
         </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-xs-12">
             <div class="">
                 <div class="logo-invoice">
                     <img src="<?=base_url('uploads/logo/'.$company->logo)?>">
                 </div>
             </div>
-            <div class="border-invoice">
-                <div class="label-invoice"><span>Customer Invoice</span></div>
-                <div class="row">
-                    <label class="col-md-12">
-                        <b>PERSONAL INFORMATION -</b>
-                    </label>
+            <div class="border-invoice-out">
+                <div class="col-xs-2 pull-right">
+                    <div class="label-invoice"><span>Customer Invoice</span></div>
                 </div>
-                <div class="row">
-                    <label class="col-md-3 col-sm-3 col-xs-3">Name</label>
-                    <div class="col-md-9 col-sm-9 col-xs-9">: <?=$deal?$deal->mcustomer->name:''?></div>
-                </div>
-                <div class="row">
-                    <label class="col-md-3 col-sm-3 col-xs-3">Contact</label>
-                    <div class="col-md-9 col-sm-9 col-xs-9"">: <?=$deal?$deal->mcustomer->phone:''?></div>
+                <div class="border-invoice">
+                    <div class="row">
+                        <label class="col-xs-12">
+                            <b>PERSONAL INFORMATION -</b>
+                        </label>
+                    </div>
+                    <div class="row">
+                        <label class="col-xs-3">Name</label>
+                        <div class="col-xs-9">: <?=$deal?$deal->mcustomer->name:''?></div>
+                    </div>
+                    <div class="row">
+                        <label class="col-xs-3">Contact</label>
+                        <div class="col-xs-9"">: <?=$deal?$deal->mcustomer->phone:''?></div>
                 </div>
                 <br>
                 <div class="row">
-                    <label class="col-md-12">
+                    <label class="col-xs-12">
                         <b>ORDER DETAILS -</b>
                     </label>
                 </div>
                 <div class="row">
                     <?php foreach(proses() as $key=>$row): ?>
-                        <div class="col-md-3"><input type="radio" name="process" <?=$deal?$deal->process==$key?'checked':'':''?>> <?=$row?></div>
+                        <div class="col-xs-3"><input type="radio" name="process" <?=$deal?$deal->process==$key?'checked':'':''?>> <?=$row?></div>
                     <?php endforeach;?>
                 </div>
                 <br>
@@ -187,6 +192,7 @@
                     <label class="col-xs-3">Sisa Pembayaran</label>
                     <div class="col-xs-6">: Rp. <?=$deal?rupiah($deal->remaining_payment):''?> (<?php foreach(pay() as $key=>$row):?><?=$deal?$key==$deal->pay_rp?'<strike>'.$row.'</strike>/':$row.'/':$row.'/'?><?php endforeach; ?>) Date : <?=$deal?$deal->date_rp?tgl_indo($deal->date_rp):'':''?></div>
                 </div>
+            </div>
             </div>
             <br>
             <div class="no-border-invoice">
