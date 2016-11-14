@@ -1,0 +1,105 @@
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+/**
+ * Created by PhpStorm.
+ * User: deyelovi
+ * Date: 15/09/2016
+ * Time: 13:23
+ */
+
+if(! function_exists('rupiah'))
+{
+    function rupiah($nilai, $pecahan = 0)
+    {
+        return number_format($nilai, $pecahan, ',', '.');
+    }
+}
+
+if(!function_exists('diskon'))
+{
+    function diskon($persen,$total)
+    {
+        if($persen!=0)
+        {
+            $ppersen = $persen/100;
+            $pure = $total*$ppersen;
+            return $pure;
+        }
+        else
+        {
+            return 0;
+        }
+
+    }
+
+}
+
+if(!function_exists('modul'))
+{
+    function modul()
+    {
+        return array(
+            MODUL_USER_SEWA_BAJU => 'User',
+            MODUL_COMPANY_SEWA_BAJU => 'Company',
+            MODUL_USER_GROUP_SEWA_BAJU => 'User Group',
+            MODUL_KATEGORI_SEWA_BAJU => 'Kategori',
+            MODUL_BAJU_SEWA_BAJU => 'Baju',
+            MODUL_CUSTOMER_SEWA_BAJU => 'Customer',
+            MODUL_PARTNER_SEWA_BAJU => 'Partner',
+            MODUL_PROMO_SEWA_BAJU => 'Promo',
+            MODUL_ACCESSORIES_SEWA_BAJU => 'Accessories'
+        );
+    }
+}
+
+if(!function_exists('status_customer'))
+{
+    function status_customer()
+    {
+        return array(
+            STATUS_BOOKING => 'Booking',
+            STATUS_DEAL => 'Deal',
+            STATUS_FITTING => 'Fitting',
+            STATUS_DIPINJAM => 'Out',
+            STATUS_KEMBALI => 'Return'
+        );
+    }
+}
+
+if(!function_exists('proses'))
+{
+    function proses()
+    {
+        return array(
+            PROSES_RENT => 'Rent',
+            PROSES_MADE_FOR_RENT => 'Made For Rent',
+            PROSES_MADE_FOR_SALE => 'Made For Sale',
+            PROSES_SALE => 'Sale',
+        );
+    }
+}
+
+if(!function_exists('shipping'))
+{
+    function shipping()
+    {
+        return array(
+            SHIPPING_PICKUP => 'Pick Up',
+            SHIPPING_TO => 'Shipped To'
+        );
+    }
+}
+
+if(!function_exists('pay'))
+{
+    function pay()
+    {
+        return array(
+            PAY_CASH => 'CA',
+            PAY_CREDIT => 'CR',
+            PAY_DEBIT => 'DB',
+            PAY_TRANSFER => 'TR',
+        );
+    }
+}
+
+
