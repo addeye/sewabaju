@@ -12,6 +12,7 @@ class Group extends My_controller
     {
         parent::__construct();
         $this->load->model('group_model','model');
+        $this->load->model('role_model','rmodel');
     }
 
     public function index()

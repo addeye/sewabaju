@@ -207,6 +207,15 @@ class Appointment extends My_controller
         $shipping_address = $this->input->post('shipping_address');
         $shipping_cost = $this->input->post('shipping_cost');
 
+        if($this->input->post('total'))
+        {
+            $data_up = array(
+                'status'=>STATUS_DEAL
+            );
+
+            $this->model->update($appointment_id,$data_up);
+        }
+
         $data = array(
             'appointment_id' => $appointment_id,
             'customer_id' => $customer_id,
@@ -313,6 +322,7 @@ class Appointment extends My_controller
         {
             $total[] = $row->total;
         }
+
 
         $grandtotal = array_sum($total);
         $grandtotal = $grandtotal + $shipping_cost;

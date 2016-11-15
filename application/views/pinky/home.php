@@ -16,7 +16,7 @@
 
                 <div class="number">
 
-                    <span data-counter="counterup">0</span>
+                    <span>0</span>
 
                 </div>
 
@@ -42,7 +42,7 @@
 
                 <div class="number">
 
-                    <span data-counter="counterup">0</span>
+                    <span>0</span>
 
                 </div>
 
@@ -68,7 +68,7 @@
 
                 <div class="number">
 
-                    <span data-counter="counterup">0</span>
+                    <span>0</span>
 
                 </div>
 
@@ -94,7 +94,7 @@
 
                 <div class="number">
 
-                    <span data-counter="counterup"></span>
+                    <span></span>
 
                 </div>
 
@@ -133,17 +133,7 @@
             </div>
 
             <div class="portlet-body">
-
-                <div id="site_activities_loading">
-
-                    <img src="<?php echo base_url(); ?>assets/global/img/loading.gif" alt="loading" /> </div>
-
-                <div id="site_activities_content" class="display-none">
-
-                    <div id="site_activities" style="height: 228px;"> </div>
-
-                </div>
-
+                <div id="calendar"></div>
             </div>
 
         </div>
@@ -153,3 +143,7 @@
     </div>
 
 </div>
+
+<script>
+    var events_array = <?=$dcalendar?>
+</script>

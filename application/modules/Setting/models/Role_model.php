@@ -25,6 +25,16 @@ class Role_model extends Base_model
         return [];
     }
 
+    public function getByGroup($id)
+    {
+        $result = $this->getData($this->table,array('group_id'=>$id))->result();
+        if($result)
+        {
+            return $result;
+        }
+        return [];
+    }
+
     public function getId($id)
     {
         $condition['id']=$id;

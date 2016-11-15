@@ -34,7 +34,7 @@
                                 <td><u><?=status_customer()[$row->status]?></u></td>
                                 <td><button id="<?=$row->id?>" type="button" onclick="invoice(this.id)" class="btn btn-info btn-invoice" <?=$row->status==1?'disabled':''?>>Invoice</button></td>
                                 <td>
-                                    <a href="<?=$link_deal.$row->id?>" class="btn btn-success">Deal</a>
+                                    <a href="<?=$link_deal.$row->id?>" class="btn btn-success">Detail</a>
                                     <button type="button" href="#" class="btn btn-danger del" href="javascript:void(0);" id="<?=$row->id?>">Cancel</button>
                                 </td>
                             </tr>

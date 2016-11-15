@@ -1,8 +1,13 @@
+<style>
+    input[type="checkbox"]{
+        width: 30px; /*Desired width*/
+        height: 30px; /*Desired height*/
+    }
+</style>
 <div class="row ">
     <?=$this->session->flashdata('pesan')?>
     <div class="col-md-6">
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
-
         <div class="portlet box red">
             <div class="portlet-title">
                 <div class="caption font-dark">
@@ -68,12 +73,6 @@
                     </div>
                     <hr>
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-3 control-label">Fitting</label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" name="fitting" value="1" <?=$deal?$deal->fitting==1?'checked':'':''?>> Selesai
-                        </label>
-                    </div>
-                    <div class="form-group">
                         <label for="inputEmail3" class="col-sm-3 control-label">Total</label>
                         <div class="col-sm-3">
                             <input type="number" id="dtotal" class="form-control" name="total" required>
@@ -83,6 +82,7 @@
                         <label for="inputEmail3" class="col-sm-3 control-label">Down Payment</label>
                         <div class="col-sm-3">
                             <input type="number" id="down_payment" class="form-control" name="down_payment" value="<?=$deal?$deal->down_payment:''?>" required>
+                            <p class="help-block" id="label-dp"></p>
                         </div>
                         <div class="col-sm-3">
                             <input type="text" class="form-control date-picker" name="date_dp" value="<?=$deal?$deal->date_dp:date('Y-m-d')?>">
@@ -100,6 +100,7 @@
                         <label for="inputEmail3" class="col-sm-3 control-label">Remaining Payment</label>
                         <div class="col-sm-3">
                             <input type="number" class="form-control" id="remaining_payment" name="remaining_payment" value="<?=$deal?$deal->remaining_payment:''?>" required>
+                            <p class="help-block" id="label-remaining"></p>
                         </div>
                         <div class="col-sm-3">
                             <input type="text" class="form-control date-picker" name="date_rp" value="<?=$deal?$deal->date_rp:date('Y-m-d')?>">
@@ -116,8 +117,16 @@
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-3 control-label">Deposit</label>
                         <div class="col-sm-3">
-                            <input type="number" class="form-control" name="deposit" value="<?=$deal?$deal->deposit:''?>" required>
+                            <input type="number" id="deposit" class="form-control" name="deposit" value="<?=$deal?$deal->deposit:''?>" required>
+                            <p class="help-block" id="label-deposit"></p>
                         </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" style="font-size: large; padding-top: 20px;">Fitting</label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="fitting" value="1" <?=$deal?$deal->fitting==1?'checked':'':''?>>
+                        </label>
                     </div>
                     <hr>
                     <div class="form-group">
@@ -126,9 +135,6 @@
                         </div>
                         <div class="col-sm-2">
                             <a href="<?=$link_back?>" class="btn sbold yellow">Kembali</a>
-                        </div>
-                        <div class="col-sm-2">
-                            <button type="button" class="btn btn-info previews">Invoice</button>
                         </div>
                     </div>
                 </form>
@@ -211,7 +217,11 @@
 
 <script type="text/javascript">
 
+    function toRp(a,b,c,d,e){e=function(f){return f.split('').reverse().join('')};b=e(parseInt(a,10).toString());for(c=0,d='';c<b.length;c++){d+=b[c];if((c+1)%3===0&&c!==(b.length-1)){d+='.';}}return'Rp.\t'+e(d)+',00'}
+    function toAngka(rp){return parseInt(rp.replace(/,.*|\D/g,''),10)}
+
     jQuery(document).ready(function() {
+
         baju();
         accessories();
         totaltransaksi();
@@ -235,12 +245,18 @@
             var dp = this.value;
             var hasil = Number(dtotal - dp).toFixed();
             $('#remaining_payment').val(hasil);
+            $('#label-dp').html(toRp(this.value));
+            $('#label-remaining').html(toRp(hasil));
         });
 
         $('#shipping_cost').keyup(function(){
             totaltransaksi();
             $('#down_payment').val('');
             $('#remaining_payment').val('');
+        });
+
+        $('#deposit').keyup(function(){
+            $('#label-deposit').html(toRp(this.value));
         });
 
         $('.previews').click(function(){
@@ -423,8 +439,20 @@
             .success(function(data) {
                 $('#dtotal').val(data.total);
                 $('#ptotal').html(data.labeltotal);
+            })
+            .done(function(){
+                calculate();
             });
 
+    }
+
+    function calculate()
+    {
+        var total = $('#dtotal').val();
+        var dp = $('#down_payment').val();
+        var hasil = Number(total - dp).toFixed();
+        console.log(hasil);
+        $('#remaining_payment').val(hasil);
     }
 
 </script>
