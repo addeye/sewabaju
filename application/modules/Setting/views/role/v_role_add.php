@@ -27,10 +27,10 @@
                             <tr>
                                 <td><?=$no++?></td>
                                 <td><?=$row?></td>
-                                <td><input class="form-control" name="attr[<?=$row?>]['create']" value="1" type="checkbox"></td>
-                                <td><input class="form-control" name="attr[<?=$row?>]['r']" value="1" type="checkbox"></td>
-                                <td><input class="form-control" name="attr[<?=$row?>]['u']" value="1" type="checkbox"></td>
-                                <td><input class="form-control" name="attr[<?=$row?>]['d']" value="1" type="checkbox"></td>
+                                <td><input class="form-control" name="attr[]['c']" value="1" type="checkbox"></td>
+                                <td><input class="form-control" name="attr[]['r']" value="1" type="checkbox"></td>
+                                <td><input class="form-control" name="attr[]['u']" value="1" type="checkbox"></td>
+                                <td><input class="form-control" name="attr[]['d']" value="1" type="checkbox"></td>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>

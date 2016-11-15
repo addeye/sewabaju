@@ -9,6 +9,7 @@
 class User_model extends Base_model
 {
     protected $table = 'm_user';
+    protected $table_group = 'm_group';
 
     public function __construct()
     {
@@ -21,6 +22,7 @@ class User_model extends Base_model
         foreach($pagedata as $key=>$row)
         {
             $pagedata[$key]->status = $row->active?'Aktif':'Tidak';
+            $pagedata[$key]->mgroup = $this->getData($this->table_group,array('id'=>$row->group_id))->row();
         }
         if($pagedata)
         {

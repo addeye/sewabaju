@@ -1,12 +1,9 @@
 .DS_Store
 
 application/cache/*
-!application/cache/index.html
-!application/cache/.htaccess
+
 
 application/logs/*
-!application/logs/index.html
-!application/logs/.htaccess
 
 user_guide_src/build/*
 user_guide_src/cilexer/build/*
@@ -25,3 +22,10 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.stTheme.cache
 *.sublime-workspace
 *.sublime-project
+.idea/
+uploads/baju/baju-AUSTIN-1479177385.jpg
+uploads/baju/baju-FLYNN-1479177436.jpg
+uploads/baju/baju-JUDE-1479177462.jpg
+uploads/baju/baju-ROCCO-1479177492.jpg
+uploads/logo/logo.jpg
+uploads/logo/ttdinvoice.jpg

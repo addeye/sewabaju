@@ -12,6 +12,8 @@ class User extends My_controller
     {
         parent::__construct();
         $this->load->model('user_model','model');
+        $this->load->model('group_model','gmodel');
+
     }
 
     public function index()
@@ -36,6 +38,7 @@ class User extends My_controller
             'header_desc' => 'Master',
             'link_back' => site_url('setting/user'),
             'link_act' => site_url('setting/user/do_add'),
+            'group' => $this->gmodel->getAll()
         );
         $content = 'user/v_user_add';
         $this->pinky->output($data,$content);
@@ -45,11 +48,13 @@ class User extends My_controller
     {
         $name = $this->input->post('name');
         $username = $this->input->post('username');
+        $group_id = $this->input->post('group_id');
         $password = md5($this->input->post('password'));
 
         $data = array(
             'name' => $name,
             'username' => $username,
+            'group_id' => $group_id,
             'password' => $password,
         );
 
@@ -68,7 +73,8 @@ class User extends My_controller
             'header_desc' => 'Master',
             'link_back' => site_url('setting/user'),
             'link_act' => site_url('setting/user/do_update'),
-            'd' => $this->model->getId($id)
+            'd' => $this->model->getId($id),
+            'group' => $this->gmodel->getAll()
         );
 
         $content = 'user/v_user_update';
@@ -79,11 +85,13 @@ class User extends My_controller
     {
         $name = $this->input->post('name');
         $username = $this->input->post('username');
+        $group_id = $this->input->post('group_id');
 
         $id = $this->input->post('id');
 
         $data = array(
             'name' => $name,
+            'group_id' => $group_id,
             'username' => $username,
         );
         if($this->input->post('password'))

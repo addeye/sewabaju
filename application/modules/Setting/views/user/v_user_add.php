@@ -23,6 +23,17 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 col-sm-offset-1 control-label">Group</label>
+                        <div class="col-sm-3">
+                            <select name="group_id" class="form-control">
+                                <option value="">Pilih Group</option>
+                                <?php foreach($group as $row): ?>
+                                    <option value="<?=$row->id?>"><?=$row->name?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 col-sm-offset-1 control-label">Password</label>
                         <div class="col-sm-3">
                             <input type="password" class="form-control" name="password">

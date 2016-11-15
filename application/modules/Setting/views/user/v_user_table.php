@@ -17,6 +17,7 @@
                             <th>Nama</th>
                             <th>Username</th>
                             <th>Status</th>
+                            <th>Group</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -27,6 +28,7 @@
                                 <td><?=$row->name?></td>
                                 <td><?=$row->username?></td>
                                 <td><?=$row->status?></td>
+                                <td><?=$row->mgroup->name?></td>
                                 <td>
                                     <a href="<?=$link_edit.$row->id?>" class="btn btn-success">Edit</a>
                                     <button type="button" href="#" class="btn btn-danger del" href="javascript:void(0);" id="<?=$row->id?>">Del</button>

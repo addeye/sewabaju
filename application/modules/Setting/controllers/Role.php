@@ -31,15 +31,13 @@ class Role extends My_controller
     {
         $group_id = $this->input->post('group_id');
         $attr = $this->input->post('attr');
-        return var_dump($attr['User']['create']);
+        return var_dump($attr[0]);
 
         foreach(modul() as $key=>$val)
         {
             $modul = $this->input->post($val);
             $data['group_id'] = $group_id;
             $data['modul'] = $key;
-
-            return var_dump($modul);
         }
 
         for($i=0; $i<count($modul); $i++)
