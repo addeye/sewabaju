@@ -18,9 +18,9 @@ define('MODUL_PROMO_SEWA_BAJU',8);
 define('MODUL_ACCESSORIES_SEWA_BAJU',9);
 
 //Status
-define('STATUS_BOOKING',1);
+define('STATUS_APPOINTMENT',1);
 define('STATUS_DEAL',2);
-define('STATUS_FITTING',3);
+define('STATUS_SIAP_AMBIL',3);
 define('STATUS_DIPINJAM',4);
 define('STATUS_KEMBALI',5);
 

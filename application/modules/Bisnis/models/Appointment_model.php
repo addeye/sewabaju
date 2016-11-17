@@ -233,4 +233,14 @@ class Appointment_model extends Base_model
         return [];
     }
 
+    public function getCustomerById($id)
+    {
+        $result = $this->getData($this->table,array('customer_id'=>$id))->result();
+        if($result)
+        {
+            return $result;
+        }
+        return [];
+    }
+
 }

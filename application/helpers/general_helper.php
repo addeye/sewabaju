@@ -56,9 +56,9 @@ if(!function_exists('status_customer'))
     function status_customer()
     {
         return array(
-            STATUS_BOOKING => 'Booking',
+            STATUS_APPOINTMENT => 'Appointment',
             STATUS_DEAL => 'Deal',
-            STATUS_FITTING => 'Fitting',
+            STATUS_SIAP_AMBIL => 'Siap Ambil',
             STATUS_DIPINJAM => 'Out',
             STATUS_KEMBALI => 'Return'
         );

@@ -22,7 +22,7 @@
             </div>
 
             <div class="portlet-body">
-                    <table id="myTable" class="table table-actions-wrapper">
+                    <table id="myTable" class="table table-hover">
                         <thead>
                         <tr>
                             <th>NO</th>
@@ -38,7 +38,7 @@
                         <?php $no=1; foreach($data as $row):?>
                             <tr>
                                 <td><?=$no++;?></td>
-                                <td><?=$row->card?></td>
+                                <td><a id="<?=$row->id?>" href="javascript:void(0);" onclick="showHistory(this.id)"><?=$row->card?></a></td>
                                 <td><?=$row->name?></td>
                                 <td><?=tgl_indo($row->born_date)?></td>
                                 <td><?=$row->phone?></td>
@@ -51,7 +51,6 @@
                         <?php endforeach; ?>
                         </tbody>
                     </table>
-
                     <div id="mymodal" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
 
                         <div class="modal-body">
@@ -71,9 +70,15 @@
                     </div>
                 <!-- ajax -->
 
-                <div id="ajax-modal" class="modal fade" tabindex="-1"> </div>
+                <div id="ajax-modal" class="modal fade" tabindex="-1">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">History Appointment Customer</h4>
+                    </div>
+                    <div id="history-list" class="modal-body">
 
-
+                    </div>
+                </div>
 
             </div>
 
@@ -93,6 +98,7 @@
 
 <input type="hidden" id="iddel">
 <input type="hidden" id="url" value="<?=$link_delete?>">
+<input type="hidden" id="urlcustomer" value="<?=$link_appointment?>">
 
 <!-- END PAGE CONTENT-->
 
@@ -121,4 +127,20 @@
                 });
         });
     });
+
+    function showHistory(id)
+    {
+        var $urlcus = $('#urlcustomer').val();
+        $.ajax({
+            url : $urlcus+'/'+id,
+            type: 'get',
+            cache: false,
+            dataType: 'html',
+        })
+            .success(function(data){
+                $('#history-list').html(data);
+                $('#ajax-modal').modal('show');
+            });
+
+    }
 </script>

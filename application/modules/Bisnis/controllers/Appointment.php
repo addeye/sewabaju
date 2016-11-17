@@ -41,6 +41,7 @@ class Appointment extends My_controller
             'link_back' => site_url('bisnis/appointment'),
             'link_act' => site_url('bisnis/appointment/do_add'),
             'link_cus' => site_url('bisnis/appointment/form_customer'),
+            'link_cus_id' => site_url('bisnis/appointment/historyCustomer'),
             'customer' => $this->cmodel->getAll()
         );
         $content = 'appointment/v_appointment_add';
@@ -110,7 +111,9 @@ class Appointment extends My_controller
     public function delete($id)
     {
         $data['deleted'] = '1';
+        $data['cancel'] = $cancel = $this->input->post('cancel');
         $result = $this->model->update($id,$data);
+
         if($result)
         {
             alert(3);
@@ -450,6 +453,16 @@ class Appointment extends My_controller
         $data['tritem'] = $this->model->getTrItem($appointment_id);
         $data['company'] = $this->model->getCompany();
         $this->load->view('appointment/v_invoice_print',$data);
+    }
+
+    public function historyCustomer($id)
+    {
+        $result = $this->model->getCustomerById($id);
+        $result = json_encode($result);
+        if($result)
+        {
+            echo $result;
+        }
     }
 
 }

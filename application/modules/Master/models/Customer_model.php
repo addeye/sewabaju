@@ -9,6 +9,7 @@
 class customer_model extends Base_model
 {
     protected $table = 'm_customer';
+    protected $mappointment = 'm_appointment';
 
     public function __construct()
     {
@@ -72,6 +73,16 @@ class customer_model extends Base_model
     {
         $kode = $this->getkodeunik($this->table,'CUS');
         return $kode;
+    }
+
+    public function getHistoryAppointment($id)
+    {
+        $result = $this->getData($this->mappointment,array('customer_id'=>$id))->result();
+        if($result)
+        {
+            return $result;
+        }
+        return [];
     }
 
 }

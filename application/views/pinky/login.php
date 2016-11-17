@@ -166,7 +166,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
             </label>
 
-            <button type="submit" class="btn blue pull-right"> Login </button>
+            <button type="submit" class="btn default pull-right"> Login </button>
 
         </div>
 

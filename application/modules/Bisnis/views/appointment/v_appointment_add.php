@@ -19,13 +19,16 @@
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 col-sm-offset-1 control-label">Customer</label>
                         <div class="col-sm-5">
-                            <select class="form-control" name="customer_id">
+                            <select id="customer-list" class="form-control" name="customer_id">
                                 <option value="">Pilih Customer</option>
                                 <?php foreach($customer as $row): ?>
                                     <option value="<?=$row->id?>"><?=$row->name?></option>
                                 <?php endforeach; ?>
                             </select>
                             <div class="help-block"><button type="button" class="btn btn-info btn-xs add-customer"><i class="fa fa-plus"></i> Customer</button></div>
+                        </div>
+                        <div class="col-sm-4">
+                            <textarea rows="4" placeholder="History..." id="history-text" class="form-control" disabled></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -71,6 +74,7 @@
     </div>
 </div>
 <input type="hidden" id="urlcustomer" value="<?=$link_cus?>">
+<input type="hidden" id="urlcustomerid" value="<?=$link_cus_id?>">
 
 <script type="text/javascript">
 
@@ -87,6 +91,20 @@
                 .success(function(data) {
                     $('#form-customer').html(data);
                     $('#ajax-modal').modal('show');
+                });
+        });
+
+        $('#customer-list').change(function(){
+            var idcus = this.value;
+            var urlcusid = $('#urlcustomerid').val();
+            $.ajax({
+                url: urlcusid+'/'+idcus,
+                type : 'get',
+                cache: false,
+                dataType : 'json',
+            })
+                .success(function(data) {
+                    $('#history-text').val(data[0].cancel);
                 });
         });
 

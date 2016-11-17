@@ -47,12 +47,12 @@
                         <div class="modal-body">
 
                             <p> Anda yakin ingin menghapus data? </p>
-
+                            <textarea id="cancel-text" class="form-control" placeholder="Alasan Cancel..."></textarea>
                         </div>
 
                         <div class="modal-footer">
 
-                            <button type="button" data-dismiss="modal" class="btn btn-outline red">Cancel</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-outline red">Batal</button>
 
                             <button id="delete_all_trigger" type="submit" class="btn btn-outline dark danger act_del">Hapus</button>
 
@@ -93,9 +93,12 @@
         $('.act_del').click(function(){
             var $url = $('#url').val();
             var id = $('#iddel').val();
+            var canceltext = $('#cancel-text').val();
+
             $.ajax({
                 url : $url+'/'+id,
-                type: 'get',
+                type: 'post',
+                data: {cancel:canceltext},
                 cache: false,
             })
                 .success(function(){

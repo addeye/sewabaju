@@ -22,6 +22,7 @@ class Customer extends My_controller
             'link_add' => site_url('master/customer/add'),
             'link_edit' => site_url('master/customer/update/'),
             'link_delete' => site_url('master/customer/delete'),
+            'link_appointment' => site_url('master/customer/appointment'),
             'data' => $this->model->getAll()
         );
         $content = 'customer/v_customer_table';
@@ -113,5 +114,11 @@ class Customer extends My_controller
         {
             alert(3);
         }
+    }
+
+    public function appointment($id)
+    {
+        $data['appointment'] = $this->model->getHistoryAppointment($id);
+        $this->load->view('customer/v_customer_history',$data);
     }
 }

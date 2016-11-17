@@ -3240,8 +3240,8 @@ Custom color buttons
 
 .btn.red:not(.btn-outline) {
   color: #ffffff;
-  background-color: #d93a6f;
-  border-color: #d93a6f; }
+  background-color: #ccc;
+  border-color: #ccc; }
   .btn.red:not(.btn-outline):focus, .btn.red:not(.btn-outline).focus {
     color: #ffffff;
     background-color: #e12330;
@@ -3269,23 +3269,23 @@ Custom color buttons
   fieldset[disabled] .btn.red:not(.btn-outline):hover,
   fieldset[disabled] .btn.red:not(.btn-outline):focus,
   fieldset[disabled] .btn.red:not(.btn-outline).focus {
-    background-color: #d93a6f;
-    border-color: #d93a6f; }
+    background-color: #ccc;
+    border-color: #ccc; }
   .btn.red:not(.btn-outline) .badge {
-    color: #d93a6f;
+    color: #ccc;
     background-color: #ffffff; }
 
 .btn.btn-outline.red {
-  border-color: #d93a6f;
-  color: #d93a6f;
+  border-color: #ccc;
+  color: #ccc;
   background: none; }
   .btn.btn-outline.red:hover, .btn.btn-outline.red:active, .btn.btn-outline.red:active:hover, .btn.btn-outline.red:active:focus, .btn.btn-outline.red:focus, .btn.btn-outline.red.active {
-    border-color: #d93a6f;
+    border-color: #ccc;
     color: #ffffff;
-    background-color: #d93a6f; }
+    background-color: #ccc; }
 
 .btn.red-stripe {
-  border-left: 4px solid #d93a6f !important; }
+  border-left: 4px solid #ccc !important; }
 
 .btn.red.btn-no-border:not(.active) {
   border-color: transparent; }
@@ -5827,12 +5827,12 @@ Custom color buttons
   border-color: #525e64; }
 
 .form-control.red {
-  border-color: #d93a6f; }
+  border-color: #ccc; }
   .form-control.red:focus {
     border-color: #e12330; }
 
 .form-control.focus-red:focus {
-  border-color: #d93a6f; }
+  border-color: #ccc; }
 
 .form-control.red-pink {
   border-color: #E08283; }
@@ -9062,7 +9062,7 @@ Custom colored portlets
 
 .portlet > .portlet-body.red,
 .portlet.red {
-  background-color: #d93a6f; }
+  background-color: #ccc; }
 
 .portlet.solid.red > .portlet-title,
 .portlet.solid.red > .portlet-body {
@@ -9093,10 +9093,10 @@ Custom colored portlets
   color: #fdfdfd; }
 
 .portlet.box.red {
-  border: 1px solid #ed7d84;
+  border: 1px solid #999;
   border-top: 0; }
   .portlet.box.red > .portlet-title {
-    background-color: #d93a6f; }
+    background-color: #ccc; }
     .portlet.box.red > .portlet-title > .caption {
       color: #ffffff; }
       .portlet.box.red > .portlet-title > .caption > i {
@@ -10610,7 +10610,7 @@ Customized Progress Bars
   color: #FFFFFF !important; }
 
 .progress-bar.red {
-  background: #d93a6f !important;
+  background: #ccc !important;
   color: #ffffff !important; }
 
 .progress-bar.red-pink {
@@ -11366,7 +11366,7 @@ Dashboard Stats
     background-color: #495359; }
 
 .dashboard-stat.red {
-  background-color: #d93a6f; }
+  background-color: #ccc; }
   .dashboard-stat.red.dashboard-stat-light:hover {
     background-color: #e53e49; }
   .dashboard-stat.red .visual > i {
@@ -16801,10 +16801,10 @@ Tasks Widget
     background: #FFFFFF; }
 
 .mt-element-list .list-default.mt-list-head.red {
-  background-color: #d93a6f;
+  background-color: #ccc;
   color: #ffffff; }
   .mt-element-list .list-default.mt-list-head.red .badge {
-    background-color: #ed7d84;
+    background-color: #999;
     color: #ffffff; }
   .mt-element-list .list-default.mt-list-head.red.ext-1 .badge {
     background-color: #e12330; }
@@ -16814,26 +16814,26 @@ Tasks Widget
     color: white; }
 
 .mt-element-list .list-todo.mt-list-head.red {
-  background-color: #d93a6f;
+  background-color: #ccc;
   color: #ffffff; }
 
 .mt-element-list .list-todo .list-count.red {
-  background-color: #d93a6f;
+  background-color: #ccc;
   color: #ffffff; }
   .mt-element-list .list-todo .list-count.red:hover {
     background-color: #e43a45; }
 
 .mt-element-list .list-todo .list-todo-line.red {
-  border-color: #d93a6f; }
+  border-color: #ccc; }
 
 .mt-element-list .list-todo .list-todo-item.red:after {
-  border-right-color: #d93a6f !important; }
+  border-right-color: #ccc !important; }
 
 .mt-element-list .list-todo .list-todo-item.red .list-toggle {
-  background: #d93a6f;
+  background: #ccc;
   color: #ffffff !important; }
   .mt-element-list .list-todo .list-todo-item.red .list-toggle > .badge {
-    color: #d93a6f;
+    color: #ccc;
     background: #ffffff; }
 
 .mt-element-list .list-default.mt-list-head.red-pink {
@@ -17965,10 +17965,10 @@ Tasks Widget
   background: #525e64; }
 
 .mt-element-list .list-todo-item.red:after {
-  border-right-color: #d93a6f; }
+  border-right-color: #ccc; }
 
 .mt-element-list .list-todo-item.red .list-toggle {
-  background: #d93a6f; }
+  background: #ccc; }
 
 .mt-element-list .list-todo-item.red-pink:after {
   border-right-color: #E08283; }
@@ -20681,58 +20681,58 @@ Custom color buttons
   border-right-color: #525e64 !important; }
 
 .bg-red {
-  background: #d93a6f !important; }
+  background: #ccc !important; }
 
 .bg-red-opacity {
   background: rgba(231, 80, 90, 0.8) !important; }
 
 .bg-hover-red:hover {
-  background: #d93a6f !important; }
+  background: #ccc !important; }
 
 .font-red {
-  color: #d93a6f !important; }
+  color: #ccc !important; }
 
 .bg-font-red {
   color: #ffffff !important; }
 
 .border-red {
-  border-color: #d93a6f !important; }
+  border-color: #ccc !important; }
 
 .border-top-red {
-  border-top-color: #d93a6f !important; }
+  border-top-color: #ccc !important; }
 
 .border-bottom-red {
-  border-bottom-color: #d93a6f !important; }
+  border-bottom-color: #ccc !important; }
 
 .border-left-red {
-  border-left-color: #d93a6f !important; }
+  border-left-color: #ccc !important; }
 
 .border-right-red {
-  border-right-color: #d93a6f !important; }
+  border-right-color: #ccc !important; }
 
 .bg-before-red:before,
 .bg-after-red:after {
-  background: #d93a6f !important; }
+  background: #ccc !important; }
 
 .border-before-red:before,
 .border-after-red:after {
-  border-color: #d93a6f !important; }
+  border-color: #ccc !important; }
 
 .border-top-before-red:before,
 .border-top-after-red:after {
-  border-top-color: #d93a6f !important; }
+  border-top-color: #ccc !important; }
 
 .border-bottom-before-red:before,
 .border-bottom-after-red:after {
-  border-bottom-color: #d93a6f !important; }
+  border-bottom-color: #ccc !important; }
 
 .border-left-before-red:before,
 .border-left-after-red:after {
-  border-left-color: #d93a6f !important; }
+  border-left-color: #ccc !important; }
 
 .border-right-before-red:before,
 .border-right-after-red:after {
-  border-right-color: #d93a6f !important; }
+  border-right-color: #ccc !important; }
 
 .bg-red-pink {
   background: #E08283 !important; }
