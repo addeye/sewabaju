@@ -126,18 +126,11 @@
                         <th>Qty</th>
                         <th>Price</th>
                     </tr>
-                    <?php foreach($tritem as $key=>$row): ?>
+                    <?php foreach($product as $row): ?>
                         <tr>
-                            <td class="col-xs-4"><?=$row->mbaju->name?></td>
-                            <td><?=$row->qty?></td>
-                            <td class="text-right"><?=rupiah($row->total)?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                    <?php foreach($traccessories as $key=>$row): ?>
-                        <tr>
-                            <td class="col-xs-4"><?=$row->maccessories->name?></td>
-                            <td><?=$row->qty?></td>
-                            <td class="text-right"><?=rupiah($row->total)?></td>
+                            <td class="col-xs-4"><?=$row['name']?></td>
+                            <td><?=$row['qty']?></td>
+                            <td class="text-right"><?=$row['total']?></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>

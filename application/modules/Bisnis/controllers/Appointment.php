@@ -14,6 +14,7 @@ class Appointment extends My_controller
         $this->load->model('appointment_model','model');
         $this->load->model('../../master/models/customer_model','cmodel');
         $this->load->model('deal_model','dmodel');
+        $this->load->model('made_model','mmodel');
     }
 
     public function index()
@@ -26,8 +27,17 @@ class Appointment extends My_controller
             'link_delete' => site_url('bisnis/appointment/delete'),
             'link_deal' => site_url('bisnis/appointment/deal/'),
             'link_invoice' => site_url('bisnis/appointment/invoice/'),
+            'link_delivery' => site_url('bisnis/appointment/delivery/'),
             'data' => $this->model->getAll()
         );
+
+        foreach($data['data'] as $key=>$row)
+        {
+
+            $data['data'][$key]->status_data = $row->status==STATUS_SIAP_AMBIL ? 'Pick Up':'Return';
+            $data['data'][$key]->link_change = $row->status==STATUS_SIAP_AMBIL ? site_url('bisnis/appointment/pickup/'.$row->id):site_url('bisnis/appointment/kembali/'.$row->id);
+        }
+
         $content = 'appointment/v_appointment_table';
 
         $this->pinky->output($data,$content);
@@ -54,6 +64,7 @@ class Appointment extends My_controller
         $date = $this->input->post('date');
         $customer_id = $this->input->post('customer_id');
         $note = $this->input->post('note');
+        $created_at = date('Y-m-d');
 
         $data = array(
             'code' => $code,
@@ -61,6 +72,7 @@ class Appointment extends My_controller
             'customer_id' => $customer_id,
             'note' => $note,
             'status' => 1,
+            'created_at'=>$created_at
         );
 
         $result = $this->model->create($data);
@@ -91,6 +103,7 @@ class Appointment extends My_controller
         $date = $this->input->post('date');
         $customer_id = $this->input->post('customer_id');
         $note = $this->input->post('note');
+        $updated_at = date('Y-m-d');
 
         $id = $this->input->post('id');
 
@@ -98,6 +111,7 @@ class Appointment extends My_controller
             'date' => $date,
             'customer_id' => $customer_id,
             'note' => $note,
+            'updated_at'=>$updated_at
         );
 
         $result = $this->model->update($id,$data);
@@ -169,6 +183,16 @@ class Appointment extends My_controller
             'link_addaccessories' => site_url('bisnis/appointment/addaccessories'),
             'link_del_allaccessories' => site_url('bisnis/appointment/delete_accessories'),
             'link_del_idaccessories' => site_url('bisnis/appointment/delete_accessoriesid'),
+
+            'link_jobs' => site_url('bisnis/appointment/viewjobs'),
+            'link_addjobs' => site_url('bisnis/appointment/addjobs'),
+            'link_del_alljobs' => site_url('bisnis/appointment/delete_jobs'),
+            'link_del_idjobs' => site_url('bisnis/appointment/delete_jobsid'),
+
+            'link_made' => site_url('bisnis/appointment/viewmade'),
+            'link_addmade' => site_url('bisnis/appointment/addmade'),
+            'link_del_allmade' => site_url('bisnis/appointment/delete_made'),
+            'link_del_idmade' => site_url('bisnis/appointment/delete_madeid'),
 
             'link_total_transaksi' => site_url('bisnis/appointment/totalTransaksi'),
             'link_invoice' => site_url('bisnis/appointment/invoice/'.$id),
@@ -298,7 +322,7 @@ class Appointment extends My_controller
         if($this->input->post('fitting'))
         {
             $data_up = array(
-                'status'=>STATUS_FITTING
+                'status'=>STATUS_SIAP_AMBIL
             );
 
             $this->model->update($appointment_id,$data_up);
@@ -326,6 +350,17 @@ class Appointment extends My_controller
             $total[] = $row->total;
         }
 
+        $jobs = $this->model->getTrJobs($appointment_id);
+        foreach($jobs as $row)
+        {
+            $total[] = $row->price;
+        }
+
+        $made = $this->model->getTrMade($appointment_id);
+        foreach($made as $row)
+        {
+            $total[] = $row->price;
+        }
 
         $grandtotal = array_sum($total);
         $grandtotal = $grandtotal + $shipping_cost;
@@ -437,11 +472,137 @@ class Appointment extends My_controller
         return FALSE;
     }
 
+    public function viewjobs($appointment_id)
+    {
+        $data['trjobs'] = $this->model->getTrJobs($appointment_id);
+        $this->load->view('appointment/v_list_jobs',$data);
+    }
+
+    public function addJobs()
+    {
+        $appointment_id = $this->input->post('appointment_id');
+        $job = $this->input->post('job');
+        $price = $this->input->post('price');
+
+        $data = array(
+            'appointment_id' => $appointment_id,
+            'job' => $job,
+            'price' => $price,
+        );
+
+        $this->model->addJobs($data);
+
+    }
+
+    public function delete_jobs($appointment_id)
+    {
+        $result = $this->model->delAllTrJobs($appointment_id);
+        if($result)
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function delete_jobsid($id)
+    {
+        $result = $this->model->delJobsId($id);
+        if($result)
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function viewmade($appointment_id)
+    {
+        $data['trmade'] = $this->model->getTrMade($appointment_id);
+        $this->load->view('appointment/v_list_made',$data);
+    }
+
+    public function addMade()
+    {
+        $appointment_id = $this->input->post('appointment_id');
+        $disc = $this->input->post('disc');
+        $price = $this->input->post('price');
+
+        $data = array(
+            'appointment_id' => $appointment_id,
+            'disc' => $disc,
+            'price' => $price,
+        );
+
+        $this->model->addmade($data);
+
+    }
+
+    public function delete_made($appointment_id)
+    {
+        $result = $this->model->delAllTrMade($appointment_id);
+        if($result)
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function delete_madeid($id)
+    {
+        $result = $this->model->delMadeId($id);
+        if($result)
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
     public function invoice($appointment_id)
     {
         $data['deal'] = $this->dmodel->getDataByAppointment($appointment_id);
-        $data['traccessories'] = $this->model->getTrAccessories($appointment_id);
-        $data['tritem'] = $this->model->getTrItem($appointment_id);
+
+        $traccessories = $this->model->getTrAccessories($appointment_id);
+        $tritem = $this->model->getTrItem($appointment_id);
+        $trjobs = $this->model->getTrJobs($appointment_id);
+        $trmade = $this->model->getTrMade($appointment_id);
+
+        foreach($tritem as $row)
+        {
+            $product[] = array(
+                'name' => $row->mbaju->name,
+                'qty' => $row->qty,
+                'total' => rupiah($row->total)
+            );
+        }
+
+        foreach($traccessories as $row)
+        {
+            $product[] = array(
+                'name' => $row->maccessories->name,
+                'qty' => $row->qty,
+                'total' => rupiah($row->total)
+            );
+        }
+
+        foreach($trjobs as $row)
+        {
+            $product[] = array(
+                'name' => $row->job,
+                'qty' => '-',
+                'total' => rupiah($row->price)
+            );
+        }
+
+        foreach($trmade as $row)
+        {
+            $product[] = array(
+                'name' => $row->disc,
+                'qty' => '-',
+                'total' => rupiah($row->price)
+            );
+        }
+
+        $data['product'] = $product;
+//        return var_dump($data);
         $data['company'] = $this->model->getCompany();
         $this->load->view('appointment/v_invoice',$data);
     }
@@ -449,8 +610,48 @@ class Appointment extends My_controller
     public function invoice_print($appointment_id)
     {
         $data['deal'] = $this->dmodel->getDataByAppointment($appointment_id);
-        $data['traccessories'] = $this->model->getTrAccessories($appointment_id);
-        $data['tritem'] = $this->model->getTrItem($appointment_id);
+        $traccessories = $this->model->getTrAccessories($appointment_id);
+        $tritem = $this->model->getTrItem($appointment_id);
+        $trjobs = $this->model->getTrJobs($appointment_id);
+        $trmade = $this->model->getTrMade($appointment_id);
+
+        foreach($tritem as $row)
+        {
+            $product[] = array(
+                'name' => $row->mbaju->name,
+                'qty' => $row->qty,
+                'total' => rupiah($row->total)
+            );
+        }
+
+        foreach($traccessories as $row)
+        {
+            $product[] = array(
+                'name' => $row->maccessories->name,
+                'qty' => $row->qty,
+                'total' => rupiah($row->total)
+            );
+        }
+
+        foreach($trjobs as $row)
+        {
+            $product[] = array(
+                'name' => $row->job,
+                'qty' => '-',
+                'total' => rupiah($row->price)
+            );
+        }
+
+        foreach($trmade as $row)
+        {
+            $product[] = array(
+                'name' => $row->disc,
+                'qty' => '-',
+                'total' => rupiah($row->price)
+            );
+        }
+
+        $data['product'] = $product;
         $data['company'] = $this->model->getCompany();
         $this->load->view('appointment/v_invoice_print',$data);
     }
@@ -463,6 +664,60 @@ class Appointment extends My_controller
         {
             echo $result;
         }
+    }
+
+    public function pickup($appointment_id)
+    {
+        $data_up = array(
+            'status'=>STATUS_DIPINJAM,
+            'pickuped' => date('Y-m-d')
+        );
+
+        $this->model->update($appointment_id,$data_up);
+        redirect('bisnis/appointment');
+    }
+
+    public function kembali($appointment_id)
+    {
+        $data_up = array(
+            'status'=>STATUS_KEMBALI,
+            'returned' => date('Y-m-d')
+        );
+
+        $this->model->updateAllTrItemByAppointmentId($appointment_id);
+
+        $this->model->update($appointment_id,$data_up);
+        redirect('bisnis/appointment');
+    }
+
+    public function delivery($appointment_id)
+    {
+        $data['deal'] = $this->dmodel->getDataByAppointment($appointment_id);
+        $data['appointment'] = $this->model->getId($appointment_id);
+        $data['appointment']->title = $data['appointment']->status==STATUS_DIPINJAM ?'DATE OF PICK UP' : 'DATE OF RETURN';
+        $data['appointment']->date_delivery = $data['appointment']->status==STATUS_DIPINJAM ? $data['appointment']->pickuped : $data['appointment']->returned;
+        $data['traccessories'] = $this->model->getTrAccessories($appointment_id);
+        $data['tritem'] = $this->model->getTrItem($appointment_id);
+        $data['trjobs'] = $this->model->getTrJobs($appointment_id);
+        $data['trmade'] = $this->model->getTrMade($appointment_id);
+
+        $data['company'] = $this->model->getCompany();
+        $this->load->view('appointment/v_delivery',$data);
+    }
+
+    public function delivery_print($appointment_id)
+    {
+        $data['deal'] = $this->dmodel->getDataByAppointment($appointment_id);
+        $data['appointment'] = $this->model->getId($appointment_id);
+        $data['appointment']->title = $data['appointment']->status==STATUS_DIPINJAM ?'DATE OF PICK UP' : 'DATE OF RETURN';
+        $data['appointment']->date_delivery = $data['appointment']->status==STATUS_DIPINJAM ? $data['appointment']->pickuped : $data['appointment']->returned;
+        $data['traccessories'] = $this->model->getTrAccessories($appointment_id);
+        $data['tritem'] = $this->model->getTrItem($appointment_id);
+        $data['trjobs'] = $this->model->getTrJobs($appointment_id);
+        $data['trmade'] = $this->model->getTrMade($appointment_id);
+
+        $data['company'] = $this->model->getCompany();
+        $this->load->view('appointment/v_delivery_print',$data);
     }
 
 }

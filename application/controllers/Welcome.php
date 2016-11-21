@@ -30,18 +30,33 @@ class Welcome extends My_controller {
 		$data['header_title'] = 'Dashboard';
 		$data['header_desc'] = 'Master | Sewa Baju';
 		$rowData = $this->model->getDataAllTr();
+		$fitingData = $this->model->getFittingDate();
+		$dataCalendar = array();
 
 		foreach($rowData as $row)
 		{
+			if($row->mdeal)
+			{
+				$dataCalendar[] = array(
+					'title' => $row->mbaju->name,
+					'start' => $row->mdeal->date_borrow,
+					'end' => $row->mdeal->date_back.'T23:59:00',
+					'description' => $row->mcustomer->name,
+				);
+			}
+		}
+
+		foreach($fitingData as $row)
+		{
 			$dataCalendar[] = array(
-				'title' => $row->mbaju->name,
-				'start' => $row->mdeal->date_borrow,
-				'end' => $row->mdeal->date_back.'T23:59:00',
-				'description' => $row->mcustomer->name
+				'title' => $row->mcustomer->name,
+				'start' => $row->date_fitting,
+				'description' => $row->mcustomer->name.'- Fitting',
+				'color' => 'red',
 			);
 		}
-		$data['dcalendar'] = json_encode($dataCalendar);
 
+		$data['dcalendar'] = json_encode($dataCalendar);
 		$this->pinky->output($data,'pinky/home');
 
 		//$this->load->view('view_barcode');

@@ -15,6 +15,8 @@ class Appointment_model extends Base_model
     protected $tr_accessories = 'tr_accessories';
     protected $mdeal = 'm_deal';
     protected $mcompany = 'm_company';
+    protected $tr_jobs = 'tr_jobs';
+    protected $tr_made = 'tr_made';
 
     public function __construct()
     {
@@ -25,6 +27,8 @@ class Appointment_model extends Base_model
     public function getAll()
     {
         $condition['deleted']='0';
+        $condition['status !='] = 5;
+
         $pagedata = $this->getData($this->table,$condition)->result();
         foreach($pagedata as $key=>$row)
         {
@@ -143,6 +147,7 @@ class Appointment_model extends Base_model
     {
         $condition['appointment_id'] = $appointment_id;
         $result = $this->getData($this->tr_item,$condition)->result();
+
         foreach($result as $key=>$row)
         {
             $result[$key]->mbaju = $this->getData($this->table_baju,array('id'=>$row->baju_id))->row();
@@ -223,6 +228,96 @@ class Appointment_model extends Base_model
         return FALSE;
     }
 
+    //job transaksi
+
+    public function addJobs($data=array())
+    {
+        $result = $this->addData($this->tr_jobs,$data);
+        if($result)
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function getTrJobs($appointment_id)
+    {
+        $condition['appointment_id'] = $appointment_id;
+        $result = $this->getData($this->tr_jobs,$condition)->result();
+        if($result)
+        {
+            return $result;
+        }
+        return [];
+    }
+
+    public function delAllTrJobs($appointment_id)
+    {
+        $condition['appointment_id'] = $appointment_id;
+        $result = $this->deleteData($this->tr_jobs,$condition);
+        if($result)
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function delJobsId($id)
+    {
+        $condition['id'] = $id;
+        $result = $this->deleteData($this->tr_jobs,$condition);
+        if($result)
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    //made transaksi
+
+    public function addMade($data=array())
+    {
+        $result = $this->addData($this->tr_made,$data);
+        if($result)
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function getTrMade($appointment_id)
+    {
+        $condition['appointment_id'] = $appointment_id;
+        $result = $this->getData($this->tr_made,$condition)->result();
+        if($result)
+        {
+            return $result;
+        }
+        return [];
+    }
+
+    public function delAllTrMade($appointment_id)
+    {
+        $condition['appointment_id'] = $appointment_id;
+        $result = $this->deleteData($this->tr_made,$condition);
+        if($result)
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function delMadeId($id)
+    {
+        $condition['id'] = $id;
+        $result = $this->deleteData($this->tr_made,$condition);
+        if($result)
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
     public function getCompany()
     {
         $result = $this->getData($this->mcompany,array('id'=>1))->row();
@@ -243,4 +338,31 @@ class Appointment_model extends Base_model
         return [];
     }
 
+    public function getHistory()
+    {
+        $condition['deleted']='0';
+        $condition['status'] = 5;
+
+        $pagedata = $this->getData($this->table,$condition)->result();
+        foreach($pagedata as $key=>$row)
+        {
+            $pagedata[$key]->mcustomer = $this->cmodel->getId($row->customer_id);
+            $pagedata[$key]->mdeal = $this->getData($this->mdeal,array('appointment_id'=>$row->id))->result();
+        }
+        if($pagedata)
+        {
+            return $pagedata;
+        }
+        return [];
+    }
+
+    public function updateAllTrItemByAppointmentId($id)
+    {
+        $condition['appointment_id'] = $id;
+        $data = $this->getData($this->tr_item,$condition)->result();
+        foreach($data as $row)
+        {
+            $this->updateData($this->tr_item,array('returned'=>1),array('id'=>$row->id));
+        }
+    }
 }

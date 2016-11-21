@@ -32,10 +32,16 @@
                                 <td><?=$row->mcustomer->name?></td>
                                 <td><?=$row->note?></td>
                                 <td><u><?=status_customer()[$row->status]?></u></td>
-                                <td><button id="<?=$row->id?>" type="button" onclick="invoice(this.id)" class="btn btn-info btn-invoice" <?=$row->status==1?'disabled':''?>>Invoice</button></td>
+                                <td>
+                                    <button id="<?=$row->id?>" type="button" onclick="invoice(this.id)" class="btn btn-info btn-invoice" <?=$row->status==STATUS_APPOINTMENT?'disabled':''?>>Invoice</button>
+                                    <button id="<?=$row->id?>" type="button" onclick="delivery(this.id)" class="btn btn-info btn-invoice" <?=empty($row->pickuped)?'disabled':''?>>Delivery</button>
+                                </td>
                                 <td>
                                     <a href="<?=$link_deal.$row->id?>" class="btn btn-success">Detail</a>
                                     <button type="button" href="#" class="btn btn-danger del" href="javascript:void(0);" id="<?=$row->id?>">Cancel</button>
+                                    <?php if($row->status == STATUS_SIAP_AMBIL || $row->status == STATUS_DIPINJAM){?>
+                                        <button id="<?=$row->link_change?>" onclick="confirmstatus(this.id)" class="btn btn-warning"><?=$row->status_data?></button>
+                                    <?php } ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -59,6 +65,23 @@
                         </div>
 
                     </div>
+
+                <div id="mymodalalertstatus" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
+
+                    <div class="modal-body">
+
+                        <p> Anda yakin ingin merubah status ? </p>
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button type="button" data-dismiss="modal" class="btn btn-outline red">Batal</button>
+
+                        <button id="delete_all_trigger" type="button" class="btn btn-outline dark danger btn-status">Ganti</button>
+
+                    </div>
+
+                </div>
                 <!-- ajax -->
 
                 <div id="ajax-modal" class="modal fade" tabindex="-1"> </div>
@@ -75,10 +98,14 @@
 <div id="invoice" class="modal container fade modal-overflow in" tabindex="-1" aria-hidden="true">
 
 </div>
+<div id="delivery" class="modal container fade modal-overflow in" tabindex="-1" aria-hidden="true">
+
+</div>
 
 <input type="hidden" id="iddel">
 <input type="hidden" id="url" value="<?=$link_delete?>">
 <input type="hidden" id="urlinvoice" value="<?=$link_invoice?>">
+<input type="hidden" id="urldelivery" value="<?=$link_delivery?>">
 
 <!-- END PAGE CONTENT-->
 
@@ -109,9 +136,6 @@
                     location.reload(true);
                 });
         });
-        $('.btn-invoice').click(function(){
-
-        });
     });
     function invoice(id)
     {
@@ -129,5 +153,32 @@
                 $("#loading").modal('hide');
                 $('#invoice').modal('show');
             });
+    }
+
+    function delivery(id)
+    {
+        var urldelivery = $('#urldelivery').val();
+        $.ajax({
+            beforeSend:function(){
+                $("#loading").modal('show');
+            },
+            url: urldelivery+'/'+id,
+            type : 'get',
+            cache: false,
+        })
+            .success(function(data) {
+                $('#delivery').html(data);
+                $("#loading").modal('hide');
+                $('#delivery').modal('show');
+            });
+    }
+
+    function confirmstatus(url)
+    {
+        $('#mymodalalertstatus').modal('show');
+        $('.btn-status').click(function(){
+            window.location = url;
+        });
+        return false;
     }
 </script>

@@ -38,17 +38,9 @@
                             <span class="arrow"></span>
                         </a>
                     </li>
-
                     <li class="nav-item ">
-                        <a href="http://localhost/sewabaju/retur" class="nav-link">
-                            <i class="icon-action-undo"></i> Retur
-                            <span class="arrow"></span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item ">
-                        <a href="http://localhost/sewabaju/operational" class="nav-link">
-                            <i class="icon-social-dropbox"></i> Biaya Operasional
+                        <a href="<?=base_url('bisnis/history')?>" class="nav-link">
+                            <i class="icon-action-undo"></i> History
                             <span class="arrow"></span>
                         </a>
                     </li>

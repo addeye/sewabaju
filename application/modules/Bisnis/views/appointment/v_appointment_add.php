@@ -11,12 +11,6 @@
             <div class="portlet-body">
                 <form class="form-horizontal" method="post" action="<?=$link_act?>" role="post">
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 col-sm-offset-1 control-label">Tanggal</label>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control form_datetime" name="date" placeholder="Tanggal Waktu">
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 col-sm-offset-1 control-label">Customer</label>
                         <div class="col-sm-5">
                             <select id="customer-list" class="form-control" name="customer_id">
@@ -29,6 +23,12 @@
                         </div>
                         <div class="col-sm-4">
                             <textarea rows="4" placeholder="History..." id="history-text" class="form-control" disabled></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 col-sm-offset-1 control-label">Tanggal</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control form_datetime" name="date" placeholder="Tanggal Waktu">
                         </div>
                     </div>
                     <div class="form-group">
