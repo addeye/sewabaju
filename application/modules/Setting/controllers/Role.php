@@ -28,18 +28,43 @@ class Role extends My_controller
             'role' => $this->model->getByGroup($id)
         );
 
+//        return var_dump($data['role']);
+        $content = 'role/v_role_add';
         if($data['role'])
         {
             $data['link_act'] = site_url('setting/role/update_access');
+            $content = 'role/v_role_update';
         }
 
-        $content = 'role/v_role_add';
         $this->pinky->output($data,$content);
     }
 
     public function update_access()
     {
+        $group_id = $this->input->post('group_id');
+        $attr = $this->input->post('attr');
+        $id = $this->input->post('id');
 
+//        return var_dump($id);
+
+        foreach($id as $key=>$val)
+        {
+            $row = isset($attr[$val])?$attr[$val]:[];
+
+            $data['c'] = isset($row['c'])?$row['c']:0;
+            $data['r'] = isset($row['r'])?$row['r']:0;
+            $data['u'] = isset($row['u'])?$row['u']:0;
+            $data['d'] = isset($row['d'])?$row['d']:0;
+
+            $id = $val;
+
+//            return var_dump($data);
+
+            $this->model->update($id,$data);
+        }
+
+        alert();
+        redirect('setting/role/access/'.$group_id);
     }
 
     public function do_access()

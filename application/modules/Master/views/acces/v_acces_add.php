@@ -22,12 +22,12 @@
                             <input type="number" class="form-control" name="rent_price">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 col-sm-offset-1 control-label">Jual</label>
-                        <div class="col-sm-2">
-                            <input type="number" class="form-control" name="sale_price">
-                        </div>
-                    </div>
+<!--                    <div class="form-group">-->
+<!--                        <label for="inputEmail3" class="col-sm-2 col-sm-offset-1 control-label">Jual</label>-->
+<!--                        <div class="col-sm-2">-->
+<!--                            <input type="number" class="form-control" name="sale_price">-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 col-sm-offset-1 control-label">Partner</label>
                         <div class="col-sm-3">

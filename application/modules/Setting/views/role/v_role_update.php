@@ -24,14 +24,15 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <?php $no=1; foreach(modul() as $key=>$row): ?>
+                        <?php $no=1; foreach($role as $key=>$row): ?>
+                            <input type="hidden" name="id[]" value="<?=$row->id?>">
                             <tr>
                                 <td><?=$no++?></td>
-                                <td><?=$row?></td>
-                                <td><input class="form-control" name="attr[<?=$key?>][c]" value="1" type="checkbox"></td>
-                                <td><input class="form-control" name="attr[<?=$key?>][r]" value="1" type="checkbox"></td>
-                                <td><input class="form-control" name="attr[<?=$key?>][u]" value="1" type="checkbox"></td>
-                                <td><input class="form-control" name="attr[<?=$key?>][d]" value="1" type="checkbox"></td>
+                                <td><?=modul()[$row->modul]?></td>
+                                <td><input class="form-control" name="attr[<?=$row->id?>][c]" value="1" <?=$row->c==1?'checked':''?> type="checkbox"></td>
+                                <td><input class="form-control" name="attr[<?=$row->id?>][r]" value="1" <?=$row->r==1?'checked':''?> type="checkbox"></td>
+                                <td><input class="form-control" name="attr[<?=$row->id?>][u]" value="1" <?=$row->u==1?'checked':''?> type="checkbox"></td>
+                                <td><input class="form-control" name="attr[<?=$row->id?>][d]" value="1" <?=$row->d==1?'checked':''?> type="checkbox"></td>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>

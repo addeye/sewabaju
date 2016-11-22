@@ -51,14 +51,14 @@ class Acces extends My_controller
         $code = $this->model->getKode();
         $name = $this->input->post('name');
         $rent_price = $this->input->post('rent_price');
-        $sale_price = $this->input->post('sale_price');
+//        $sale_price = $this->input->post('sale_price');
         $partner = $this->input->post('partner');
 
         $data = array(
             'code' => $code,
             'name' => $name,
             'rent_price' => $rent_price,
-            'sale_price' => $sale_price,
+//            'sale_price' => $sale_price,
             'partner' => $partner,
         );
 
@@ -89,7 +89,7 @@ class Acces extends My_controller
     {
         $name = $this->input->post('name');
         $rent_price = $this->input->post('rent_price');
-        $sale_price = $this->input->post('sale_price');
+//        $sale_price = $this->input->post('sale_price');
         $partner = $this->input->post('partner');
 
         $id = $this->input->post('id');
@@ -97,7 +97,7 @@ class Acces extends My_controller
         $data = array(
             'name' => $name,
             'rent_price' => $rent_price,
-            'sale_price' => $sale_price,
+//            'sale_price' => $sale_price,
             'partner' => $partner,
         );
 

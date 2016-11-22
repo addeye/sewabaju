@@ -16,7 +16,7 @@
                 <div class="tools"></div>
             </div>
             <div class="portlet-body">
-                <form class="form-horizontal" method="post" action="<?=$link_act?>" role="post">
+                <form class="form-horizontal" method="post" action="<?=$link_act?>">
                     <input type="hidden" id="customer_id" name="customer_id" value="<?=$d->customer_id?>">
                     <input type="hidden" id="appointment_id" name="appointment_id" value="<?=$d->id?>">
                     <input type="hidden" name="id" value="<?=$deal?$deal->id:0?>">
@@ -35,13 +35,15 @@
                             <input type="text" class="form-control date-picker" name="date_fitting" placeholder="Tanggal Fitting" value="<?=$deal?$deal->date_fitting:''?>" required>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-3 control-label">Rent / Back</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control date-picker" name="date_borrow" placeholder="Tanggal Pinjam" value="<?=$deal?$deal->date_borrow:''?>" required>
-                        </div>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control date-picker" name="date_back" placeholder="Tanggal Kembali" value="<?=$deal?$deal->date_back:''?>" required>
+                    <div id="rent-form" style="display: none;">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-3 control-label">Rent / Back</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control date-picker" name="date_borrow" placeholder="Tanggal Pinjam" value="<?=$deal?$deal->date_borrow:''?>">
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control date-picker" name="date_back" placeholder="Tanggal Kembali" value="<?=$deal?$deal->date_back:''?>">
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -134,7 +136,7 @@
                             <button type="submit" class="btn btn-success">Simpan</button>
                         </div>
                         <div class="col-sm-2">
-                            <a href="<?=$link_back?>" class="btn sbold yellow">Kembali</a>
+                            <a href="<?=$link_back?>" class="btn bold yellow">Kembali</a>
                         </div>
                     </div>
                 </form>
@@ -268,14 +270,21 @@
 
     function rent()
     {
-        $('#baju-form,#accessories-form,#jobs-form').show();
+        $("#baju-form,#accessories-form,#jobs-form,#rent-form").show();
         $('#made-form').hide();
         $('.select2').select2();
     }
 
-    function madefor()
+    function madeforRent()
     {
         $('#baju-form,#accessories-form,#jobs-form').hide();
+        $("#made-form,#rent-form").show();
+        $('.select2').select2();
+    }
+
+    function madeforSale()
+    {
+        $("#baju-form,#accessories-form,#jobs-form,#rent-form").hide();
         $('#made-form').show();
         $('.select2').select2();
     }
@@ -283,7 +292,7 @@
     function sale()
     {
         $('#baju-form, #jobs-form').show();
-        $('#made-form,#accessories-form').hide();
+        $("#made-form,#accessories-form,#rent-form").hide();
         $('.select2').select2();
     }
 
@@ -306,9 +315,13 @@
         {
             rent();
         }
-        else if($('input:radio:checked').val()==2 || $('input:radio:checked').val()==3)
+        else if($('input:radio:checked').val()==2)
         {
-            madefor();
+            madeforRent();
+        }
+        else if($('input:radio:checked').val()==3)
+        {
+            madeforSale();
         }
         else if($('input:radio:checked').val()==4)
         {
@@ -358,9 +371,13 @@
             {
                 rent();
             }
-            else if(process==2 || process==3)
+            else if(process==2)
             {
-                madefor();
+                madeforRent();
+            }
+            else if(process==3)
+            {
+                madeforSale();
             }
             if(process==4)
             {

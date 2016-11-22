@@ -40,10 +40,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 col-sm-offset-1 control-label">Harga Produksi / Jual</label>
-                        <div class="col-sm-2">
-                            <input name="production_price" class="form-control" type="number" required/>
-                        </div>
+                        <label for="inputEmail3" class="col-sm-2 col-sm-offset-1 control-label">Harga Jual</label>
+<!--                        <div class="col-sm-2">-->
+<!--                            <input name="production_price" class="form-control" type="number" required/>-->
+<!--                        </div>-->
                         <div class="col-sm-2">
                             <input name="sale_price" class="form-control" type="number" required />
                         </div>

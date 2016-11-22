@@ -17,8 +17,6 @@
                             <th>Kode</th>
                             <th>Nama</th>
                             <th>Sewa</th>
-                            <th>Jual</th>
-                            <th>Partner</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -29,8 +27,6 @@
                                 <td><?=$row->code?></td>
                                 <td><?=$row->name?></td>
                                 <td><?=rupiah($row->rent_price)?></td>
-                                <td><?=rupiah($row->sale_price)?></td>
-                                <td><?=$row->mpartner?$row->mpartner->name:''?></td>
                                 <td>
                                     <a href="<?=$link_edit.$row->id?>" class="btn btn-success">Edit</a>
                                     <button type="button" href="#" class="btn btn-danger del" href="javascript:void(0);" id="<?=$row->id?>">Del</button>

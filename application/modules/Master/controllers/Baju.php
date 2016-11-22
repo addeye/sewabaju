@@ -58,7 +58,7 @@ class Baju extends My_controller
         $kategori = $this->input->post('kategori');
         $hpp_price = $this->input->post('hpp_price');
         $rent_price = $this->input->post('rent_price');
-        $production_price = $this->input->post('production_price');
+//        $production_price = $this->input->post('production_price');
         $sale_price = $this->input->post('sale_price');
         $qty = $this->input->post('qty');
         $partner = $this->input->post('partner');
@@ -71,7 +71,7 @@ class Baju extends My_controller
             'kategori' => $kategori,
             'hpp_price' => $hpp_price,
             'rent_price' => $rent_price,
-            'production_price' => $production_price,
+//            'production_price' => $production_price,
             'sale_price' => $sale_price,
             'qty' => $qty,
             'partner' => $partner,
@@ -131,7 +131,7 @@ class Baju extends My_controller
         $kategori = $this->input->post('kategori');
         $hpp_price = $this->input->post('hpp_price');
         $rent_price = $this->input->post('rent_price');
-        $production_price = $this->input->post('production_price');
+//        $production_price = $this->input->post('production_price');
         $sale_price = $this->input->post('sale_price');
         $qty = $this->input->post('qty');
         $partner = $this->input->post('partner');
@@ -145,7 +145,7 @@ class Baju extends My_controller
             'kategori' => $kategori,
             'hpp_price' => $hpp_price,
             'rent_price' => $rent_price,
-            'production_price' => $production_price,
+//            'production_price' => $production_price,
             'sale_price' => $sale_price,
             'qty' => $qty,
             'partner' => $partner,

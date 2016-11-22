@@ -27,7 +27,7 @@ class Role_model extends Base_model
 
     public function getByGroup($id)
     {
-        $result = $this->getData($this->table,array('group_id'=>$id))->result();
+        $result = $this->getData($this->table,array('group_id'=>$id),'ASC')->result();
         if($result)
         {
             return $result;
