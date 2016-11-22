@@ -14,6 +14,9 @@ class User extends My_controller
         $this->load->model('user_model','model');
         $this->load->model('group_model','gmodel');
 
+        $this->session->set_flashdata('parent_menu_active', 'setting');
+        $this->session->set_flashdata('child_menu_active', 'user');
+
     }
 
     public function index()

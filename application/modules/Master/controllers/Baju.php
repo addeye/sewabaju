@@ -14,6 +14,9 @@ class Baju extends My_controller
         $this->load->model('baju_model','model');
         $this->load->model('kategori_model','kmodel');
         $this->load->model('partner_model','pmodel');
+
+        $this->session->set_flashdata('parent_menu_active', 'master');
+        $this->session->set_flashdata('child_menu_active', 'baju');
     }
 
     public function index()

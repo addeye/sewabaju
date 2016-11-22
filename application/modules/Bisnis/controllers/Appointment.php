@@ -15,6 +15,9 @@ class Appointment extends My_controller
         $this->load->model('../../master/models/customer_model','cmodel');
         $this->load->model('deal_model','dmodel');
         $this->load->model('made_model','mmodel');
+
+        $this->session->set_flashdata('parent_menu_active', 'bisnis');
+        $this->session->set_flashdata('child_menu_active', 'appointment');
     }
 
     public function index()

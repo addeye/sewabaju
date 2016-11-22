@@ -126,7 +126,7 @@
 
                     <i class="icon-share font-red-sunglo hide"></i>
 
-                    <span class="caption-subject bold uppercase">Pendapatan</span>
+                    <span class="caption-subject bold uppercase">Schedule</span>
 
                 </div>
 

@@ -12,6 +12,9 @@ class Customer extends My_controller
     {
         parent::__construct();
         $this->load->model('customer_model','model');
+
+        $this->session->set_flashdata('parent_menu_active', 'master');
+        $this->session->set_flashdata('child_menu_active', 'customer');
     }
 
     public function index()

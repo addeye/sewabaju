@@ -12,6 +12,9 @@ class Role extends My_controller
     {
         parent::__construct();
         $this->load->model('role_model','model');
+
+        $this->session->set_flashdata('parent_menu_active', 'setting');
+        $this->session->set_flashdata('child_menu_active', 'user_group');
     }
 
     public function access($id)

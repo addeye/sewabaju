@@ -13,6 +13,9 @@ class Acces extends My_controller
         parent::__construct();
         $this->load->model('acces_model','model');
         $this->load->model('partner_model','pmodel');
+
+        $this->session->set_flashdata('parent_menu_active', 'master');
+        $this->session->set_flashdata('child_menu_active', 'accessories');
     }
 
     public function index()

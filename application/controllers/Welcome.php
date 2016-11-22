@@ -23,12 +23,17 @@ class Welcome extends My_controller {
 	{
 		parent::__construct();
 		$this->load->model('dashboard_model','model');
+		/* Active Menu */
+
+		$this->session->set_flashdata('parent_menu_active', 'dashboard');
+//		$this->session->set_flashdata('child_menu_active',  'customer');
 	}
 
 	public function index()
 	{
 		$data['header_title'] = 'Dashboard';
 		$data['header_desc'] = 'Master | Sewa Baju';
+
 		$rowData = $this->model->getDataAllTr();
 		$fitingData = $this->model->getFittingDate();
 		$dataCalendar = array();

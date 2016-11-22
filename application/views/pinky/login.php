@@ -115,12 +115,9 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN LOGIN -->
 
 <div class="content">
-
     <!-- BEGIN LOGIN FORM -->
-
+    <?=$this->session->flashdata('pesan')?>
     <form class="login-form" action="<?php echo base_url(); ?>auth/do_login" method="post">
-
-
 
         <!-- BEGIN LOGO -->
 
