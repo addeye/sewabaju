@@ -103,7 +103,8 @@ class Promo extends My_controller
 
     public function delete($id)
     {
-        $result = $this->model->delete($id);
+        $data['status'] = '1';
+        $result = $this->model->update($id,$data);
         if($result)
         {
             alert(3);

@@ -12,9 +12,8 @@
             <div class="portlet-title">
 
                 <div class="caption font-dark">
-
                     <a href="<?=$link_add?>" class="btn sbold blue"><i class="fa fa-plus"></i> Tambah Data</a>
-
+                    <a href="<?=$link_import?>" class="btn sbold blue"><i class="fa fa-plus"></i> Import</a>
                 </div>
 
                 <div class="tools"> </div>

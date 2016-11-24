@@ -18,6 +18,11 @@ class Libexcel extends PHPExcel {
 		}
 	}
 
+	public function convertDate($date)
+	{
+		return PHPExcel_Shared_Date::ExcelToPHP($date);
+	}
+
     public function bangunexcel($parameter){
     	$alphas = range("A", "Z");
     	$objPHPExcel = new PHPExcel();

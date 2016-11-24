@@ -17,7 +17,7 @@ class Promo_model extends Base_model
 
     public function getAll()
     {
-        $pagedata = $this->get($this->table)->result();
+        $pagedata = $this->getData($this->table,array('status'=>0))->result();
         if($pagedata)
         {
             return $pagedata;

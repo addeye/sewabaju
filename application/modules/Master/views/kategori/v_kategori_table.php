@@ -14,7 +14,7 @@
                     <table id="myTable" class="table table-actions-wrapper">
                         <thead>
                         <tr>
-                            <th>No</th>
+                            <th>ID</th>
                             <th>Nama</th>
                             <th>Action</th>
                         </tr>
@@ -22,7 +22,7 @@
                         <tbody>
                         <?php $no=1; foreach($data as $row):?>
                             <tr>
-                                <td><?=$no++;?></td>
+                                <td><?=$row->id?></td>
                                 <td><?=$row->name?></td>
                                 <td>
                                     <a href="<?=$link_edit.$row->id?>" class="btn btn-success">Edit</a>
