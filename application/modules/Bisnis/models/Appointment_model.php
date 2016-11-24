@@ -46,6 +46,7 @@ class Appointment_model extends Base_model
     {
         $condition['id']=$id;
         $pagedata = $this->getData($this->table,$condition)->row();
+        $pagedata->mdeal = $this->getData($this->mdeal,array('appointment_id'=>$id))->row();
         if($pagedata)
         {
             return $pagedata;
@@ -364,5 +365,15 @@ class Appointment_model extends Base_model
         {
             $this->updateData($this->tr_item,array('returned'=>1),array('id'=>$row->id));
         }
+    }
+
+    public function updateBaju($id,$data=array())
+    {
+        $result = $this->updateData($this->table_baju,$data,array('id'=>$id));
+        if($result)
+        {
+            return TRUE;
+        }
+        return FALSE;
     }
 }

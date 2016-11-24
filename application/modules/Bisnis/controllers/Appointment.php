@@ -698,8 +698,24 @@ class Appointment extends My_controller
             'status'=>STATUS_DIPINJAM,
             'pickuped' => date('Y-m-d')
         );
-
         $this->model->update($appointment_id,$data_up);
+
+        $detail = $this->model->getId($appointment_id);
+        $status = $detail->mdeal->process;
+        if($status==PROSES_RENT)
+        {
+            $trItem = $this->model->getTrItem($appointment_id);
+            foreach($trItem as $row)
+            {
+                $idbaju = $row->baju_id;
+                $bajudata = $this->model->getBajuById($idbaju);
+                $hpp_price = $bajudata->hpp_price;
+                $data['hpp_price'] = $hpp_price - $row->total;
+
+                $this->model->updateBaju($idbaju,$data);
+            }
+        }
+
         redirect('bisnis/appointment');
     }
 
