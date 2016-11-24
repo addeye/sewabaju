@@ -29,6 +29,7 @@ class Baju extends My_controller
             'link_edit' => site_url('master/baju/update/'),
             'link_import' => site_url('master/baju/import'),
             'link_delete' => site_url('master/baju/delete'),
+            'link_customerhistory' => site_url('master/baju/history_customer'),
             'data' => $this->model->getAll()
         );
 
@@ -307,5 +308,21 @@ class Baju extends My_controller
         unlink($media['full_path']);
         alert();
         redirect('master/baju');
+    }
+
+    public function history_customer($idbaju)
+    {
+        $customer = array();
+        $dataRow = $this->model->getCustomerRentById($idbaju);
+        if($dataRow)
+        {
+            foreach($dataRow as $row)
+            {
+                $customer[] = $row->mcustomer->name.' - '.$row->mcustomer->address;
+            }
+        }
+
+        $data['customer'] = array_unique($customer);
+        $this->load->view('baju/v_baju_history',$data);
     }
 }

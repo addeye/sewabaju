@@ -38,7 +38,7 @@
                         <?php $no=1; foreach($data as $row):?>
                             <tr>
                                 <td><?=$no++;?></td>
-                                <td><?=$row->code?></td>
+                                <td><a id="<?=$row->id?>" href="javascript:void(0);" onclick="showHistory(this.id)"><?=$row->code?></a></td>
                                 <td><?=$row->name?></td>
                                 <td><?=$row->colour?></td>
                                 <td><?=$row->mkategori->name?></td>
@@ -71,15 +71,16 @@
 
                     </div>
                 <!-- ajax -->
+                <div id="ajax-modal" class="modal fade" tabindex="-1">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">History Customer</h4>
+                    </div>
+                    <div id="history-list" class="modal-body">
 
-                <div id="ajax-modal" class="modal fade" tabindex="-1"> </div>
-
-
-
+                    </div>
+                </div>
             </div>
-
-
-
         </div>
 
         <!-- END EXAMPLE TABLE PORTLET-->
@@ -94,6 +95,7 @@
 
 <input type="hidden" id="iddel">
 <input type="hidden" id="url" value="<?=$link_delete?>">
+<input type="hidden" id="urlhistory" value="<?=$link_customerhistory?>">
 
 <!-- END PAGE CONTENT-->
 
@@ -122,4 +124,21 @@
                 });
         });
     });
+
+    function showHistory(id)
+    {
+        var $urlhistory = $('#urlhistory').val();
+        $.ajax({
+            url : $urlhistory+'/'+id,
+            type: 'get',
+            cache: false,
+            dataType: 'html',
+        })
+            .success(function(data)
+            {
+                $('#history-list').html(data);
+                $('#ajax-modal').modal('show');
+            });
+
+    }
 </script>

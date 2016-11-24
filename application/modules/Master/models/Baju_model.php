@@ -9,6 +9,8 @@
 class Baju_model extends Base_model
 {
     protected $table = 'm_baju';
+    protected $tritem = 'tr_item';
+    protected $mcustomer = 'm_customer';
 
     public function __construct()
     {
@@ -82,6 +84,21 @@ class Baju_model extends Base_model
     {
         $kode = $this->getkodeunik($this->table,'BA');
         return $kode;
+    }
+
+    public function getCustomerRentById($id)
+    {
+        $result = $this->getData($this->tritem,array('baju_id'=>$id))->result();
+        foreach($result as $key=>$row)
+        {
+            $result[$key]->mcustomer = $this->getData($this->mcustomer,array('id'=>$row->customer_id))->row();
+        }
+
+        if($result)
+        {
+            return $result;
+        }
+        return [];
     }
 
 }
