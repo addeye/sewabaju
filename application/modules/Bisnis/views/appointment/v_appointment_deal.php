@@ -173,6 +173,25 @@
                     <div id="list-baju"></div>
                     <hr>
                 </div>
+                <div id="baju-form-sale" style="display: none">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-xs-10">
+                                <select class="form-control select2" id="baju_id_sale" name="baju_id_sale">
+                                    <option value="">Pilih Baju</option>
+                                    <?php foreach($baju as $row): ?>
+                                        <option value="<?=$row->id?>"><?=$row->name?> - <?=$row->colour?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="col-xs-1">
+                                <button class="btn btn-info btn-addbaju-sale"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="list-baju-sale"></div>
+                    <hr>
+                </div>
                 <div id="accessories-form" style="display: none">
                     <div class="form-horizontal">
                         <div class="form-group">
@@ -242,6 +261,7 @@
 
 <input type="hidden" id="urlbaju" value="<?=$link_baju?>">
 <input type="hidden" id="urladdbaju" value="<?=$link_addbaju?>">
+<input type="hidden" id="urladdbajusale" value="<?=$link_addbajusale?>">
 <input type="hidden" id="urldelallbaju" value="<?=$link_del_allitem?>">
 <input type="hidden" id="urldelidbaju" value="<?=$link_del_iditem?>">
 
@@ -271,28 +291,28 @@
     function rent()
     {
         $("#baju-form,#accessories-form,#jobs-form,#rent-form").show();
-        $('#made-form').hide();
+        $('#made-form,#baju-form-sale').hide();
         $('.select2').select2();
     }
 
     function madeforRent()
     {
-        $('#baju-form,#accessories-form,#jobs-form').hide();
+        $('#baju-form,#accessories-form,#jobs-form,#baju-form-sale').hide();
         $("#made-form,#rent-form").show();
         $('.select2').select2();
     }
 
     function madeforSale()
     {
-        $("#baju-form,#accessories-form,#jobs-form,#rent-form").hide();
+        $("#baju-form,#accessories-form,#jobs-form,#rent-form,#baju-form-sale").hide();
         $('#made-form').show();
         $('.select2').select2();
     }
 
     function sale()
     {
-        $('#baju-form, #jobs-form').show();
-        $("#made-form,#accessories-form,#rent-form").hide();
+        $('#baju-form-sale, #jobs-form').show();
+        $("#made-form,#accessories-form,#rent-form,#baju-form").hide();
         $('.select2').select2();
     }
 
@@ -329,6 +349,7 @@
         }
 
         baju();
+        bajusale();
         accessories();
         jobs();
         made();
@@ -347,6 +368,11 @@
         $('.btn-addbaju').click(function(){
             addbaju();
             baju();
+            totaltransaksi();
+        });
+        $('.btn-addbaju-sale').click(function(){
+            addbajusale();
+            bajusale();
             totaltransaksi();
         });
         $('.btn-addacc').click(function(){
@@ -443,6 +469,24 @@
             });
     }
 
+    function bajusale()
+    {
+        var urlbaju = $('#urlbaju').val();
+        var appointment_id = $('#appointment_id').val();
+        $.ajax({
+            beforeSend:function(){
+                $("#loading").modal('show');
+            },
+            url: urlbaju+'/'+appointment_id,
+            type : 'get',
+            cache: false,
+        })
+            .success(function(data) {
+                $('#list-baju-sale').html(data);
+                $("#loading").modal('hide');
+            });
+    }
+
     function accessories()
     {
         var urlaccessories = $('#urlaccessories').val();
@@ -506,6 +550,24 @@
 
         $.ajax({
             url: urladdbaju,
+            type : 'post',
+            data : {baju_id:baju_id,appointment_id:appointment_id,customer_id:customer_id},
+            cache: false,
+        })
+            .success(function() {
+                console.log('success');
+            });
+    }
+
+    function addbajusale()
+    {
+        var baju_id = $('#baju_id_sale').val();
+        var appointment_id = $('#appointment_id').val();
+        var customer_id = $('#customer_id').val();
+        var urladdbajusale = $('#urladdbajusale').val();
+
+        $.ajax({
+            url: urladdbajusale,
             type : 'post',
             data : {baju_id:baju_id,appointment_id:appointment_id,customer_id:customer_id},
             cache: false,
@@ -581,6 +643,7 @@
             .success(function() {
                 console.log('success');
                 baju();
+                bajusale();
                 totaltransaksi();
             });
     }
@@ -644,6 +707,7 @@
             .success(function() {
                 console.log('success');
                 baju();
+                bajusale();
                 totaltransaksi();
             });
     }

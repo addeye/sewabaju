@@ -93,7 +93,7 @@ class Appointment_model extends Base_model
 
     public function getBaju()
     {
-        $result = $this->get($this->table_baju)->result();
+        $result = $this->getData($this->table_baju,array('status'=>0))->result();
         if($result)
         {
             return $result;
@@ -103,7 +103,7 @@ class Appointment_model extends Base_model
 
     public function getAccessories()
     {
-        $result = $this->get($this->table_acessories)->result();
+        $result = $this->getData($this->table_acessories,array('status'=>0))->result();
         if($result)
         {
             return $result;

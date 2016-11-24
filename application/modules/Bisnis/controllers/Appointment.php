@@ -179,6 +179,7 @@ class Appointment extends My_controller
 
             'link_baju' => site_url('bisnis/appointment/viewbaju'),
             'link_addbaju' => site_url('bisnis/appointment/addbaju'),
+            'link_addbajusale' => site_url('bisnis/appointment/addbajusale'),
             'link_del_allitem' => site_url('bisnis/appointment/delete_item'),
             'link_del_iditem' => site_url('bisnis/appointment/delete_itemid'),
 
@@ -404,6 +405,28 @@ class Appointment extends My_controller
 
         $this->model->addItem($data);
 
+    }
+
+    public function addbajusale()
+    {
+        $appointment_id = $this->input->post('appointment_id');
+        $baju_id = $this->input->post('baju_id');
+        $customer_id = $this->input->post('customer_id');
+        $qty = 1;
+
+        $bajus = $this->model->getBajuById($baju_id);
+        $baju_price = $bajus->sale_price;
+
+        $data = array(
+            'appointment_id' => $appointment_id,
+            'customer_id' => $customer_id,
+            'baju_id' => $baju_id,
+            'qty' => $qty,
+            'price' => $baju_price,
+            'total' => $qty * $baju_price
+        );
+
+        $this->model->addItem($data);
     }
 
     public function delete_item($appointment_id)

@@ -13,8 +13,8 @@
     <tr>
         <td><?=$row->mbaju->name?></td>
         <td><?=$row->qty?></td>
-        <td><?=rupiah($row->price)?></td>
-        <td><?=rupiah($row->total)?></td>
+        <td><?=rupiah($row->price?$row->price:0)?></td>
+        <td><?=rupiah($row->total?$row->total:0)?></td>
         <td><a href="javacript:void(0);" onclick="delperid(<?=$row->id?>)"><i class="fa fa-remove"></i></a></td>
     </tr>
     <?php endforeach; ?>
