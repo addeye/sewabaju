@@ -79,6 +79,17 @@ class Deal_model extends Base_model
         return FALSE;
     }
 
+    public function updateByApp($id,$data=array())
+    {
+        $condition['appointment_id'] = $id;
+        $query = $this->updateData($this->table,$data,$condition);
+        if($query)
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
     public function delete($id)
     {
         $condition['id']=$id;

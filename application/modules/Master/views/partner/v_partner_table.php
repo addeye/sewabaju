@@ -25,7 +25,7 @@
                     <table id="myTable" class="table table-actions-wrapper">
                         <thead>
                         <tr>
-                            <th>No</th>
+                            <th>ID</th>
                             <th>Kode</th>
                             <th>Nama</th>
                             <th>TL</th>
@@ -37,7 +37,7 @@
                         <tbody>
                         <?php $no=1; foreach($partner as $row):?>
                             <tr>
-                                <td><?=$no++;?></td>
+                                <td><?=$row->id?></td>
                                 <td><?=$row->code?></td>
                                 <td><?=$row->name?></td>
                                 <td><?=tgl_indo($row->born_date)?></td>

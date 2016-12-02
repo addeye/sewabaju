@@ -64,6 +64,7 @@ class Baju extends My_controller
         $sale_price = $this->input->post('sale_price');
         $qty = $this->input->post('qty');
         $partner = $this->input->post('partner');
+        $konsinyasi = $this->input->post('konsinyasi');
         $note = $this->input->post('note');
 
         $data = array(
@@ -77,6 +78,7 @@ class Baju extends My_controller
             'sale_price' => $sale_price,
             'qty' => $qty,
             'partner' => $partner,
+            'konsinyasi' => $konsinyasi,
             'note' => $note,
         );
 
@@ -137,6 +139,7 @@ class Baju extends My_controller
         $sale_price = $this->input->post('sale_price');
         $qty = $this->input->post('qty');
         $partner = $this->input->post('partner');
+        $konsinyasi = $this->input->post('konsinyasi');
         $note = $this->input->post('note');
 
         $id = $this->input->post('id');
@@ -151,6 +154,7 @@ class Baju extends My_controller
             'sale_price' => $sale_price,
             'qty' => $qty,
             'partner' => $partner,
+            'konsinyasi' => $konsinyasi,
             'note' => $note,
         );
         if($this->input->post('new_item'))

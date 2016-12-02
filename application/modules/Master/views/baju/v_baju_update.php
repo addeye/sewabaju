@@ -70,6 +70,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="inputEmail3" class="col-xs-4 control-label">Konsinyasi</label>
+                        <div class="col-xs-3">
+                            <input class="form-control" type="number" name="konsinyasi" placeholder="Harga Konsinyasi" value="<?=$d->konsinyasi?>">
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="inputEmail3" class="col-xs-4 control-label">Note</label>
                         <div class="col-xs-4">
                             <textarea class="form-control" name="note" rows="3"><?=$d->note?></textarea>

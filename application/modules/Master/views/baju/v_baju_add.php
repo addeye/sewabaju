@@ -69,6 +69,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 col-sm-offset-1 control-label">Konsinyasi</label>
+                        <div class="col-sm-3">
+                            <input class="form-control" type="number" name="konsinyasi" placeholder="Harga Konsinyasi">
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 col-sm-offset-1 control-label">Note</label>
                         <div class="col-sm-4">
                             <textarea class="form-control" name="note" rows="4"></textarea>

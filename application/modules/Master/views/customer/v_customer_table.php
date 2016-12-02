@@ -26,7 +26,7 @@
                     <table id="myTable" class="table table-hover">
                         <thead>
                         <tr>
-                            <th>NO</th>
+                            <th>ID</th>
                             <th>ID CARD</th>
                             <th>Nama</th>
                             <th>TL</th>
@@ -38,7 +38,7 @@
                         <tbody>
                         <?php $no=1; foreach($data as $row):?>
                             <tr>
-                                <td><?=$no++;?></td>
+                                <td><?=$row->id?></td>
                                 <td><a id="<?=$row->id?>" href="javascript:void(0);" onclick="showHistory(this.id)"><?=$row->card?></a></td>
                                 <td><?=$row->name?></td>
                                 <td><?=tgl_indo($row->born_date)?></td>

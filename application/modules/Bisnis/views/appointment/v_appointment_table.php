@@ -39,8 +39,10 @@
                                 <td>
                                     <a href="<?=$link_deal.$row->id?>" class="btn btn-success">Detail</a>
                                     <button type="button" href="#" class="btn btn-danger del" href="javascript:void(0);" id="<?=$row->id?>">Cancel</button>
-                                    <?php if($row->status == STATUS_SIAP_AMBIL || $row->status == STATUS_DIPINJAM){?>
-                                        <button id="<?=$row->link_change?>" onclick="confirmstatus(this.id)" class="btn btn-warning"><?=$row->status_data?></button>
+                                    <?php if($row->status == STATUS_SIAP_AMBIL){?>
+                                        <button id="<?=$row->link_change?>" onclick="confirmstatus(this.id,<?=$row->mdeal->remaining_payment?>)" class="btn btn-warning"><?=$row->status_data?></button>
+                                    <?php }elseif($row->status == STATUS_DIPINJAM){?>
+                                        <button id="<?=$row->link_change?>" data-id="<?=$row->id?>" onclick="confirmreturn(this.id,<?=$row->mdeal->deposit?>,<?=$row->id?>)" class="btn btn-warning"><?=$row->status_data?></button>
                                     <?php } ?>
                                 </td>
                             </tr>
@@ -69,8 +71,31 @@
                 <div id="mymodalalertstatus" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
 
                     <div class="modal-body">
-
+                        <h3 id="remaining-pay"></h3>
                         <p> Anda yakin ingin merubah status ? </p>
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button type="button" data-dismiss="modal" class="btn btn-outline red">Batal</button>
+
+                        <button id="delete_all_trigger" type="button" class="btn btn-outline dark danger btn-status">Ganti</button>
+
+                    </div>
+
+                </div>
+
+                <div id="mymodalreturnstatus" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
+
+                    <div class="modal-body">
+                        <h3 id="deposit-pay"></h3>
+                        <div class="form-group">
+                            <input placeholder="Final Deposit" type="number" id="deposit_final" class="form-control">
+                            <p class="help-block">*Dikosongkan jika barang tidak ada yang rusak</p>
+                        </div>
+                        <div class="form-group">
+                                <textarea class="form-control" id="return_note" placeholder="Keterangan Barang Yang dipinjam..."></textarea>
+                        </div>
                     </div>
 
                     <div class="modal-footer">
@@ -106,6 +131,7 @@
 <input type="hidden" id="url" value="<?=$link_delete?>">
 <input type="hidden" id="urlinvoice" value="<?=$link_invoice?>">
 <input type="hidden" id="urldelivery" value="<?=$link_delivery?>">
+<input type="hidden" id="urlajaxkembali" value="<?=$link_ajaxkembali?>">
 
 <!-- END PAGE CONTENT-->
 
@@ -173,12 +199,39 @@
             });
     }
 
-    function confirmstatus(url)
+    function confirmstatus(url,rp)
     {
         $('#mymodalalertstatus').modal('show');
+        $('#remaining-pay').html('Biaya Remaining Payment : <span class="label-danger">'+toRp(rp)+'</span>');
         $('.btn-status').click(function(){
             window.location = url;
         });
         return false;
+    }
+
+    function confirmreturn(url,rp,id)
+    {
+        $('#mymodalreturnstatus').modal('show');
+        $('#deposit-pay').html('Kembalikan Deposit : <span class="label-danger">'+toRp(rp)+'</span>');
+        var urlajax = $('#urlajaxkembali').val();
+
+        $('.btn-status').click(function(){
+
+            var deposit_final = $('#deposit_final').val();
+            var return_note = $('#return_note').val();
+            $.ajax({
+                url: url,
+                type : 'post',
+                data : {deposit_final:deposit_final,return_note:return_note},
+                cache: false,
+            })
+                .success(function() {
+                    $('#mymodalreturnstatus').modal('hide');
+                    delivery(id)
+                    $('#delivery').on('hide',function(){
+                        location.reload();
+                    });
+                });
+        });
     }
 </script>

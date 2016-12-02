@@ -31,6 +31,7 @@ class Appointment extends My_controller
             'link_deal' => site_url('bisnis/appointment/deal/'),
             'link_invoice' => site_url('bisnis/appointment/invoice/'),
             'link_delivery' => site_url('bisnis/appointment/delivery/'),
+            'link_ajaxkembali' => site_url('bisnis/appointment/ajax_kembali/'),
             'data' => $this->model->getAll()
         );
 
@@ -372,6 +373,7 @@ class Appointment extends My_controller
         $data = array(
             'total'=> $grandtotal,
             'labeltotal' => rupiah($grandtotal),
+            'labeldp' => rupiah($grandtotal/2)
         );
         echo json_encode($data);
     }
@@ -694,6 +696,7 @@ class Appointment extends My_controller
 
     public function pickup($appointment_id)
     {
+        /*Update status data appointment */
         $data_up = array(
             'status'=>STATUS_DIPINJAM,
             'pickuped' => date('Y-m-d')
@@ -702,6 +705,8 @@ class Appointment extends My_controller
 
         $detail = $this->model->getId($appointment_id);
         $status = $detail->mdeal->process;
+
+        /*Update data master baju*/
         if($status==PROSES_RENT)
         {
             $trItem = $this->model->getTrItem($appointment_id);
@@ -716,6 +721,14 @@ class Appointment extends My_controller
             }
         }
 
+        /*Update tabel deal tgl remaining payment*/
+
+        $data = array(
+            'date_rp' => date('Y-m-d'),
+        );
+
+        $this->dmodel->updateByApp($appointment_id,$data);
+
         redirect('bisnis/appointment');
     }
 
@@ -729,7 +742,20 @@ class Appointment extends My_controller
         $this->model->updateAllTrItemByAppointmentId($appointment_id);
 
         $this->model->update($appointment_id,$data_up);
-        redirect('bisnis/appointment');
+
+        $data = array(
+            'return_note' => $this->input->post('return_note'),
+            'deposit_final' => $this->input->post('deposit_final')
+        );
+
+        $result = $this->dmodel->updateByApp($appointment_id,$data);
+        if($result)
+        {
+            return TRUE;
+        }
+        return FALSE;
+
+//        redirect('bisnis/appointment');
     }
 
     public function delivery($appointment_id)

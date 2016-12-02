@@ -46,7 +46,7 @@
                 </ul>
             </li>
 
-            <li class="nav-item ">
+            <li class="nav-item <?= $this->session->flashdata('parent_menu_active') == 'laporan' ? 'active': '';?>">
 
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-notebook"></i>
@@ -56,8 +56,8 @@
 
                 <ul class="sub-menu">
 
-                    <li class="nav-item ">
-                        <a href="http://localhost/sewabaju/kas" class="nav-link">
+                    <li class="nav-item <?= $this->session->flashdata('child_menu_active') == 'aruskas' ? 'active': '';?>">
+                        <a href="<?=base_url('laporan/aruskas')?>" class="nav-link">
                             <i class="icon-bag"></i> Arus Kas
                             <span class="arrow"></span>
                         </a>
@@ -113,7 +113,7 @@
 
                     <li class="nav-item <?= $this->session->flashdata('child_menu_active') == 'promo' ? 'active': '';?> ">
                         <a href="<?=base_url('master/promo')?>" class="nav-link">
-                            <i class="icon-disc"></i> Promo
+                            <i class="icon-present"></i> Promo
                             <span class="arrow"></span>
                         </a>
                     </li>

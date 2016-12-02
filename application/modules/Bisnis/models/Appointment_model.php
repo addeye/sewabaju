@@ -33,7 +33,7 @@ class Appointment_model extends Base_model
         foreach($pagedata as $key=>$row)
         {
             $pagedata[$key]->mcustomer = $this->cmodel->getId($row->customer_id);
-            $pagedata[$key]->mdeal = $this->getData($this->mdeal,array('appointment_id'=>$row->id))->result();
+            $pagedata[$key]->mdeal = $this->getData($this->mdeal,array('appointment_id'=>$row->id))->row();
         }
         if($pagedata)
         {

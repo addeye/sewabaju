@@ -91,7 +91,6 @@
                         </div>
                         <div class="col-sm-3">
                             <select name="pay_dp" class="form-control" style="width: 70px;">
-                                <option value=""></option>
                                 <?php foreach(pay() as $key=>$row): ?>
                                     <option value="<?=$key?>" <?=$deal?$deal->pay_dp==$key?'selected':'':''?> ><?=$row?></option>
                                 <?php endforeach; ?>
@@ -109,7 +108,6 @@
                         </div>
                         <div class="col-sm-3">
                             <select name="pay_rp" class="form-control" style="width: 70px;">
-                                <option value=""></option>
                                 <?php foreach(pay() as $key=>$row): ?>
                                     <option value="<?=$key?>" <?=$deal?$deal->pay_rp==$key?'selected':'':''?> ><?=$row?></option>
                                 <?php endforeach; ?>
@@ -246,6 +244,7 @@
                     <hr>
                 </div>
                 <h2>Total : <span id="ptotal"></span></h2>
+                <h2>Down Payment : <span id="ptotaldp"></span></h2>
             </div>
         </div>
     </div>
@@ -771,6 +770,7 @@
             .success(function(data) {
                 $('#dtotal').val(data.total);
                 $('#ptotal').html(data.labeltotal);
+                $('#ptotaldp').html(data.labeldp);
             })
             .done(function(){
                 calculate();
