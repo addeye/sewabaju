@@ -21,6 +21,8 @@ class Baju extends My_controller
 
     public function index()
     {
+        role(MODUL_BAJU_SEWA_BAJU,'read');
+
         $data['partner'] = $this->model->getAll();
         $data = array(
             'header_title' => 'Baju',
@@ -40,6 +42,8 @@ class Baju extends My_controller
 
     public function add()
     {
+        role(MODUL_BAJU_SEWA_BAJU,'create');
+
         $data = array(
             'header_title' => 'Form Baju',
             'header_desc' => 'Master',
@@ -54,11 +58,13 @@ class Baju extends My_controller
 
     public function do_add()
     {
+        role(MODUL_BAJU_SEWA_BAJU,'create');
+
         $name = $this->input->post('name');
         $code = $this->model->getkode();
         $colour = $this->input->post('colour');
         $kategori = $this->input->post('kategori');
-        $hpp_price = $this->input->post('hpp_price');
+        $hpp_first = $this->input->post('hpp_first');
         $rent_price = $this->input->post('rent_price');
 //        $production_price = $this->input->post('production_price');
         $sale_price = $this->input->post('sale_price');
@@ -72,7 +78,8 @@ class Baju extends My_controller
             'name' => $name,
             'colour' => $colour,
             'kategori' => $kategori,
-            'hpp_price' => $hpp_price,
+            'hpp_price' => $hpp_first,
+            'hpp_first' => $hpp_first,
             'rent_price' => $rent_price,
 //            'production_price' => $production_price,
             'sale_price' => $sale_price,
@@ -114,6 +121,8 @@ class Baju extends My_controller
 
     public function update($id)
     {
+        role(MODUL_BAJU_SEWA_BAJU,'update');
+
         $data = array(
             'header_title' => 'Update Baju',
             'header_desc' => 'Master',
@@ -130,10 +139,12 @@ class Baju extends My_controller
 
     public function do_update()
     {
+        role(MODUL_BAJU_SEWA_BAJU,'update');
+
         $name = $this->input->post('name');
         $colour = $this->input->post('colour');
         $kategori = $this->input->post('kategori');
-        $hpp_price = $this->input->post('hpp_price');
+        $hpp_first = $this->input->post('hpp_first');
         $rent_price = $this->input->post('rent_price');
 //        $production_price = $this->input->post('production_price');
         $sale_price = $this->input->post('sale_price');
@@ -148,7 +159,7 @@ class Baju extends My_controller
             'name' => $name,
             'colour' => $colour,
             'kategori' => $kategori,
-            'hpp_price' => $hpp_price,
+            'hpp_first' => $hpp_first,
             'rent_price' => $rent_price,
 //            'production_price' => $production_price,
             'sale_price' => $sale_price,
@@ -191,6 +202,8 @@ class Baju extends My_controller
 
     public function delete($id)
     {
+        role(MODUL_BAJU_SEWA_BAJU,'delete');
+
         $this->deletefileimages('baju',$id);
         $data['status'] = '1';
         $result = $this->model->update($id,$data);
@@ -246,6 +259,8 @@ class Baju extends My_controller
 
     public function import()
     {
+        role(MODUL_BAJU_SEWA_BAJU,'create');
+
         $data = array(
             'header_title' => 'Import Baju',
             'header_desc' => 'Master',
@@ -260,6 +275,8 @@ class Baju extends My_controller
 
     public function do_import()
     {
+        role(MODUL_BAJU_SEWA_BAJU,'create');
+
         $this->load->library('Libexcel');
 
         $fileName = time().$_FILES['file']['name'];
@@ -300,7 +317,8 @@ class Baju extends My_controller
                 "rent_price"=> $rowData[0][4],
                 "sale_price"=> $rowData[0][5],
                 "note"=> $rowData[0][6],
-                "code" => $this->model->getkode()
+                "code" => $this->model->getkode(),
+                "hpp_first" => $rowData[0][3]
             );
 
 //            return var_dump($data);

@@ -75,35 +75,21 @@ if(!function_exists('savebarang'))
     }
 }
 
-if(!function_exists('update_trans_buy'))
+if(!function_exists('role'))
 {
-    function update_trans_buy($id,$data=array(),$act=1)
+    function role($modul,$act)
     {
         $CI = & get_instance();
 
-        //load model log
-        $CI->load->model('log_model');
+        $level = $CI->session->level;
 
-        //call data
-        $row = $CI->log_model->getTransBuyById($id);
-        $old_total = $row->grand_total;
+        /*Call Status*/
+        $result = $CI->privilege_model->active($modul,$level,$act);
 
-        switch ($act)
+        if(!$result)
         {
-            case 1:
-                $data['grand_total'] = $data['grand_total']+$old_total;
-                //save to database
-                $CI->log_model->updateTransBuy($id,$data);
-                break;
-            case 0:
-                $data['grand_total'] = $old_total-$data['grand_total'];
-                //save to database
-                $CI->log_model->updateTransBuy($id,$data);
-                break;
+            redirect('welcome/denied');
         }
-
-        //save to database
-//        $CI->log_model->savebarang($id,$data);
-
+        return TRUE;
     }
 }

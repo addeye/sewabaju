@@ -33,10 +33,10 @@
                     </div>
                     <div class="form-group">
                         <label for="inputEmail3" class="col-xs-4 control-label">HPP / Harga Sewa</label>
-                        <div class="col-xs-2">
-                            <input name="hpp_price" class="form-control" type="number" value="<?=$d->hpp_price?>" />
+                        <div class="col-xs-3">
+                            <input name="hpp_first" class="form-control" type="number" value="<?=$d->hpp_first?>" />
                         </div>
-                        <div class="col-xs-2">
+                        <div class="col-xs-3">
                             <input name="rent_price" class="form-control" type="text" value="<?=$d->rent_price?>"/>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
 <!--                        <div class="col-sm-2">-->
 <!--                            <input name="production_price" class="form-control" type="number" value=""/>-->
 <!--                        </div>-->
-                        <div class="col-xs-2">
+                        <div class="col-xs-3">
                             <input name="sale_price" class="form-control" type="number" value="<?=$d->sale_price?>" />
                         </div>
                     </div>

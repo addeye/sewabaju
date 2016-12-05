@@ -19,6 +19,8 @@ class Customer extends My_controller
 
     public function index()
     {
+        role(MODUL_CUSTOMER_SEWA_BAJU,'read');
+
         $data = array(
             'header_title' => 'Customer',
             'header_desc' => 'Master',
@@ -36,6 +38,8 @@ class Customer extends My_controller
 
     public function add()
     {
+        role(MODUL_CUSTOMER_SEWA_BAJU,'create');
+
         $data = array(
             'header_title' => 'Form Customer',
             'header_desc' => 'Master',
@@ -48,6 +52,8 @@ class Customer extends My_controller
 
     public function do_add()
     {
+        role(MODUL_CUSTOMER_SEWA_BAJU,'create');
+
         $name = $this->input->post('name');
         $card = $this->model->getkode();
         $born_date = $this->input->post('born_date');
@@ -72,6 +78,8 @@ class Customer extends My_controller
 
     public function update($id)
     {
+        role(MODUL_CUSTOMER_SEWA_BAJU,'update');
+
         $data = array(
             'header_title' => 'Update Partner',
             'header_desc' => 'Master',
@@ -86,6 +94,8 @@ class Customer extends My_controller
 
     public function do_update()
     {
+        role(MODUL_CUSTOMER_SEWA_BAJU,'update');
+
         $name = $this->input->post('name');
         $card = $this->model->getkode();
         $born_date = $this->input->post('born_date');
@@ -113,6 +123,8 @@ class Customer extends My_controller
 
     public function delete($id)
     {
+        role(MODUL_CUSTOMER_SEWA_BAJU,'delete');
+
         $data['status'] = '1';
         $result = $this->model->update($id,$data);
         if($result)
@@ -129,6 +141,8 @@ class Customer extends My_controller
 
     public function import()
     {
+        role(MODUL_CUSTOMER_SEWA_BAJU,'create');
+
         $data = array(
             'header_title' => 'Import Customer',
             'header_desc' => 'Master',
@@ -143,6 +157,8 @@ class Customer extends My_controller
 
     public function do_import()
     {
+        role(MODUL_CUSTOMER_SEWA_BAJU,'create');
+
         $this->load->library('Libexcel');
 
         $fileName = time().$_FILES['file']['name'];

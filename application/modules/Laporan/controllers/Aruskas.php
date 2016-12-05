@@ -37,7 +37,81 @@ class Aruskas extends My_controller
         $piutang_total = array();
 
         $date_from = $this->input->post('date_from');
-        $data_to = $this->input->post('date_to');
+        $date_to = $this->input->post('date_to');
+        $mdeal = $this->model->getDeal($date_from,$date_to);
+
+        foreach($mdeal as $row)
+        {
+            $tritem = $row->tritem;
+
+            $kredit = array();
+
+            foreach($tritem as $item)
+            {
+                $result = $this->model->getIdBaju($item->baju_id);
+                $partner = $result->partner;
+
+                if($partner)
+                {
+                    $kredit[] = $result->konsinyasi;
+                }
+            }
+
+            $totkredit = array_sum($kredit);
+
+            $status = $row->mappointment->status;
+
+            $debit = $row->down_payment;
+            $piutang = $row->remaining_payment;
+
+            if($status > STATUS_SIAP_AMBIL)
+            {
+                $debit = $row->total - $totkredit;
+                $piutang = 0;
+            }
+
+            $tempData[] = array(
+                'invoice' => $row->mappointment->code,
+                'tanggal' => $row->date_dp,
+                'keterangan' => 'Status - '.status_customer()[$row->mappointment->status],
+                'debit' => 'Rp. '. rupiah($debit),
+                'kredit' => 'Rp. '.rupiah($totkredit),
+                'piutang' => 'Rp. '.rupiah($piutang)
+            );
+
+            $debit_total[] = $debit;
+            $kredit_total[] = $totkredit;
+            $piutang_total[] = $piutang;
+        }
+
+
+
+//        return var_dump($tempData);
+
+        $data = array(
+            'header_title' => 'Arus Kas',
+            'header_desc' => 'Master',
+            'deal' => $tempData,
+            'total_debit' => rupiah(array_sum($debit_total)),
+            'total_kredit' => rupiah(array_sum($kredit_total)),
+            'total_piutang' => rupiah(array_sum($piutang_total)),
+            'from' => $date_from,
+            'to' => $date_to
+        );
+
+        $content = 'aruskas/v_aruskas_table';
+
+        $this->pinky->output($data,$content);
+    }
+
+    public function print_aruskas($from,$to)
+    {$tempData = array();
+        $debit_total = array();
+        $kredit_total = array();
+        $piutang_total = array();
+
+        $date_from = $from;
+        $data_to = $to;
         $mdeal = $this->model->getDeal($date_from,$data_to);
 
         foreach($mdeal as $row)
@@ -95,10 +169,9 @@ class Aruskas extends My_controller
             'total_debit' => rupiah(array_sum($debit_total)),
             'total_kredit' => rupiah(array_sum($kredit_total)),
             'total_piutang' => rupiah(array_sum($piutang_total)),
+            'company' => $this->model->getCompany()
         );
 
-        $content = 'aruskas/v_aruskas_table';
-
-        $this->pinky->output($data,$content);
+        $this->load->view('aruskas/v_aruskas_print',$data);
     }
 }

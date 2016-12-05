@@ -63,8 +63,8 @@
                         </a>
                     </li>
 
-                    <li class="nav-item ">
-                        <a href="http://localhost/sewabaju/profit" class="nav-link">
+                    <li class="nav-item <?= $this->session->flashdata('child_menu_active') == 'labarugi' ? 'active': '';?>">
+                        <a href="<?=base_url('laporan/labarugi')?>" class="nav-link">
                             <i class="icon-calculator"></i> Laba Rugi
                             <span class="arrow"></span>
                         </a>

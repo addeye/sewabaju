@@ -32,18 +32,13 @@ class Auth extends CI_Controller
             $data = [
                 'user_id' => $row->id,
                 'name' => $row->name,
-                'level' => $row->level,
+                'level' => $row->group_id,
                 'islogin' => TRUE
             ];
             $this->session->set_userdata($data);
 
             $this->auth_model->time_log($row->id);
-
-//            helper_log("login", "melakukan login");
-            if($this->session->level==3)
-            {
-                redirect('teller/cart');
-            }
+            
             redirect('/');
         }
         else

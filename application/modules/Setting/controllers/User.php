@@ -21,6 +21,8 @@ class User extends My_controller
 
     public function index()
     {
+        role(MODUL_USER_SEWA_BAJU,'read');
+
         $data = array(
             'header_title' => 'User',
             'header_desc' => 'Master',
@@ -29,6 +31,12 @@ class User extends My_controller
             'link_delete' => site_url('setting/user/delete'),
             'data' => $this->model->getAll()
         );
+
+        if($this->user_level() != 1)
+        {
+            $data['data'] = $this->model->getRowId($this->user_id());
+        }
+
         $content = 'user/v_user_table';
 
         $this->pinky->output($data,$content);
@@ -36,6 +44,8 @@ class User extends My_controller
 
     public function add()
     {
+        role(MODUL_USER_SEWA_BAJU,'create');
+
         $data = array(
             'header_title' => 'Form User',
             'header_desc' => 'Master',
@@ -49,6 +59,8 @@ class User extends My_controller
 
     public function do_add()
     {
+        role(MODUL_USER_SEWA_BAJU,'create');
+
         $name = $this->input->post('name');
         $username = $this->input->post('username');
         $group_id = $this->input->post('group_id');
@@ -71,6 +83,8 @@ class User extends My_controller
 
     public function update($id)
     {
+        role(MODUL_USER_SEWA_BAJU,'update');
+
         $data = array(
             'header_title' => 'Update User',
             'header_desc' => 'Master',
@@ -86,6 +100,8 @@ class User extends My_controller
 
     public function do_update()
     {
+        role(MODUL_USER_SEWA_BAJU,'update');
+
         $name = $this->input->post('name');
         $username = $this->input->post('username');
         $group_id = $this->input->post('group_id');
@@ -112,6 +128,8 @@ class User extends My_controller
 
     public function delete($id)
     {
+        role(MODUL_USER_SEWA_BAJU,'delete');
+
         $result = $this->model->delete($id);
         if($result)
         {

@@ -19,6 +19,8 @@ class Promo extends My_controller
 
     public function index()
     {
+        role(MODUL_PROMO_SEWA_BAJU,'read');
+
         $data = array(
             'header_title' => 'Promo',
             'header_desc' => 'Master',
@@ -34,6 +36,8 @@ class Promo extends My_controller
 
     public function add()
     {
+        role(MODUL_PROMO_SEWA_BAJU,'create');
+
         $data = array(
             'header_title' => 'Form Promo',
             'header_desc' => 'Master',
@@ -46,6 +50,8 @@ class Promo extends My_controller
 
     public function do_add()
     {
+        role(MODUL_PROMO_SEWA_BAJU,'create');
+
         $name = $this->input->post('name');
         $note = $this->input->post('note');
         $disc = $this->input->post('disc');
@@ -66,6 +72,8 @@ class Promo extends My_controller
 
     public function update($id)
     {
+        role(MODUL_PROMO_SEWA_BAJU,'update');
+
         $data = array(
             'header_title' => 'Update Promo',
             'header_desc' => 'Master',
@@ -80,6 +88,8 @@ class Promo extends My_controller
 
     public function do_update()
     {
+        role(MODUL_PROMO_SEWA_BAJU,'update');
+
         $name = $this->input->post('name');
         $note = $this->input->post('note');
         $disc = $this->input->post('disc');
@@ -103,6 +113,8 @@ class Promo extends My_controller
 
     public function delete($id)
     {
+        role(MODUL_PROMO_SEWA_BAJU,'delete');
+
         $data['status'] = '1';
         $result = $this->model->update($id,$data);
         if($result)

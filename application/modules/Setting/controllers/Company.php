@@ -19,6 +19,8 @@ class Company extends My_controller
 
     public function index()
     {
+        role(MODUL_COMPANY_SEWA_BAJU,'read');
+
         $data = array(
             'header_title' => 'Company',
             'header_desc' => 'Master',
@@ -32,6 +34,8 @@ class Company extends My_controller
 
     public function do_update()
     {
+        role(MODUL_COMPANY_SEWA_BAJU,'update');
+
         $name = $this->input->post('name');
         $phone = $this->input->post('phone');
         $address = $this->input->post('address');
@@ -76,6 +80,7 @@ class Company extends My_controller
 
     public function upload_image($input,$filename,$path)
     {
+
         $config['upload_path']          = './uploads/'.$path;
         $config['allowed_types']        = 'gif|jpg|jpeg|png';
         $config['max_size']             = 2048;

@@ -34,4 +34,11 @@ class My_controller extends CI_Controller
         $name = $this->session->userdata('name');
         return $name;
     }
+
+    public function user_level()
+    {
+        $level = $this->session->userdata('level');
+        return $level;
+    }
+
 }

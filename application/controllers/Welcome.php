@@ -67,6 +67,11 @@ class Welcome extends My_controller {
 		//$this->load->view('view_barcode');
 	}
 
+	public function denied()
+	{
+		$this->pinky->output(NULL,'pinky/denied');
+	}
+
 	function bikin_barcode($kode)
 	{
 //kita load library nya ini membaca file Zend.php yang berisi loader

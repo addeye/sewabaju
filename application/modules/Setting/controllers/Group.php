@@ -20,6 +20,8 @@ class Group extends My_controller
 
     public function index()
     {
+        role(MODUL_USER_GROUP_SEWA_BAJU,'read');
+
         $data = array(
             'header_title' => 'Group',
             'header_desc' => 'Master',
@@ -36,6 +38,8 @@ class Group extends My_controller
 
     public function add()
     {
+        role(MODUL_USER_GROUP_SEWA_BAJU,'create');
+
         $data = array(
             'header_title' => 'Form Group',
             'header_desc' => 'Master',
@@ -48,6 +52,8 @@ class Group extends My_controller
 
     public function do_add()
     {
+        role(MODUL_USER_GROUP_SEWA_BAJU,'create');
+
         $name = $this->input->post('name');
 
         $data = array(
@@ -64,6 +70,8 @@ class Group extends My_controller
 
     public function update($id)
     {
+        role(MODUL_USER_GROUP_SEWA_BAJU,'update');
+
         $data = array(
             'header_title' => 'Update Group',
             'header_desc' => 'Master',
@@ -78,6 +86,8 @@ class Group extends My_controller
 
     public function do_update()
     {
+        role(MODUL_USER_GROUP_SEWA_BAJU,'update');
+
         $name = $this->input->post('name');
 
         $id = $this->input->post('id');
@@ -97,6 +107,8 @@ class Group extends My_controller
 
     public function delete($id)
     {
+        role(MODUL_USER_GROUP_SEWA_BAJU,'delete');
+
         $result = $this->model->delete($id);
         if($result)
         {

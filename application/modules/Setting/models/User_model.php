@@ -31,6 +31,22 @@ class User_model extends Base_model
         return [];
     }
 
+    public function getRowId($id)
+    {
+        $condition['id']=$id;
+        $pagedata = $this->getData($this->table,$condition)->result();
+        foreach($pagedata as $key=>$row)
+        {
+            $pagedata[$key]->status = $row->active?'Aktif':'Tidak';
+            $pagedata[$key]->mgroup = $this->getData($this->table_group,array('id'=>$row->group_id))->row();
+        }
+        if($pagedata)
+        {
+            return $pagedata;
+        }
+        return [];
+    }
+
     public function getId($id)
     {
         $condition['id']=$id;

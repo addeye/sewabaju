@@ -21,86 +21,41 @@
                     <table id="myTable" class="table table-actions-wrapper">
                         <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Invoice</th>
-                            <th>Tanggal</th>
-                            <th>Keterangan</th>
-                            <th>Debit</th>
-                            <th>Kredit</th>
-                            <th>Piutang</th>
+                            <th class="col-xs-1">No</th>
+                            <th>Nama</th>
+                            <th>Sewa</th>
+                            <th>HPP Awal</th>
+                            <th>Balance</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php $no=1; foreach($deal as $row):?>
+                        <?php $no=1; foreach($baju as $row):?>
                             <tr>
                                 <td><?=$no++;?></td>
-                                <td><?=$row['invoice']?></td>
-                                <td><?=$row['tanggal']?></td>
-                                <td><?=$row['keterangan']?></td>
-                                <td class="text-right"><?=$row['debit']?></td>
-                                <td class="text-right"><?=$row['kredit']?></td>
-                                <td class="text-right"><?=$row['piutang']?></td>
+                                <td><?=$row->name?></td>
+                                <td>Rp. <?=rupiah($row->rent_price)?></td>
+                                <td>Rp. <?=rupiah($row->hpp_first)?></td>
+                                <td>Rp. <?=rupiah($row->balance)?></td>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>
                     </table>
                 <!-- ajax -->
-
                 <div id="ajax-modal" class="modal fade" tabindex="-1"> </div>
                 <hr>
                 <div class="row">
-
                     <div class="col-md-4 col-md-offset-8">
-
                         <div class="form-group">
-
-                            <label class="col-md-5 control-label bold"> Total Debit: </label>
-
+                            <label class="col-md-5 control-label bold"> Total Balance: </label>
                             <div class="col-md-7 bold">
-
-                                <div class="text-right" id="total-debit">Rp. <?=$total_debit?></div>
-
+                                <div class="text-right" id="total-debit">Rp. <?=rupiah($total)?></div>
                             </div>
 
                         </div>
-
-                        <div class="clearfix"></div>
-
-                        <div class="form-group">
-
-                            <label class="col-md-5 control-label bold"> Total Kredit: </label>
-
-                            <div class="col-md-7 bold">
-
-                                <div class="text-right" id="total-kredit">Rp. <?=$total_kredit?></div>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <div class="clearfix"></div>
-
-
-
-                        <div class="form-group">
-
-                            <label class="col-md-5 control-label bold"> Total Piutang: </label>
-
-                            <div class="col-md-7 bold">
-
-                                <div class="text-right" id="total-piutang">Rp. <?=$total_piutang?></div>
-
-                            </div>
-
-                        </div>
-
                     </div>
 
                 </div>
             </div>
-
         </div>
 
         <!-- END EXAMPLE TABLE PORTLET-->
@@ -113,7 +68,7 @@
 
 </div>
 
-<input type="hidden" id="urlcetak" value="<?=base_url('laporan/aruskas/print_aruskas/'.$from.'/'.$to)?>">
+<input type="hidden" id="urlcetak" value="<?=base_url('laporan/aruskas/print_aruskas/')?>">
 
 <!-- END PAGE CONTENT-->
 
