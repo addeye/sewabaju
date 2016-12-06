@@ -21,6 +21,8 @@ class Aruskas extends My_controller
 
     public function index()
     {
+        role(MODUL_ARUSKAS_SEWA_BAJU,'read');
+
         $data = array(
             'header_title' => 'Arus Kas',
             'header_desc' => 'Master',
@@ -31,6 +33,8 @@ class Aruskas extends My_controller
 
     public function report()
     {
+        role(MODUL_ARUSKAS_SEWA_BAJU,'read');
+
         $tempData = array();
         $debit_total = array();
         $kredit_total = array();

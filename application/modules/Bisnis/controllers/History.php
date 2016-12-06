@@ -22,6 +22,8 @@ class History extends My_controller
 
     public function index()
     {
+        role(MODUL_HISTORY_SEWA_BAJU,'read');
+
         $data = array(
             'header_title' => 'Appointment',
             'header_desc' => 'Master',

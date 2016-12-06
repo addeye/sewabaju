@@ -20,6 +20,8 @@ class Labarugi extends My_controller
 
     public function index()
     {
+        role(MODUL_LABARUGI_SEWA_BAJU,'read');
+
         $total =0;
         $baju = $this->model->getAllBaju();
         foreach($baju as $row)
