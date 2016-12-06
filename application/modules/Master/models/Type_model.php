@@ -6,24 +6,18 @@
  * Date: 02/11/2016
  * Time: 13:26
  */
-class Promo_model extends Base_model
+class Type_model extends Base_model
 {
-    protected $table = 'm_promo';
+    protected $table = 'm_type';
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('kategori_model','mkategori');
     }
 
     public function getAll()
     {
         $pagedata = $this->getData($this->table,array('status'=>0))->result();
-        foreach($pagedata as $key=>$row)
-        {
-            $pagedata[$key]->mkategori = $this->mkategori->getId($row->kategori);
-        }
-
         if($pagedata)
         {
             return $pagedata;
@@ -76,7 +70,7 @@ class Promo_model extends Base_model
 
     public function getkode()
     {
-        $kode = $this->getkodeunik($this->table,'BA');
+        $kode = $this->getkodeunik($this->table,'TP');
         return $kode;
     }
 

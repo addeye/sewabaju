@@ -46,7 +46,12 @@ if(!function_exists('modul'))
             MODUL_CUSTOMER_SEWA_BAJU => 'Customer',
             MODUL_PARTNER_SEWA_BAJU => 'Partner',
             MODUL_PROMO_SEWA_BAJU => 'Promo',
-            MODUL_ACCESSORIES_SEWA_BAJU => 'Accessories'
+            MODUL_ACCESSORIES_SEWA_BAJU => 'Accessories',
+            MODUL_TYPE_SEWA_BAJU => 'Type',
+            MODUL_APPOINTMENT_SEWA_BAJU => 'Appointment',
+            MODUL_HISTORY_SEWA_BAJU => 'History',
+            MODUL_ARUSKAS_SEWA_BAJU => 'Arus Kas',
+            MODUL_LABARUGI_SEWA_BAJU => 'Laba Rugi',
         );
     }
 }

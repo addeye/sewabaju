@@ -12,6 +12,7 @@ class Promo extends My_controller
     {
         parent::__construct();
         $this->load->model('promo_model','model');
+        $this->load->model('kategori_model','kmodel');
 
         $this->session->set_flashdata('parent_menu_active', 'master');
         $this->session->set_flashdata('child_menu_active', 'promo');
@@ -27,7 +28,7 @@ class Promo extends My_controller
             'link_add' => site_url('master/promo/add'),
             'link_edit' => site_url('master/promo/update/'),
             'link_delete' => site_url('master/promo/delete'),
-            'data' => $this->model->getAll()
+            'data' => $this->model->getAll(),
         );
         $content = 'promo/v_promo_table';
 
@@ -43,6 +44,7 @@ class Promo extends My_controller
             'header_desc' => 'Master',
             'link_back' => site_url('master/promo'),
             'link_act' => site_url('master/promo/do_add'),
+            'kategori' => $this->kmodel->getAll(),
         );
         $content = 'promo/v_promo_add';
         $this->pinky->output($data,$content);
@@ -55,11 +57,15 @@ class Promo extends My_controller
         $name = $this->input->post('name');
         $note = $this->input->post('note');
         $disc = $this->input->post('disc');
+        $qty = $this->input->post('qty');
+        $kategori = $this->input->post('kategori');
 
         $data = array(
             'name' => $name,
             'note' => $note,
             'disc' => $disc,
+            'qty' => $qty,
+            'kategori' => $kategori,
         );
 
         $result = $this->model->create($data);
@@ -79,7 +85,8 @@ class Promo extends My_controller
             'header_desc' => 'Master',
             'link_back' => site_url('master/promo'),
             'link_act' => site_url('master/promo/do_update'),
-            'd' => $this->model->getId($id)
+            'd' => $this->model->getId($id),
+            'kategori' => $this->kmodel->getAll(),
         );
 
         $content = 'promo/v_promo_update';
@@ -93,6 +100,8 @@ class Promo extends My_controller
         $name = $this->input->post('name');
         $note = $this->input->post('note');
         $disc = $this->input->post('disc');
+        $qty = $this->input->post('qty');
+        $kategori = $this->input->post('kategori');
 
         $id = $this->input->post('id');
 
@@ -100,6 +109,8 @@ class Promo extends My_controller
             'name' => $name,
             'note' => $note,
             'disc' => $disc,
+            'qty' => $qty,
+            'kategori' => $kategori,
         );
 
         $condition['id']= $id;

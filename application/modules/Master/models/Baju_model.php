@@ -16,17 +16,21 @@ class Baju_model extends Base_model
     {
         parent::__construct();
         $this->load->model('kategori_model','mkategori');
+        $this->load->model('type_model','mtype');
         $this->load->model('partner_model','mpartner');
     }
 
     public function getAll()
     {
         $pagedata = $this->getData($this->table,array('status'=>0))->result();
+
         foreach($pagedata as $key=>$row)
         {
             $pagedata[$key]->mkategori = $this->mkategori->getId($row->kategori);
+            $pagedata[$key]->mtype = $this->mtype->getId($row->type);
             $pagedata[$key]->mpartner = $this->mpartner->getId($row->partner);
         }
+
         if($pagedata)
         {
             return $pagedata;

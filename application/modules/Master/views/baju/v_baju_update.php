@@ -30,6 +30,14 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                        <div class="col-sm-3">
+                            <select name="type" class="form-control" required>
+                                <option value="">Pilih Type</option>
+                                <?php foreach($type as $row): ?>
+                                    <option value="<?=$row->id?>" <?=$d->type==$row->id?'selected':''?> ><?=$row->name?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="inputEmail3" class="col-xs-4 control-label">HPP / Harga Sewa</label>

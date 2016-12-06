@@ -83,6 +83,13 @@
 
                 <ul class="sub-menu">
 
+                    <li class="nav-item <?= $this->session->flashdata('child_menu_active') == 'type' ? 'active': '';?> ">
+                        <a href="<?=base_url('master/type')?>" class="nav-link">
+                            <i class="icon-layers"></i> Type
+                            <span class="arrow"></span>
+                        </a>
+                    </li>
+
                     <li class="nav-item <?= $this->session->flashdata('child_menu_active') == 'kategori' ? 'active': '';?> ">
                         <a href="<?=base_url('master/kategori')?>" class="nav-link">
                             <i class="icon-layers"></i> Kategori

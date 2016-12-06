@@ -6,6 +6,7 @@
             <div class="portlet-title">
                 <div class="caption font-dark">
                     <a href="<?=$link_add?>" class="btn sbold blue"><i class="fa fa-plus"></i> Tambah Data</a>
+                    <a href="<?=$link_import?>" class="btn sbold blue"><i class="fa fa-plus"></i> Import</a>
                 </div>
                 <div class="tools"> </div>
             </div>
@@ -13,24 +14,16 @@
                     <table id="myTable" class="table table-actions-wrapper">
                         <thead>
                         <tr>
-                            <th>No</th>
+                            <th>ID</th>
                             <th>Nama</th>
-                            <th>Keterangan</th>
-                            <th>Diskon</th>
-                            <th>Jumlah</th>
-                            <th>Kategori</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php $no=1; foreach($data as $row):?>
                             <tr>
-                                <td><?=$no++;?></td>
+                                <td><?=$row->id?></td>
                                 <td><?=$row->name?></td>
-                                <td><?=$row->note?></td>
-                                <td><?=rupiah($row->disc)?></td>
-                                <td><?=$row->qty?></td>
-                                <td><?=$row->mkategori->name?></td>
                                 <td>
                                     <a href="<?=$link_edit.$row->id?>" class="btn btn-success">Edit</a>
                                     <button type="button" href="#" class="btn btn-danger del" href="javascript:void(0);" id="<?=$row->id?>">Del</button>

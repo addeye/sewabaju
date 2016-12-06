@@ -344,11 +344,33 @@ class Appointment extends My_controller
     public function totalTransaksi($appointment_id,$shipping_cost=0)
     {
         $total = array();
+//        $lop = 1;
+        $ids = array();
+
         $baju = $this->model->getTrItem($appointment_id);
+
         foreach($baju as $row)
         {
-            $total[] = $row->total;
+            $promo = $this->model->getPromo($row->mbaju->kategori);
+            if($promo)
+            {
+                $ids[] = $row->id;
+            }
         }
+
+        if(count($ids)==3)
+        {
+            $total[] = 8000000;
+        }
+        else
+        {
+            foreach($baju as $row)
+            {
+                $total[] = $row->total;
+            }
+        }
+
+
         $accessories = $this->model->getTrAccessories($appointment_id);
         foreach($accessories as $row)
         {
@@ -378,6 +400,14 @@ class Appointment extends My_controller
         echo json_encode($data);
     }
 
+    public function changeTrItem($ids=array())
+    {
+        foreach($ids as $id)
+        {
+
+        }
+    }
+
 
     public function viewbaju($appointment_id)
     {
@@ -394,7 +424,6 @@ class Appointment extends My_controller
 
         $bajus = $this->model->getBajuById($baju_id);
         $baju_price = $bajus->rent_price;
-
 
         $data = array(
             'appointment_id' => $appointment_id,

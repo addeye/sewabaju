@@ -30,6 +30,20 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 col-sm-offset-1 control-label">Jumlah / Kategori</label>
+                        <div class="col-sm-1">
+                            <input type="number" class="form-control" name="qty" value="<?=$d->qty?>">
+                        </div>
+                        <div class="col-sm-3">
+                            <select name="kategori" class="form-control" required>
+                                <option value="">Pilih Kategori</option>
+                                <?php foreach($kategori as $row): ?>
+                                    <option value="<?=$row->id?>" <?=$d->kategori==$row->id?'selected':''?> ><?=$row->name?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-1">
                             <button type="submit" class="btn btn-success">Simpan</button>
                         </div>

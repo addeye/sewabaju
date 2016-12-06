@@ -13,6 +13,7 @@ class Baju extends My_controller
         parent::__construct();
         $this->load->model('baju_model','model');
         $this->load->model('kategori_model','kmodel');
+        $this->load->model('type_model','tmodel');
         $this->load->model('partner_model','pmodel');
 
         $this->session->set_flashdata('parent_menu_active', 'master');
@@ -51,6 +52,7 @@ class Baju extends My_controller
             'link_act' => site_url('master/baju/do_add'),
             'kategori' => $this->kmodel->getAll(),
             'partner' => $this->pmodel->getAll(),
+            'type' => $this->tmodel->getAll(),
         );
         $content = 'baju/v_baju_add';
         $this->pinky->output($data,$content);
@@ -63,6 +65,7 @@ class Baju extends My_controller
         $name = $this->input->post('name');
         $code = $this->model->getkode();
         $colour = $this->input->post('colour');
+        $type = $this->input->post('type');
         $kategori = $this->input->post('kategori');
         $hpp_first = $this->input->post('hpp_first');
         $rent_price = $this->input->post('rent_price');
@@ -77,6 +80,7 @@ class Baju extends My_controller
             'code' => $code,
             'name' => $name,
             'colour' => $colour,
+            'type' => $type,
             'kategori' => $kategori,
             'hpp_price' => $hpp_first,
             'hpp_first' => $hpp_first,
@@ -131,6 +135,7 @@ class Baju extends My_controller
             'd' => $this->model->getId($id),
             'kategori' => $this->kmodel->getAll(),
             'partner' => $this->pmodel->getAll(),
+            'type' => $this->tmodel->getAll(),
         );
 
         $content = 'baju/v_baju_update';
@@ -143,6 +148,7 @@ class Baju extends My_controller
 
         $name = $this->input->post('name');
         $colour = $this->input->post('colour');
+        $type = $this->input->post('type');
         $kategori = $this->input->post('kategori');
         $hpp_first = $this->input->post('hpp_first');
         $rent_price = $this->input->post('rent_price');
@@ -158,6 +164,7 @@ class Baju extends My_controller
         $data = array(
             'name' => $name,
             'colour' => $colour,
+            'type' => $type,
             'kategori' => $kategori,
             'hpp_first' => $hpp_first,
             'rent_price' => $rent_price,
@@ -312,13 +319,14 @@ class Baju extends My_controller
             $data = array(
                 "name"=> $rowData[0][0],
                 "colour"=> $rowData[0][1],
-                "kategori"=> $rowData[0][2],
-                "hpp_price"=> $rowData[0][3],
-                "rent_price"=> $rowData[0][4],
-                "sale_price"=> $rowData[0][5],
-                "note"=> $rowData[0][6],
+                "type"=> $rowData[0][2],
+                "kategori"=> $rowData[0][3],
+                "hpp_price"=> $rowData[0][4],
+                "rent_price"=> $rowData[0][5],
+                "sale_price"=> $rowData[0][6],
+                "note"=> $rowData[0][7],
                 "code" => $this->model->getkode(),
-                "hpp_first" => $rowData[0][3]
+                "hpp_first" => $rowData[0][4]
             );
 
 //            return var_dump($data);

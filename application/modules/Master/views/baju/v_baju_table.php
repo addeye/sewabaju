@@ -28,6 +28,7 @@
                             <th>Kode</th>
                             <th>Nama</th>
                             <th>Warna</th>
+                            <th>Type</th>
                             <th>Kategori</th>
                             <th>Sewa</th>
                             <th>Jual</th>
@@ -41,6 +42,7 @@
                                 <td><a id="<?=$row->id?>" href="javascript:void(0);" onclick="showHistory(this.id)"><?=$row->code?></a></td>
                                 <td><?=$row->name?></td>
                                 <td><?=$row->colour?></td>
+                                <td><?=$row->mtype->name?></td>
                                 <td><?=$row->mkategori->name?></td>
                                 <td><?=rupiah($row->rent_price)?></td>
                                 <td><?=rupiah($row->sale_price)?></td>

@@ -17,6 +17,7 @@ class Appointment_model extends Base_model
     protected $mcompany = 'm_company';
     protected $tr_jobs = 'tr_jobs';
     protected $tr_made = 'tr_made';
+    protected $m_promo = 'm_promo';
 
     public function __construct()
     {
@@ -365,6 +366,27 @@ class Appointment_model extends Base_model
         {
             $this->updateData($this->tr_item,array('returned'=>1),array('id'=>$row->id));
         }
+    }
+
+    public function updateTrItem($id,$data=array())
+    {
+        $condition['id'] = $id;
+        $result = $this->updateData($this->tr_item,$data,$condition);
+        if($result)
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function getPromo($kategori)
+    {
+        $result = $this->getData($this->m_promo,array('kategori'=>$kategori))->row();
+        if($result)
+        {
+            return $result;
+        }
+        return [];
     }
 
     public function updateBaju($id,$data=array())
