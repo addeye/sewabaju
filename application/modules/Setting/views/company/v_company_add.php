@@ -1,6 +1,6 @@
 <!-- include summernote css/js-->
-<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+<link href="<?=base_url('assets/pinky/global/plugins/summernote/summernote.css')?>" rel="stylesheet">
+<script src="<?=base_url('assets/pinky/global/plugins/summernote/summernote.js')?>"></script>
 <div class="row ">
     <?=$this->session->flashdata('pesan')?>
     <div class="col-md-8">
@@ -99,7 +99,7 @@
             height: 200,                 // set editor height
             minHeight: null,             // set minimum height of editor
             maxHeight: null,             // set maximum height of editor
-            focus: true
+            focus: true,
         });
     });
 

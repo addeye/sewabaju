@@ -21,6 +21,8 @@ define('MODUL_ARUSKAS_SEWA_BAJU',11);
 define('MODUL_LABARUGI_SEWA_BAJU',12);
 define('MODUL_APPOINTMENT_SEWA_BAJU',13);
 define('MODUL_HISTORY_SEWA_BAJU',14);
+define('MODUL_OPERASIONAL_SEWA_BAJU',15);
+define('MODUL_VOUCHER_SEWA_BAJU',16);
 
 //Status
 define('STATUS_APPOINTMENT',1);
@@ -28,6 +30,7 @@ define('STATUS_DEAL',2);
 define('STATUS_SIAP_AMBIL',3);
 define('STATUS_DIPINJAM',4);
 define('STATUS_KEMBALI',5);
+define('STATUS_COMPLETE',6);
 
 //Proses
 define('PROSES_RENT',1);
@@ -44,3 +47,8 @@ define('PAY_CASH',1);
 define('PAY_CREDIT',2);
 define('PAY_DEBIT',3);
 define('PAY_TRANSFER',4);
+
+//STATUS BARANG RETURN
+define('RETURN_COMPLETE',1);
+define('RETURN_RUSAK',2);
+define('RETURN_TELAT',3);

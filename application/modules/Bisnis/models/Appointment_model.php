@@ -18,6 +18,9 @@ class Appointment_model extends Base_model
     protected $tr_jobs = 'tr_jobs';
     protected $tr_made = 'tr_made';
     protected $m_promo = 'm_promo';
+    protected $d_promo = 'd_promo';
+    protected $tr_promo = 'tr_promo';
+    protected $mvoucher = 'm_voucher';
 
     public function __construct()
     {
@@ -154,6 +157,18 @@ class Appointment_model extends Base_model
         {
             $result[$key]->mbaju = $this->getData($this->table_baju,array('id'=>$row->baju_id))->row();
         }
+        if($result)
+        {
+            return $result;
+        }
+        return [];
+    }
+
+    public function getTrItemById($id)
+    {
+        $condition['id'] = $id;
+        $result = $this->getData($this->tr_item,$condition)->row();
+
         if($result)
         {
             return $result;
@@ -389,6 +404,26 @@ class Appointment_model extends Base_model
         return [];
     }
 
+    public function getPromoById($id)
+    {
+        $result = $this->getData($this->m_promo,array('id'=>$id))->row();
+        if($result)
+        {
+            return $result;
+        }
+        return [];
+    }
+
+    public function getPromoAll()
+    {
+        $pagedata = $this->getData($this->m_promo,array('status'=>0))->result();
+        if($pagedata)
+        {
+            return $pagedata;
+        }
+        return [];
+    }
+
     public function updateBaju($id,$data=array())
     {
         $result = $this->updateData($this->table_baju,$data,array('id'=>$id));
@@ -397,5 +432,101 @@ class Appointment_model extends Base_model
             return TRUE;
         }
         return FALSE;
+    }
+
+    public function addPromo($data=array())
+    {
+        $result = $this->addData($this->d_promo,$data);
+        if($result)
+        {
+            return $this->getLastInsertId();
+        }
+        return FALSE;
+    }
+
+    public function getDpromo($id)
+    {
+        $result = $this->getData($this->d_promo,array('appointment_id'=>$id))->result();
+        foreach($result as $key=>$val)
+        {
+            $result[$key]->trpromo = $this->getData($this->tr_promo,array('dpromo_id'=>$val->id))->result();
+            foreach($result[$key]->trpromo as $k=>$row)
+            {
+                $result[$key]->trpromo[$k]->mbaju = $this->getData($this->table_baju, array('id'=>$row->baju_id))->row();
+            }
+            $result[$key]->mpromo = $this->getData($this->m_promo,array('id'=>$val->promo_id))->row();
+        }
+        if($result)
+        {
+            return $result;
+        }
+        return [];
+    }
+
+    public function delDpromo($id)
+    {
+        $result = $this->deleteData($this->d_promo,array('id'=>$id));
+        if($result)
+        {
+            $this->deleteData($this->tr_promo,array('dpromo_id'=>$id));
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function delDpromoAll($appointment_id)
+    {
+        $data = $this->getData($this->d_promo,array('appointment_id'=>$appointment_id))->result();
+        foreach($data as $row)
+        {
+            $this->deleteData($this->tr_promo,array('dpromo_id'=>$row->id));
+        }
+
+        $result = $this->deleteData($this->d_promo,array('appointment_id'=>$appointment_id));
+        if($result)
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function addTrPromo($data=array())
+    {
+        $result = $this->addData($this->tr_promo,$data);
+        if($result)
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function getTrPromoId($id)
+    {
+        $result = $this->getData($this->tr_promo,array('id'=>$id))->row();
+        if($result)
+        {
+            return $result;
+        }
+        return [];
+    }
+
+    public function updateTrPromo($id,$data=array())
+    {
+        $result = $this->updateData($this->tr_promo,$data,array('id'=>$id));
+        if($result)
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function getDiscVoucher($kode)
+    {
+        $result = $this->getData($this->mvoucher,array('code'=>$kode))->row();
+        if($result)
+        {
+            return $result;
+        }
+        return [];
     }
 }

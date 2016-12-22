@@ -61,6 +61,21 @@ class Group extends My_controller
         );
 
         $result = $this->model->create($data);
+
+        $group_id = $this->db->insert_id();
+
+        foreach(modul() as $key=>$val)
+        {
+            $data_role['group_id'] = $group_id;
+            $data_role['modul'] = $key;
+            $data_role['c'] = '1';
+            $data_role['r'] = '1';
+            $data_role['u'] = '1';
+            $data_role['d'] = '1';
+
+            $this->rmodel->create($data_role);
+        }
+
         if($result)
         {
             alert();
@@ -110,6 +125,7 @@ class Group extends My_controller
         role(MODUL_USER_GROUP_SEWA_BAJU,'delete');
 
         $result = $this->model->delete($id);
+        $this->rmodel->deleteAllByIdLevel($id);
         if($result)
         {
             alert(3);

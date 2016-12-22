@@ -26,7 +26,7 @@ class Welcome extends My_controller {
 		/* Active Menu */
 
 		$this->session->set_flashdata('parent_menu_active', 'dashboard');
-//		$this->session->set_flashdata('child_menu_active',  'customer');
+		$this->session->set_flashdata('child_menu_active',  '');
 	}
 
 	public function index()
@@ -44,7 +44,7 @@ class Welcome extends My_controller {
 			{
 				$dataCalendar[] = array(
 					'title' => $row->mbaju->name,
-					'start' => $row->mdeal->date_borrow,
+					'start' => $row->mdeal->date_fitting,
 					'end' => $row->mdeal->date_back.'T23:59:00',
 					'description' => $row->mcustomer->name,
 				);

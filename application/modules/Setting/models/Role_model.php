@@ -78,6 +78,17 @@ class Role_model extends Base_model
         return FALSE;
     }
 
+    public function deleteAllByIdLevel($idlevel)
+    {
+        $condition['group_id']=$idlevel;
+        $query = $this->deleteData($this->table,$condition);
+        if($query)
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
     public function getkode()
     {
         $kode = $this->getkodeunik($this->table,'BA');

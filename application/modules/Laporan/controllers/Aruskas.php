@@ -43,6 +43,8 @@ class Aruskas extends My_controller
         $date_from = $this->input->post('date_from');
         $date_to = $this->input->post('date_to');
         $mdeal = $this->model->getDeal($date_from,$date_to);
+        $moperasional = $this->model->getOperasional($date_from,$date_to);
+//        return var_dump($moperasional);
 
         foreach($mdeal as $row)
         {
@@ -88,7 +90,19 @@ class Aruskas extends My_controller
             $piutang_total[] = $piutang;
         }
 
+        foreach($moperasional as $row)
+        {
+            $tempData[] = array(
+                'invoice' => $row->code,
+                'tanggal' => $row->date,
+                'keterangan' => $row->name.' - '.$row->deskripsi,
+                'debit' => 'Rp. '. rupiah(0),
+                'kredit' => 'Rp. '.rupiah($row->cost),
+                'piutang' => 'Rp. '.rupiah(0)
+            );
 
+            $kredit_total[] = $row->cost;
+        }
 
 //        return var_dump($tempData);
 
@@ -109,7 +123,8 @@ class Aruskas extends My_controller
     }
 
     public function print_aruskas($from,$to)
-    {$tempData = array();
+    {
+        $tempData = array();
         $debit_total = array();
         $kredit_total = array();
         $piutang_total = array();

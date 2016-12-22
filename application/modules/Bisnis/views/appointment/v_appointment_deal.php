@@ -20,6 +20,10 @@
                     <input type="hidden" id="customer_id" name="customer_id" value="<?=$d->customer_id?>">
                     <input type="hidden" id="appointment_id" name="appointment_id" value="<?=$d->id?>">
                     <input type="hidden" name="id" value="<?=$deal?$deal->id:0?>">
+                    <input type="hidden" id="codevoucher" value="<?=$deal?$deal->code_voucher:''?>" name="codevoucher">
+                    <input type="hidden" id="discvoucher" value="<?=$deal?$deal->disc_voucher:0?>" name="discvoucher">
+                    <input type="hidden" name="promo" id="promodeal" value="<?=$deal?$deal->promo:0?>">
+
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-3 control-label">Proses</label>
                         <?php foreach(proses() as $key=>$row): ?>
@@ -29,10 +33,12 @@
                         <?php endforeach; ?>
                     </div>
                     <hr>
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-3 control-label">Fitting</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control date-picker" name="date_fitting" placeholder="Tanggal Fitting" value="<?=$deal?$deal->date_fitting:''?>" required>
+                    <div id="fittingdateform" style="display: none;">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-3 control-label">Fitting</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control date-picker" name="date_fitting" placeholder="Tanggal Fitting" value="<?=$deal?$deal->date_fitting:''?>">
+                            </div>
                         </div>
                     </div>
                     <div id="rent-form" style="display: none;">
@@ -143,6 +149,34 @@
         </div>
     </div>
     <div class="col-md-6">
+        <div class="portlet box red">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                   <input id="promo-check" value="1" <?=$deal?$deal->promo==1?'checked':'':''?> name="promo" type="checkbox"> <span>PROMO</span>
+                </div>
+                <div class="tools"></div>
+            </div>
+            <div class="portlet-body">
+                <div id="promo-form">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-xs-10">
+                                <select class="form-control select2" id="promo_id" name="promo_id">
+                                    <option value="">Pilih Promo</option>
+                                    <?php foreach($promo as $row): ?>
+                                        <option value="<?=$row->id?>"><?=$row->name?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="col-xs-1">
+                                <button class="btn btn-info btn-addpromo"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="list-promo"></div>
+                </div>
+            </div>
+        </div>
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
         <div class="portlet box red">
             <div class="portlet-title">
@@ -243,6 +277,19 @@
                     <div id="list-made"></div>
                     <hr>
                 </div>
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Kode Voucher</label>
+                        <div class="col-sm-5">
+                            <input type="text" id="text-voucher" class="form-control" placeholder="Kode Voucher.." value="<?=$deal?$deal->code_voucher:''?>">
+                            <p id="help-voucher" class="help-block">Validasi kode</p>
+                            <input type="hidden" id="nilai-disc">
+                        </div>
+                        <div class="col-xs-1">
+                            <button class="btn btn-info btn-addvoucher"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
                 <h2>Total : <span id="ptotal"></span></h2>
                 <h2>Down Payment : <span id="ptotaldp"></span></h2>
             </div>
@@ -252,6 +299,18 @@
 
 <div id="loading" class="modal fade modal-overflow in" tabindex="-1" aria-hidden="true">
     <p>Loading....... </p>
+</div>
+
+<div id="promoform" class="modal fade modal-overflow in" tabindex="-1" aria-hidden="true">
+    <div class="modal-body" id="form-promo">
+
+    </div>
+</div>
+
+<div id="itemform" class="modal fade modal-overflow in" tabindex="-1" aria-hidden="true">
+    <div class="modal-body" id="form-item">
+
+    </div>
 </div>
 
 <div id="invoice" class="modal container fade modal-overflow in" tabindex="-1" aria-hidden="true">
@@ -279,6 +338,19 @@
 <input type="hidden" id="urldelallmade" value="<?=$link_del_allmade?>">
 <input type="hidden" id="urldelidmade" value="<?=$link_del_idmade?>">
 
+<input type="hidden" id="urlpromo" value="<?=$link_promo?>">
+<input type="hidden" id="urladdpromo" value="<?=$link_addpromo?>">
+<input type="hidden" id="urldelallpromo" value="<?=$link_del_allpromo?>">
+<input type="hidden" id="urldelidpromo" value="<?=$link_del_idpromo?>">
+
+<input type="hidden" id="urlformtrpromo" value="<?=$link_formtrpromo?>">
+<input type="hidden" id="urlupdatetrpromo" value="<?=$link_updatetrpromo?>">
+
+<input type="hidden" id="urlformtritem" value="<?=$link_formtritem?>">
+<input type="hidden" id="urlupdatetritem" value="<?=$link_updatetritem?>">
+
+<input type="hidden" id="urlvoucher" value="<?=$link_urlvoucher?>">
+
 <input type="hidden" id="urltotaltransaksi" value="<?=$link_total_transaksi?>">
 <input type="hidden" id="urlinvoice" value="<?=$link_invoice?>">
 
@@ -289,22 +361,22 @@
 
     function rent()
     {
-        $("#baju-form,#accessories-form,#jobs-form,#rent-form").show();
-        $('#made-form,#baju-form-sale').hide();
+        $("#baju-form,#accessories-form,#jobs-form").show();
+        $('#made-form,#baju-form-sale,#rent-form').hide();
         $('.select2').select2();
     }
 
     function madeforRent()
     {
         $('#baju-form,#accessories-form,#jobs-form,#baju-form-sale').hide();
-        $("#made-form,#rent-form").show();
+        $("#made-form,#rent-form,#fittingdateform").show();
         $('.select2').select2();
     }
 
     function madeforSale()
     {
         $("#baju-form,#accessories-form,#jobs-form,#rent-form,#baju-form-sale").hide();
-        $('#made-form').show();
+        $('#made-form,#fittingdateform').show();
         $('.select2').select2();
     }
 
@@ -352,6 +424,8 @@
         accessories();
         jobs();
         made();
+        promo();
+        voucher();
         totaltransaksi();
 
         var bajuform = $('#baju-form');
@@ -388,6 +462,39 @@
             addmade();
             made();
             totaltransaksi();
+        });
+
+        $('.btn-addpromo').click(function(){
+            addpromo();
+            promo();
+        });
+
+        $('.btn-addvoucher').click(function(){
+            totaltransaksi();
+        });
+
+        $('#text-voucher').keyup(function(){
+            if(this.value != '')
+            {
+                voucher();
+            }
+            else
+            {
+                $('#help-voucher').html('Validasi Kode');
+            }
+        });
+
+        $('#promo-check').change(function() {
+            if($(this).is(":checked")) {
+                $(this).attr("checked", true);
+                $('#promodeal').val(1);
+            }
+            else
+            {
+                $('#promodeal').val(0);
+            }
+//            $('#textbox1').val($(this).is(':checked'));
+            console.log($(this).is(':checked'));
         });
 
         $('.process-input').click(function(){
@@ -449,6 +556,25 @@
 
     });
 
+    function voucher()
+    {
+        var urlvoucher = $('#urlvoucher').val();
+        var textvoucher = $('#text-voucher').val();
+
+        $.ajax({
+            url: urlvoucher+'/'+textvoucher,
+            type : 'get',
+            cache: false,
+            dataType : 'JSON',
+        })
+            .success(function(data) {
+                $('#help-voucher').html('Potongan Sebesar '+toRp(data.disc));
+                $('#nilai-disc').val(data.disc);
+                $('#codevoucher').val(data.code);
+                $('#discvoucher').val(data.disc);
+                console.log(data.disc);
+            });
+    }
 
     function baju()
     {
@@ -540,6 +666,24 @@
             });
     }
 
+    function promo()
+    {
+        var urlpromo = $('#urlpromo').val();
+        var appointment_id = $('#appointment_id').val();
+        $.ajax({
+            beforeSend:function(){
+                $("#loading").modal('show');
+            },
+            url: urlpromo+'/'+appointment_id,
+            type : 'get',
+            cache: false,
+        })
+            .success(function(data) {
+                $('#list-promo').html(data);
+                $("#loading").modal('hide');
+            });
+    }
+
     function addbaju()
     {
         var baju_id = $('#baju_id').val();
@@ -623,6 +767,24 @@
             url: urladdmade,
             type : 'post',
             data : {disc:disc,appointment_id:appointment_id,price:price},
+            cache: false,
+        })
+            .success(function() {
+                console.log('success');
+            });
+    }
+
+    function addpromo()
+    {
+        var appointment_id = $('#appointment_id').val();
+        var promo_id = $('#promo_id').val();
+        var customer_id = $('#customer_id').val();
+        var urladdpromo = $('#urladdpromo').val();
+
+        $.ajax({
+            url: urladdpromo,
+            type : 'post',
+            data : {promo_id:promo_id,appointment_id:appointment_id,customer_id:customer_id},
             cache: false,
         })
             .success(function() {
@@ -756,14 +918,32 @@
             });
     }
 
+    function delperidpromo(id)
+    {
+        var urldelidpromo = $('#urldelidpromo').val();
+        $.ajax({
+            url: urldelidpromo+'/'+id,
+            type : 'get',
+            cache: false,
+        })
+            .success(function() {
+                console.log('success');
+                promo();
+                totaltransaksi();
+            });
+    }
+
     function totaltransaksi()
     {
         var urltotaltransaksi = $('#urltotaltransaksi').val();
         var appointment_id = $('#appointment_id').val();
         var shipping_cost = $('#shipping_cost').val();
+        var voucher_disc = $('#discvoucher').val();
+
         $.ajax({
-            url: urltotaltransaksi+'/'+appointment_id+'/'+shipping_cost,
-            type : 'get',
+            url: urltotaltransaksi,
+            type : 'post',
+            data : {appointment_id:appointment_id,shipping_cost:shipping_cost,disc_voucher:voucher_disc},
             cache: false,
             dataType: "json"
         })
@@ -785,6 +965,70 @@
         var hasil = Number(total - dp).toFixed();
         console.log(hasil);
         $('#remaining_payment').val(hasil);
+    }
+
+    function formtrpromo(id)
+    {
+        var urlform = $('#urlformtrpromo').val();
+        $.ajax({
+            url: urlform+'/'+id,
+            type : 'get',
+            cache: false,
+            dataType: "html"
+        })
+            .success(function(data) {
+                $('#form-promo').html(data);
+                $('#promoform').modal('show');
+            });
+    }
+
+    function updatetrpromo()
+    {
+        var urlupdate = $('#urlupdatetrpromo').val();
+        var data = $('#formpromo').serializeArray();
+
+        $.ajax({
+            url: urlupdate,
+            type : 'post',
+            cache: false,
+            data: data
+        })
+            .success(function(data) {
+                $('#promoform').modal('hide');
+                promo();
+                totaltransaksi();
+            });
+    }
+
+    function formtritem(id)
+    {
+        var urlform = $('#urlformtritem').val();
+        $.ajax({
+            url: urlform+'/'+id,
+            type : 'get',
+            cache: false,
+            dataType: "html"
+        })
+            .success(function(data) {
+                $('#form-item').html(data);
+                $('#itemform').modal('show');
+            });
+    }
+
+    function updatetritem()
+    {
+        var urlupdate = $('#urlupdatetritem').val();
+        var data = $('#formitem').serializeArray();
+
+        $.ajax({
+            url: urlupdate,
+            type : 'post',
+            cache: false,
+            data: data
+        })
+            .success(function(data) {
+                $('#itemform').modal('hide');
+            });
     }
 
 </script>

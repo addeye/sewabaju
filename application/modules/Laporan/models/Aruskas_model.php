@@ -11,8 +11,10 @@ class Aruskas_model extends Base_model
     protected $mdeal = 'm_deal';
     protected $mappointemnt = 'm_appointment';
     protected $tritem = 'tr_item';
+    protected $trpromo = 'tr_promo';
     protected $mcompany = 'm_company';
     protected $mbaju = 'm_baju';
+    protected $moperasional = 'm_operasional';
 
     public function __construct()
     {
@@ -38,6 +40,21 @@ class Aruskas_model extends Base_model
         return [];
     }
 
+    public function getOperasional($from,$to)
+    {
+        $condition['date >= '] = $from;
+        $condition['date <= '] = $to;
+        $condition['status'] = '0';
+        $result = $this->getData($this->moperasional,$condition)->result();
+
+        if($result)
+        {
+            return $result;
+        }
+        return [];
+
+    }
+
     public function getIdBaju($id)
     {
         $result = $this->getData($this->mbaju,array('id'=>$id))->row();
@@ -61,13 +78,15 @@ class Aruskas_model extends Base_model
 
     public function getAllBaju()
     {
-        $total=array();
         $condition['partner']=0;
         $result = $this->getData($this->mbaju,$condition)->result();
         foreach($result as $key=>$row)
         {
             $trData = $this->getData($this->tritem,array('baju_id'=>$row->id))->result();
+            $trPromo = $this->getData($this->trpromo,array('baju_id'=>$row->id))->result();
             $result[$key]->tritem = $trData;
+            $result[$key]->trpromo = $trPromo;
+            $result[$key]->disewa = count($trData)+count($trPromo);
             $result[$key]->balance = $row->hpp_price<0?abs($row->hpp_price):0-$row->hpp_price;
         }
 

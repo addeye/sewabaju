@@ -44,6 +44,7 @@
                                     <?php }elseif($row->status == STATUS_DIPINJAM){?>
                                         <button id="<?=$row->link_change?>" data-id="<?=$row->id?>" onclick="confirmreturn(this.id,<?=$row->mdeal->deposit?>,<?=$row->id?>)" class="btn btn-warning"><?=$row->status_data?></button>
                                     <?php } ?>
+                                    <a class="btn btn-default" href="<?=$link_ttd?><?=$row->id?>">TTD</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -89,15 +90,36 @@
 
                     <div class="modal-body">
                         <h3 id="deposit-pay"></h3>
-                        <div class="form-group">
-                            <input placeholder="Final Deposit" type="number" id="deposit_final" class="form-control">
-                            <p class="help-block">*Dikosongkan jika barang tidak ada yang rusak</p>
+                        <input type="hidden" id="deposit-paying">
+                        <input type="hidden" id="keepdeposit-paying">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <select class="form-control" id="status_return">
+                                    <option value="0">Pilih Status</option>
+                                    <?php foreach(status_return() as $key=>$val): ?>
+                                        <option value="<?=$key?>"><?=$val?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
                         </div>
-                        <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input placeholder="Telat Berapa Hari ..." type="number" onkeyup="dayminusdeposit(this.value)" id="daydeposit" class="form-control">
+                                <p class="help-block">*Per Jumlah Hari x 100.000</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input placeholder="Dendan Sejumlah .. " onkeyup="minusdeposit(this.value)" type="number" id="pinalty_deposit" class="form-control">
+                                <p class="help-block">*Denda kerusakan</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
                                 <textarea class="form-control" id="return_note" placeholder="Keterangan Barang Yang dipinjam..."></textarea>
+                            </div>
                         </div>
                     </div>
-
                     <div class="modal-footer">
 
                         <button type="button" data-dismiss="modal" class="btn btn-outline red">Batal</button>
@@ -213,16 +235,22 @@
     {
         $('#mymodalreturnstatus').modal('show');
         $('#deposit-pay').html('Kembalikan Deposit : <span class="label-danger">'+toRp(rp)+'</span>');
+        $('#deposit-paying').val(rp);
+        $('#keepdeposit-paying').val(rp);
         var urlajax = $('#urlajaxkembali').val();
 
         $('.btn-status').click(function(){
 
-            var deposit_final = $('#deposit_final').val();
+            var pinalty_deposit = $('#pinalty_deposit').val();
+            var back_deposit = $('#deposit-paying').val();
             var return_note = $('#return_note').val();
+            var status_return = $('#status_return').val();
+            var day = $('#daydeposit').val();
+
             $.ajax({
                 url: url,
                 type : 'post',
-                data : {deposit_final:deposit_final,return_note:return_note},
+                data : {pinalty:pinalty_deposit,return_note:return_note,status_return:status_return,day:day,back_deposit:back_deposit},
                 cache: false,
             })
                 .success(function() {
@@ -233,5 +261,34 @@
                     });
                 });
         });
+    }
+
+    function dayminusdeposit(num)
+    {
+        if(num != 0)
+        {
+            var depo = $('#deposit-paying').val();
+            var result = parseInt(depo)-(parseInt(num)*100000);
+            $('#deposit-pay').html('Kembalikan Deposit : <span class="label-danger">'+toRp(result)+'</span>');
+            console.log(result);
+            $('#keepdeposit-paying').val(result);
+        }
+    }
+
+    function minusdeposit(num)
+    {
+        if(num != 0)
+        {
+            var depo = $('#keepdeposit-paying').val();
+            var result = parseInt(depo)-parseInt(num);
+            $('#deposit-pay').html('Kembalikan Deposit : <span class="label-danger">'+toRp(result)+'</span>');
+            console.log(result);
+            $('#deposit-paying').val(result);
+        }
+        else
+        {
+            var keepdepo = $('#keepdeposit-paying').val();
+            $('#deposit-paying').val(keepdepo);
+        }
     }
 </script>

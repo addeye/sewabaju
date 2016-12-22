@@ -23,9 +23,9 @@
                         <tr>
                             <th class="col-xs-1">No</th>
                             <th>Nama</th>
-                            <th>Sewa</th>
+                            <th>Harga Sewa</th>
                             <th>HPP Awal</th>
-                            <th>Balance</th>
+                            <th>Disewa</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -35,7 +35,7 @@
                                 <td><?=$row->name?></td>
                                 <td>Rp. <?=rupiah($row->rent_price)?></td>
                                 <td>Rp. <?=rupiah($row->hpp_first)?></td>
-                                <td>Rp. <?=rupiah($row->balance)?></td>
+                                <td><?=$row->disewa?></td>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>

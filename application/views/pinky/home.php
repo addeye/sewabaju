@@ -2,7 +2,7 @@
 
 <div class="row">
 
-    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 
         <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
 
@@ -28,7 +28,7 @@
 
     </div>
 
-    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 
         <a class="dashboard-stat dashboard-stat-v2 red" href="#">
 
@@ -54,33 +54,7 @@
 
     </div>
 
-    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-
-        <a class="dashboard-stat dashboard-stat-v2 green" href="#">
-
-            <div class="visual">
-
-                <i class="fa fa-tags"></i>
-
-            </div>
-
-            <div class="details">
-
-                <div class="number">
-
-                    <span>0</span>
-
-                </div>
-
-                <div class="desc"> Pendapatan Hari Ini </div>
-
-            </div>
-
-        </a>
-
-    </div>
-
-    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 
         <a class="dashboard-stat dashboard-stat-v2 purple" href="#">
 

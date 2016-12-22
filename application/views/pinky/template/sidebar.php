@@ -43,6 +43,12 @@
                             <span class="arrow"></span>
                         </a>
                     </li>
+                    <li class="nav-item <?= $this->session->flashdata('child_menu_active') == 'operasional' ? 'active': '';?>">
+                        <a href="<?=base_url('bisnis/operasional')?>" class="nav-link">
+                            <i class="icon-social-dropbox"></i> Operasional
+                            <span class="arrow"></span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 
@@ -121,6 +127,13 @@
                     <li class="nav-item <?= $this->session->flashdata('child_menu_active') == 'promo' ? 'active': '';?> ">
                         <a href="<?=base_url('master/promo')?>" class="nav-link">
                             <i class="icon-present"></i> Promo
+                            <span class="arrow"></span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item <?= $this->session->flashdata('child_menu_active') == 'voucher' ? 'active': '';?> ">
+                        <a href="<?=base_url('master/voucher')?>" class="nav-link">
+                            <i class="icon-disc"></i> Voucher
                             <span class="arrow"></span>
                         </a>
                     </li>
