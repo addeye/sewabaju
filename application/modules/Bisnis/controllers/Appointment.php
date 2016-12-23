@@ -35,6 +35,8 @@ class Appointment extends My_controller
             'link_delivery' => site_url('bisnis/appointment/delivery/'),
             'link_ajaxkembali' => site_url('bisnis/appointment/ajax_kembali/'),
             'link_ttd' => site_url('bisnis/appointment/signature/'),
+            'link_ttdpickup' => site_url('bisnis/appointment/signaturepickup/'),
+            'link_ttdreturn' => site_url('bisnis/appointment/signaturereturn/'),
             'data' => $this->model->getAll()
         );
 
@@ -934,11 +936,55 @@ class Appointment extends My_controller
         $this->pinky->output($data, $content);
     }
 
+    public function signaturepickup($id)
+    {
+        $data = array(
+            'header_title' => 'Signature',
+            'header_desc' => 'Master',
+            'urlsignature' => site_url('bisnis/appointment/update_signaturepickup'),
+            'urlback' => site_url('bisnis/appointment'),
+            'id' => $id
+        );
+        $content = 'appointment/v_signaturepickup';
+        $this->pinky->output($data, $content);
+    }
+
+    public function signaturereturn($id)
+    {
+        $data = array(
+            'header_title' => 'Signature',
+            'header_desc' => 'Master',
+            'urlsignature' => site_url('bisnis/appointment/update_signaturereturn'),
+            'urlback' => site_url('bisnis/appointment'),
+            'id' => $id
+        );
+        $content = 'appointment/v_signaturereturn';
+        $this->pinky->output($data, $content);
+    }
+
     public function update_signature()
     {
         $id = $this->input->post('id');
         $data = array(
             'ttd_invoice' => $this->input->post('ttd_invoice')
+        );
+        $this->model->update($id,$data);
+    }
+
+    public function update_signaturepickup()
+    {
+        $id = $this->input->post('id');
+        $data = array(
+            'ttd_pickup' => $this->input->post('ttd_pickup')
+        );
+        $this->model->update($id,$data);
+    }
+
+    public function update_signaturereturn()
+    {
+        $id = $this->input->post('id');
+        $data = array(
+            'ttd_return' => $this->input->post('ttd_return')
         );
         $this->model->update($id,$data);
     }
@@ -958,6 +1004,17 @@ class Appointment extends My_controller
 
         echo json_encode($data);
 
+    }
+
+    public function process_detail($appointment_id)
+    {
+        $data = array(
+            'dpromo' => $this->model->getDpromo($appointment_id),
+            'tritem' => $this->model->getTrItem($appointment_id)
+        );
+
+        $content = 'appointment/v_process_detail';
+        $this->pinky->output($data, $content);
     }
 
 }

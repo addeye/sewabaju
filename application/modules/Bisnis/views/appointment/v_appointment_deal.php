@@ -157,7 +157,7 @@
                 <div class="tools"></div>
             </div>
             <div class="portlet-body">
-                <div id="promo-form">
+                <div id="promo-form" style="display: none;">
                     <div class="form-horizontal">
                         <div class="form-group">
                             <div class="col-xs-10">
@@ -361,29 +361,33 @@
 
     function rent()
     {
-        $("#baju-form,#accessories-form,#jobs-form").show();
+        $("#baju-form,#accessories-form,#jobs-form,#promo-form").show();
         $('#made-form,#baju-form-sale,#rent-form').hide();
+        $('#promo-check').attr("checked", true);
         $('.select2').select2();
     }
 
     function madeforRent()
     {
-        $('#baju-form,#accessories-form,#jobs-form,#baju-form-sale').hide();
+        $('#baju-form,#accessories-form,#jobs-form,#baju-form-sale,#promo-form').hide();
         $("#made-form,#rent-form,#fittingdateform").show();
         $('.select2').select2();
+        $('#promo-check').attr("checked", false);
     }
 
     function madeforSale()
     {
-        $("#baju-form,#accessories-form,#jobs-form,#rent-form,#baju-form-sale").hide();
+        $("#baju-form,#accessories-form,#jobs-form,#rent-form,#baju-form-sale,#promo-form").hide();
         $('#made-form,#fittingdateform').show();
+        $('#promo-check').attr("checked", false);
         $('.select2').select2();
     }
 
     function sale()
     {
         $('#baju-form-sale, #jobs-form').show();
-        $("#made-form,#accessories-form,#rent-form,#baju-form").hide();
+        $("#made-form,#accessories-form,#rent-form,#baju-form,#promo-form").hide();
+        $('#promo-check').attr("checked", false);
         $('.select2').select2();
     }
 
@@ -473,7 +477,8 @@
             totaltransaksi();
         });
 
-        $('#text-voucher').keyup(function(){
+        $('#text-voucher').keyup(function()
+        {
             if(this.value != '')
             {
                 voucher();
@@ -484,7 +489,8 @@
             }
         });
 
-        $('#promo-check').change(function() {
+        $('#promo-check').change(function()
+        {
             if($(this).is(":checked")) {
                 $(this).attr("checked", true);
                 $('#promodeal').val(1);
@@ -492,6 +498,7 @@
             else
             {
                 $('#promodeal').val(0);
+                $('#promo-form').hide();
             }
 //            $('#textbox1').val($(this).is(':checked'));
             console.log($(this).is(':checked'));
