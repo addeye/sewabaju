@@ -157,9 +157,9 @@
                             <?php foreach($schedule as $row): ?>
                                 <tr>
                                     <td class="col-xs-4"><?=$row['name']?></td>
-                                    <td><?=tgl_indo($row['tglfitting'])?></td>
-                                    <td><?=tgl_indo($row['tglsewa'])?></td>
-                                    <td><?=tgl_indo($row['tglkembali'])?></td>
+                                    <td><?=$row['tglfitting']?tgl_indo($row['tglfitting']):''?></td>
+                                    <td><?=$row['tglsewa']?tgl_indo($row['tglsewa']):''?></td>
+                                    <td><?=$row['tglkembali']?tgl_indo($row['tglkembali']):''?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>
@@ -198,11 +198,11 @@
                 </div>
                 <div class="row">
                     <label class="col-xs-3">Down Payment</label>
-                    <div class="col-xs-6">: Rp. <?=$deal?rupiah($deal->down_payment):''?> (<?php foreach(pay() as $key=>$row):?><?=$deal?$key==$deal->pay_dp?$row:'/<strike>'.$row.'</strike>/':'<strike>'.$row.'</strike>/'?><?php endforeach; ?>) Date : <?=$deal?$deal->date_dp?tgl_indo($deal->date_dp):'':''?></div>
+                    <div class="col-xs-6">: Rp. <?=$deal?rupiah($deal->down_payment):''?> (<?php foreach(pay() as $key=>$row):?><?=$deal?$key==$deal->pay_dp?$row.'/':'<strike>'.$row.'</strike>/':'<strike>'.$row.'</strike>/'?><?php endforeach; ?>) Date : <?=$deal?$deal->date_dp?tgl_indo($deal->date_dp):'':''?></div>
                 </div>
                 <div class="row">
                     <label class="col-xs-3">Sisa Pembayaran</label>
-                    <div class="col-xs-6">: Rp. <?=$deal?rupiah($deal->remaining_payment):''?> (<?php foreach(pay() as $key=>$row):?><?=$deal?$key==$deal->pay_rp?$row:'/<strike>'.$row.'</strike>/':'<strike>'.$row.'</strike>/'?><?php endforeach; ?>) Date : <?=$deal?$deal->date_rp?tgl_indo($deal->date_rp):'':''?></div>
+                    <div class="col-xs-6">: Rp. <?=$deal?rupiah($deal->remaining_payment):''?> (<?php foreach(pay() as $key=>$row):?><?=$deal?$key==$deal->pay_rp?$row.'/':'<strike>'.$row.'</strike>/':'<strike>'.$row.'</strike>/'?><?php endforeach; ?>) Date : <?=$deal?$deal->date_rp?tgl_indo($deal->date_rp):'':''?></div>
                 </div>
             </div>
             </div>

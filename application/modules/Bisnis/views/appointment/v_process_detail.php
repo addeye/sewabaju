@@ -1,6 +1,6 @@
 <div class="row ">
     <?= $this->session->flashdata('pesan') ?>
-    <div class="col-md-7">
+    <div class="col-md-6">
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
         <div class="portlet box red">
             <form class="form" method="post" action="<?=$link_act?>">
@@ -74,9 +74,12 @@
                                     ?>
                                     <tr>
                                         <td><?= $no++ ?></td>
-                                        <td><?= $tr->mbaju ? $tr->mbaju->name : 'Belum Milih' ?></td>
+                                        <td><?= $tr->mbaju ? $tr->mbaju->name : 'Belum Dipilih' ?></td>
                                         <td><?= $tr->fitting_date?tgl_indo($tr->fitting_date):'' ?></td>
-                                        <td><input type="checkbox" name="promo_fitting_status[]" value="<?=$tr->id?>" <?= $tr->fitting_status == 1 ? 'checked' : '' ?>>
+                                        <td>
+                                            <?php if($tr->mbaju) {?>
+                                            <input type="checkbox" name="promo_fitting_status[]" value="<?=$tr->id?>" <?= $tr->fitting_status == 1 ? 'checked' : '' ?>>
+                                            <?php } ?>
                                         </td>
                                     </tr>
                                     <?php
@@ -118,9 +121,12 @@
                                     ?>
                                     <tr>
                                         <td><?= $no++ ?></td>
-                                        <td><?= $tr->mbaju ? $tr->mbaju->name : 'Belum Milih' ?></td>
+                                        <td><?= $tr->mbaju ? $tr->mbaju->name : 'Belum Dipilih' ?></td>
                                         <td><?= $tr->rent_date?tgl_indo($tr->rent_date):'' ?></td>
-                                        <td><input type="checkbox" name="promo_rent_status[]" value="<?=$tr->id?>" <?= $tr->rent_status == 1 ? 'checked' : '' ?>>
+                                        <td>
+                                            <?php if($tr->mbaju){?>
+                                            <input type="checkbox" name="promo_rent_status[]" value="<?=$tr->id?>" <?= $tr->rent_status == 1 ? 'checked' : '' ?>>
+                                            <?php } ?>
                                         </td>
                                     </tr>
                                     <?php
@@ -133,7 +139,7 @@
             </form>
         </div>
     </div>
-    <div class="col-sm-5">
+    <div class="col-sm-6">
         <div class="portlet box red">
             <div class="portlet-title">
                 <div class="caption font-dark">
@@ -147,6 +153,7 @@
                         <th>No</th>
                         <th>Nama</th>
                         <th>Tanggal</th>
+                        <th>Deposit</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -158,6 +165,7 @@
                                 <td><?= $no++ ?></td>
                                 <td><?= $row->mbaju->name ?></td>
                                 <td><?= tgl_indo($row->back_date) ?></td>
+                                <td class="text-right"><?=rupiah($row->deposit)?></td>
                                 <td>
                                     <a href="<?=site_url('bisnis/appointment/return_sewa/'.$row->id.'/item')?>" class="btn btn-success"><i class="glyphicon glyphicon-share-alt"></i></a>
                                 </td>
@@ -171,10 +179,13 @@
                                 ?>
                                 <tr>
                                     <td><?= $no++ ?></td>
-                                    <td><?= $tr->mbaju ? $tr->mbaju->name : 'Belum Milih' ?></td>
+                                    <td><?= $tr->mbaju ? $tr->mbaju->name : 'Belum Dipilih' ?></td>
                                     <td><?= $tr->back_date?tgl_indo($tr->back_date):'' ?></td>
+                                    <td class="text-right"><?=$tr->deposit?rupiah($tr->deposit):''?></td>
                                     <td>
+                                        <?php if($tr->mbaju){?>
                                         <a href="<?=site_url('bisnis/appointment/return_sewa/'.$tr->id.'/promo')?>" class="btn btn-success"><i class="glyphicon glyphicon-share-alt"></i></a>
+                                        <?php } ?>
                                     </td>
                                 </tr>
                                 <?php
@@ -186,7 +197,7 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-5">
+    <div class="col-sm-6">
         <div class="portlet box red">
             <div class="portlet-title">
                 <div class="caption font-dark">
@@ -207,7 +218,7 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-5">
+    <div class="col-sm-5" style="display: none;">
         <div class="portlet box red">
             <div class="portlet-title">
                 <div class="caption font-dark">

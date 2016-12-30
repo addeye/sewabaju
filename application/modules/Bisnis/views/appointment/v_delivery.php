@@ -67,7 +67,7 @@
                             <?php foreach($dpromo as $row):
                                 foreach($row->trpromo as $trp):
                                 ?>
-                                <li><?=$trp->mbaju?$trp->mbaju->name:'- Belum Milih -'?></li>
+                                <li><input type="checkbox" <?=$trp->rent_status==1?'checked':''?> disabled> <?=$trp->mbaju?$trp->mbaju->name:'- Belum Dipilih -'?></li>
                             <?php endforeach;
                                 endforeach; ?>
                             <?php foreach($trmade as $row): ?>

@@ -427,7 +427,13 @@ class Appointment extends My_controller
 
     public function viewbaju($appointment_id)
     {
+        $total=array();
         $data['tritem'] = $this->model->getTrItem($appointment_id);
+        foreach($data['tritem'] as $key=>$row)
+        {
+            $total[] = $row->total;
+        }
+        $data['total'] = array_sum($total);
         $this->load->view('appointment/v_list_baju', $data);
     }
 
@@ -605,7 +611,7 @@ class Appointment extends My_controller
 
     public function delete_deposit($appointment_id)
     {
-        $result = $this->model - getTrDepositByAppointment($appointment_id);
+        $result = $this->model->getTrDepositByAppointment($appointment_id);
         if ($result) {
             return TRUE;
         }
@@ -695,13 +701,13 @@ class Appointment extends My_controller
         foreach ($dpromo as $dp) {
             foreach ($dp->trpromo as $row) {
                 $product[] = array(
-                    'name' => $row->mbaju ? $row->mbaju->name : 'Belum Milih',
+                    'name' => $row->mbaju ? $row->mbaju->name : 'Belum Dipilih',
                     'qty' => $row->qty,
                     'total' => rupiah($row->total),
                 );
 
                 $schedule[] = array(
-                    'name' => $row->mbaju->name,
+                    'name' => $row->mbaju?$row->mbaju->name:'Belum Dipilih',
                     'qty' => $row->qty,
                     'total' => rupiah($row->total),
                     'tglfitting' => $row->fitting_date,
@@ -976,6 +982,7 @@ class Appointment extends My_controller
             'fitting_date' => $this->input->post('fitting_date'),
             'rent_date' => $this->input->post('rent_date'),
             'back_date' => $this->input->post('back_date'),
+            'deposit' => $this->input->post('deposit'),
         );
         $id = $this->input->post('id');
 
@@ -996,6 +1003,7 @@ class Appointment extends My_controller
             'fitting_date' => $this->input->post('fitting_date'),
             'rent_date' => $this->input->post('rent_date'),
             'back_date' => $this->input->post('back_date'),
+            'deposit' => $this->input->post('deposit'),
         );
         $id = $this->input->post('id');
 
@@ -1142,7 +1150,7 @@ class Appointment extends My_controller
             if($result)
             {
                 $data_up = array(
-                    'status' => STATUS_SIAP_AMBIL
+                    'status' => STATUS_SIAP_AMBIL,
                 );
                 $this->model->update($appointment_id, $data_up);
             }
@@ -1154,7 +1162,8 @@ class Appointment extends My_controller
             }
 
             $data_up = array(
-                'status' => STATUS_DIPINJAM
+                'status' => STATUS_DIPINJAM,
+                'pickuped' => date('Y-m-d')
             );
 
             $this->model->update($appointment_id, $data_up);
@@ -1188,7 +1197,8 @@ class Appointment extends My_controller
                 $this->model->updateTrItem($row, $data = array('rent_status' => 1));
             }
             $data_up = array(
-                'status' => STATUS_DIPINJAM
+                'status' => STATUS_DIPINJAM,
+                'pickuped' => date('Y-m-d')
             );
 
             $this->model->update($appointment_id, $data_up);
@@ -1242,6 +1252,10 @@ class Appointment extends My_controller
         $keterangan = $this->input->post('keterangan');
         $id = $this->input->post('id');
 
+        $deposit = $this->input->post('deposit');
+        $tot_hari_telat = $hari_telat * 100000;
+        $minus = $deposit-($tot_hari_telat+$denda);
+
         $appointment_id = $this->input->post('appointment_id');
 
         $data = array(
@@ -1249,6 +1263,7 @@ class Appointment extends My_controller
             'hari_telat' => $hari_telat,
             'denda' => $denda,
             'keterangan' => $keterangan,
+            'minus' => $minus
         );
 
         if($jenis=='promo')
@@ -1259,13 +1274,8 @@ class Appointment extends My_controller
         {
             $this->model->updateTrItem($id,$data);
         }
-    }
-
-    public function genarate_minus_deposit($appointment_id)
-    {
-        $denda = array();
-        $tritem = $this->model->getTrItem($appointment_id);
-        $trpromo = $this->model->getTrPromoByAppointment($appointment_id);
+        alert(2);
+        redirect('bisnis/appointment/process_detail/'.$appointment_id);
     }
 
     public function sendmail()

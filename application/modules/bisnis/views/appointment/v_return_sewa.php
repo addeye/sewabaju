@@ -14,6 +14,8 @@
                     <input type="hidden" name="jenis" value="<?=$jenis?>">
                     <input type="hidden" name="appointment_id" value="<?=$rowdata->appointment_id?>">
 
+                    <input type="hidden" id="deposit" name="deposit" value="<?=$rowdata->deposit?>">
+
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 col-sm-offset-1 control-label">Status Return</label>
                         <div class="col-sm-5">
@@ -28,19 +30,19 @@
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 col-sm-offset-1 control-label">Telat Hari</label>
                         <div class="col-sm-1">
-                            <input type="number" class="form-control" name="hari_telat" value="<?=$rowdata->hari_telat?>">
+                            <input type="number" id="hari_telat" class="form-control" name="hari_telat" value="<?=$rowdata->hari_telat?>">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 col-sm-offset-1 control-label">Denda</label>
                         <div class="col-sm-3">
-                            <input type="number" class="form-control" name="denda" value="<?=$rowdata->denda?>">
+                            <input type="number" id="denda" class="form-control" name="denda" value="<?=$rowdata->denda?>">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 col-sm-offset-1 control-label">Keterangan</label>
-                        <div class="col-sm-3">
-                            <textarea name="keterangan" class="form-control"><?=$rowdata->keterangan?></textarea>
+                        <div class="col-sm-5">
+                            <textarea name="keterangan" rows="4" class="form-control"><?=$rowdata->keterangan?></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -62,7 +64,6 @@
     jQuery(document).ready(function() {
 
         ComponentsDateTimePickers.init();
-
     });
 
 </script>

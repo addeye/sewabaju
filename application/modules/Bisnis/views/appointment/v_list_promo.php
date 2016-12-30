@@ -15,14 +15,17 @@
     <tr>
         <td><?=$row->mbaju?$row->mbaju->name:'Pilih baju'?></td>
         <td><?=$row->qty?></td>
-        <td><?=rupiah($row->price?$row->price:0)?></td>
-        <td><?=rupiah($row->total?$row->total:0)?></td>
+        <td class="text-right"><?=rupiah($row->price?$row->price:0)?></td>
+        <td class="text-right"><?=rupiah($row->total?$row->total:0)?></td>
         <td><button class="btn btn-xs btn-success" type="button" onclick="formtrpromo(<?=$row->id?>)"><i class="fa fa-edit"></i></button></td>
     </tr>
     <?php endforeach; ?>
     <tr>
-        <td>Harga Promo</td>
-        <td colspan="4"><?=rupiah($rowp->price)?></td>
+        <td colspan="5"></td>
+    </tr>
+    <tr>
+        <th>HARGA PROMO</th>
+        <th class="text-right" colspan="3"><?=rupiah($rowp->price)?></th>
     </tr>
     </tbody>
 </table>

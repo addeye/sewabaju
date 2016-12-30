@@ -23,7 +23,7 @@
 
                         <div class="input-icon">
 
-                            <input id="txtenddate" name="fitting_date" class="form-control" size="16" type="text" value="<?=$d->fitting_date?>">
+                            <input id="date-fitting" name="fitting_date" class="form-control" size="16" type="text" value="<?=$d->fitting_date?>">
 
                         </div>
 
@@ -38,7 +38,7 @@
 
                         <div class="input-icon">
 
-                            <input id="txtenddate" name="rent_date" class="form-control" size="16" type="text" value="<?=$d->rent_date?>">
+                            <input id="daterent" name="rent_date" class="form-control" size="16" type="text" value="<?=$d->rent_date?>">
 
                         </div>
 
@@ -53,7 +53,23 @@
 
                         <div class="input-icon">
 
-                            <input name="back_date" class="form-control date-picker" size="16" type="text" value="<?=$d->back_date?>">
+                            <input id="dateback" name="back_date" class="form-control" size="16" type="text" value="<?=$d->back_date?>">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="customer_tanggal_lahir" class="col-md-4 control-label">Deposit</label>
+
+                    <div class="col-md-8">
+
+                        <div class="input-icon">
+
+                            <input name="deposit" class="form-control" size="16" type="text" value="<?=$d->deposit?>">
 
                         </div>
 
@@ -85,22 +101,43 @@
 
 </div>
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
-<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/redmond/jquery-ui.css">
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.js"></script>
-
 <script type="text/javascript">
 
-    jQuery(document).ready(function() {
-        $("#txtstartdate").datepicker({
-            minDate: 0,
-            onSelect: function(date) {
-                $("#txtenddate").datepicker('option', 'minDate', date);
-            }
-        });
 
-        $("#txtenddate").datepicker({});
+//        ComponentsDateTimePickers.init();
+//        var dateToday = new Date();
+//        console.log(dateToday);
+
+        Date.prototype.yyyymmdd = function() {
+            var mm = this.getMonth() + 1; // getMonth() is zero-based
+            var dd = this.getDate();
+
+            return [this.getFullYear(),
+                (mm>9 ? '-' : '0') + mm,
+                (dd>9 ? '-' : '0') + dd
+            ].join('');
+        };
+
+        var date = new Date();
+
+        $( "#date-fitting" ).datepicker({
+            format :	'yyyy-mm-dd',
+            autoclose : true,
+            startDate: date.yyyymmdd(),
+        }).on('changeDate', function(e) {
+            $('#daterent').datepicker({
+                format :	'yyyy-mm-dd',
+                autoclose : true,
+                startDate: $("#date-fitting").val(),
+            }).on('changeDate', function(e){
+                $('#dateback').datepicker({
+                    format :	'yyyy-mm-dd',
+                    autoclose : true,
+                    startDate: $("#daterent").val(),
+                });
+            });
+        });
         $('.select2').select2();
-    });
+
 
 </script>

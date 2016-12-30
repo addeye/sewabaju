@@ -35,7 +35,7 @@
                             <td><u><?= status_customer()[$row->status] ?></u></td>
                             <td>
                                 <button data-toggle="tooltip" data-placement="top" title="Delivery" id="<?= $row->id ?>" type="button" onclick="delivery(this.id)"
-                                        class="btn btn-info btn-invoice" <?= empty($row->pickuped) ? 'disabled' : '' ?> >
+                                        class="btn btn-info btn-invoice">
                                     <span class="glyphicon glyphicon-send"></span></button>
                             </td>
                             <td>

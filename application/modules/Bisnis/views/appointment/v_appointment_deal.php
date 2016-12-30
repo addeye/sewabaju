@@ -135,30 +135,30 @@
         </div>
     </div>
     <div class="col-md-6">
-        <div class="portlet box red">
-            <div class="portlet-title">
-                <div class="caption font-dark">
-                    Deposit Transaksi
-                </div>
-                <div class="tools"></div>
-            </div>
-            <div class="portlet-body">
-                <div id="deposit-form">
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            <div class="col-xs-6">
-                                <input type="number" id="deposit" class="form-control" name="deposit">
-                                <p class="help-block" id="label-deposit"></p>
-                            </div>
-                            <div class="col-xs-1">
-                                <button class="btn btn-info btn-adddeposit"><i class="fa fa-plus"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="list-deposit"></div>
-                </div>
-            </div>
-        </div>
+<!--        <div class="portlet box red">-->
+<!--            <div class="portlet-title">-->
+<!--                <div class="caption font-dark">-->
+<!--                    Deposit Transaksi-->
+<!--                </div>-->
+<!--                <div class="tools"></div>-->
+<!--            </div>-->
+<!--            <div class="portlet-body">-->
+<!--                <div id="deposit-form">-->
+<!--                    <div class="form-horizontal">-->
+<!--                        <div class="form-group">-->
+<!--                            <div class="col-xs-6">-->
+<!--                                <input type="number" id="deposit" class="form-control" name="deposit">-->
+<!--                                <p class="help-block" id="label-deposit"></p>-->
+<!--                            </div>-->
+<!--                            <div class="col-xs-1">-->
+<!--                                <button class="btn btn-info btn-adddeposit"><i class="fa fa-plus"></i></button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div id="list-deposit"></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
         <div class="portlet box red">
             <div class="portlet-title">
                 <div class="caption font-dark">

@@ -13,13 +13,20 @@
     <tr>
         <td><?=$row->mbaju->name?></td>
         <td><?=$row->qty?></td>
-        <td><?=rupiah($row->price?$row->price:0)?></td>
-        <td><?=rupiah($row->total?$row->total:0)?></td>
+        <td class="text-right"><?=rupiah($row->price?$row->price:0)?></td>
+        <td class="text-right"><?=rupiah($row->total?$row->total:0)?></td>
         <td>
             <a href="javacript:void(0);" onclick="formtritem(<?=$row->id?>)"><i class="fa fa-edit"></i></a>
             <a href="javacript:void(0);" onclick="delperid(<?=$row->id?>)"><i class="fa fa-remove"></i></a>
         </td>
     </tr>
     <?php endforeach; ?>
+    <tr>
+        <td colspan="5"></td>
+    </tr>
+    <tr>
+        <th>HARGA TOTAL</th>
+        <th class="text-right" colspan="3"><?=rupiah($total)?></th>
+    </tr>
     </tbody>
 </table>
