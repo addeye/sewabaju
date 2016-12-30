@@ -12,26 +12,26 @@ if(!function_exists('helper_log'))
         $CI = & get_instance();
 
         if (strtolower($tipe) == "login"){
-            $log_tipe   = 0;
+            $log_tipe   = LOG_LOGIN;
         }
         elseif(strtolower($tipe) == "logout")
         {
-            $log_tipe   = 1;
+            $log_tipe   = LOG_LOGOUT;
         }
         elseif(strtolower($tipe) == "add"){
-            $log_tipe   = 2;
+            $log_tipe   = LOG_ADD;
         }
         elseif(strtolower($tipe) == "edit"){
-            $log_tipe  = 3;
+            $log_tipe  = LOG_EDIT;
         }
         else{
-            $log_tipe  = 4;
+            $log_tipe  = LOG_DELETE;
         }
 
         // paramter
-        $param['log_user']      = $CI->session->userdata('name');
-        $param['log_tipe']      = $log_tipe;
-        $param['log_desc']      = $str;
+        $param['name']      = $CI->session->userdata('name');
+        $param['tipe']      = $log_tipe;
+        $param['activity']      = $str;
 
         //load model log
         $CI->load->model('log_model');

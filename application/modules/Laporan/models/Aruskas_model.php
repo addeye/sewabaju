@@ -15,6 +15,7 @@ class Aruskas_model extends Base_model
     protected $mcompany = 'm_company';
     protected $mbaju = 'm_baju';
     protected $moperasional = 'm_operasional';
+    protected $mcustomer = 'm_customer';
 
     public function __construct()
     {
@@ -23,14 +24,19 @@ class Aruskas_model extends Base_model
 
     public function getDeal($from,$to)
     {
-        $condition['date_dp >= '] = $from;
-        $condition['date_dp <= '] = $to;
-        $result = $this->getData($this->mdeal,$condition)->result();
-
-        foreach($result as $key=>$row)
+        $result = $this->getData($this->mappointemnt,array('deleted'=>'0'))->result();
+        foreach($result as $keyapp=>$app)
         {
-            $result[$key]->mappointment = $this->getData($this->mappointemnt,array('id'=>$row->appointment_id))->row();
-            $result[$key]->tritem = $this->getData($this->tritem,array('appointment_id'=>$row->appointment_id))->result();
+            $condition['date_dp >= '] = $from;
+            $condition['date_dp <= '] = $to;
+            $condition['appointment_id'] = $app->id;
+            $result[$keyapp]->mdeal = $this->getData($this->mdeal,$condition)->result();
+
+            foreach($result[$keyapp]->mdeal as $key=>$row)
+            {
+                $result[$keyapp]->mdeal[$key]->mappointment = $this->getData($this->mappointemnt,array('id'=>$row->appointment_id))->row();
+                $result[$keyapp]->mdeal[$key]->tritem = $this->getData($this->tritem,array('appointment_id'=>$row->appointment_id))->result();
+            }
         }
 
         if($result)
@@ -79,6 +85,8 @@ class Aruskas_model extends Base_model
     public function getAllBaju()
     {
         $condition['partner']=0;
+        $appointment = array();
+
         $result = $this->getData($this->mbaju,$condition)->result();
         foreach($result as $key=>$row)
         {
@@ -90,6 +98,44 @@ class Aruskas_model extends Base_model
             $result[$key]->balance = $row->hpp_price<0?abs($row->hpp_price):0-$row->hpp_price;
         }
 
+        if($result)
+        {
+            return $result;
+        }
+        return [];
+    }
+
+    public function getInvoice($id)
+    {
+        $appointment_id = array();
+        $appointmentData = array();
+
+        $condition['id'] = $id;
+        $result = $this->getData($this->mbaju,$condition)->row();
+        $tritem = $this->getData($this->tritem,array('baju_id'=>$id))->result();
+        $trpromo = $this->getData($this->trpromo,array('baju_id'=>$id))->result();
+        foreach($tritem as $key=>$row)
+        {
+            $appointment_id[] = $row->appointment_id;
+        }
+
+        foreach($trpromo as $key=>$row)
+        {
+            $appointment_id[] = $row->appointment_id;
+        }
+        $appointmentlist = array_unique($appointment_id);
+
+        foreach($appointmentlist as $row)
+        {
+            $data = $this->getData($this->mappointemnt,array('id'=>$row))->row();
+            $data->mcustomer = $this->getData($this->mcustomer,array('id'=>$data->customer_id))->row();
+            $appointmentData[] = $data;
+        }
+
+        $appointment = count($appointmentlist);
+
+        $result->count = $appointment;
+        $result->appointment = $appointmentData;
         if($result)
         {
             return $result;

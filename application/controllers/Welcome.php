@@ -34,34 +34,74 @@ class Welcome extends My_controller {
 		$data['header_title'] = 'Dashboard';
 		$data['header_desc'] = 'Master | Sewa Baju';
 
-		$rowData = $this->model->getDataAllTr();
+		$tritem = $this->model->getTrItem();
+		$trpromo = $this->model->getTrPromo();
 		$fitingData = $this->model->getFittingDate();
 		$dataCalendar = array();
 
-		foreach($rowData as $row)
+//		return var_dump($tritem);
+
+		foreach($tritem as $rows)
 		{
-			if($row->mdeal)
+			if($rows->tritem)
 			{
-				$dataCalendar[] = array(
-					'title' => $row->mbaju->name,
-					'start' => $row->mdeal->date_fitting,
-					'end' => $row->mdeal->date_back.'T23:59:00',
-					'description' => $row->mcustomer->name,
-				);
+				foreach($rows->tritem as $row)
+				{
+					$dataCalendar[] = array(
+						'title' => $row->mbaju->name,
+						'start' => $row->fitting_date,
+						'end' => $row->back_date.'T23:59:00',
+						'description' => $row->mcustomer->name,
+					);
+				}
 			}
 		}
 
-		foreach($fitingData as $row)
+		foreach($trpromo as $rows)
 		{
-			$dataCalendar[] = array(
-				'title' => $row->mcustomer->name,
-				'start' => $row->date_fitting,
-				'description' => $row->mcustomer->name.'- Fitting',
-				'color' => 'red',
-			);
+			if($rows->trpromo)
+			{
+				foreach($rows->trpromo as $row)
+				{
+					$dataCalendar[] = array(
+						'title' => $row->mbaju->name,
+						'start' => $row->fitting_date,
+						'end' => $row->back_date.'T23:59:00',
+						'description' => $row->mcustomer->name,
+					);
+				}
+			}
 		}
 
+		$rowTransToday = array();
+
+		$boxsell = $this->model->getAppointmentDeal();
+		foreach($boxsell as $row)
+		{
+			if($row->mdeal)
+			{
+				$rowTransToday[] = $row->mdeal->total;
+			}
+		}
+		$trans_today = array_sum($rowTransToday);
+
+		$rowTransAll = array();
+
+		$boxIncome = $this->model->getAppointment();
+		foreach($boxIncome as $row)
+		{
+			if($row->mdeal)
+			{
+				$rowTransAll[] = $row->mdeal->total;
+			}
+		}
+		$trans_all = array_sum($rowTransAll);
+
 		$data['dcalendar'] = json_encode($dataCalendar);
+		$data['trans_today'] = $trans_today;
+//		$data['return_today'];
+		$data['total_all'] = $trans_all;
+
 		$this->pinky->output($data,'pinky/home');
 
 		//$this->load->view('view_barcode');

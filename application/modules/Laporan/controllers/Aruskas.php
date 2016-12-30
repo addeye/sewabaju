@@ -42,52 +42,60 @@ class Aruskas extends My_controller
 
         $date_from = $this->input->post('date_from');
         $date_to = $this->input->post('date_to');
-        $mdeal = $this->model->getDeal($date_from,$date_to);
+        $mapp = $this->model->getDeal($date_from,$date_to);
         $moperasional = $this->model->getOperasional($date_from,$date_to);
 //        return var_dump($moperasional);
 
-        foreach($mdeal as $row)
+//        return var_dump($mapp);
+
+        foreach($mapp as $keyapp=>$app)
         {
-            $tritem = $row->tritem;
-
-            $kredit = array();
-
-            foreach($tritem as $item)
+            if($app->mdeal)
             {
-                $result = $this->model->getIdBaju($item->baju_id);
-                $partner = $result->partner;
-
-                if($partner)
+                foreach($app->mdeal as $row)
                 {
-                    $kredit[] = $result->konsinyasi;
+                    $tritem = $row->tritem;
+
+                    $kredit = array();
+
+                    foreach($tritem as $item)
+                    {
+                        $result = $this->model->getIdBaju($item->baju_id);
+                        $partner = $result->partner;
+
+                        if($partner)
+                        {
+                            $kredit[] = $result->konsinyasi;
+                        }
+                    }
+
+                    $totkredit = array_sum($kredit);
+
+                    $status = $row->mappointment->status;
+
+                    $debit = $row->down_payment;
+                    $piutang = $row->remaining_payment;
+
+                    if($status > STATUS_SIAP_AMBIL)
+                    {
+                        $debit = $row->total - $totkredit;
+                        $piutang = 0;
+                    }
+
+                    $tempData[] = array(
+                        'invoice' => $row->mappointment->code,
+                        'tanggal' => $row->date_dp,
+                        'keterangan' => 'Status - '.status_customer()[$row->mappointment->status],
+                        'debit' => 'Rp. '. rupiah($debit),
+                        'kredit' => 'Rp. '.rupiah($totkredit),
+                        'piutang' => 'Rp. '.rupiah($piutang)
+                    );
+
+                    $debit_total[] = $debit;
+                    $kredit_total[] = $totkredit;
+                    $piutang_total[] = $piutang;
                 }
             }
-
-            $totkredit = array_sum($kredit);
-
-            $status = $row->mappointment->status;
-
-            $debit = $row->down_payment;
-            $piutang = $row->remaining_payment;
-
-            if($status > STATUS_SIAP_AMBIL)
-            {
-                $debit = $row->total - $totkredit;
-                $piutang = 0;
-            }
-
-            $tempData[] = array(
-                'invoice' => $row->mappointment->code,
-                'tanggal' => $row->date_dp,
-                'keterangan' => 'Status - '.status_customer()[$row->mappointment->status],
-                'debit' => 'Rp. '. rupiah($debit),
-                'kredit' => 'Rp. '.rupiah($totkredit),
-                'piutang' => 'Rp. '.rupiah($piutang)
-            );
-
-            $debit_total[] = $debit;
-            $kredit_total[] = $totkredit;
-            $piutang_total[] = $piutang;
         }
 
         foreach($moperasional as $row)

@@ -31,6 +31,7 @@
                             <th>Nama</th>
                             <th>TL</th>
                             <th>Handphone</th>
+                            <th>Email</th>
                             <th>Alamat</th>
                             <th>Action</th>
                         </tr>
@@ -43,6 +44,7 @@
                                 <td><?=$row->name?></td>
                                 <td><?=tgl_indo($row->born_date)?></td>
                                 <td><?=$row->phone?></td>
+                                <td><?=$row->email?></td>
                                 <td><?=$row->address?></td>
                                 <td>
                                     <a href="<?=$link_edit.$row->id?>" class="btn btn-success">Edit</a>

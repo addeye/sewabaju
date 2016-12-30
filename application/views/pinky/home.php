@@ -16,7 +16,7 @@
 
                 <div class="number">
 
-                    <span>0</span>
+                    <span><?=rupiah($trans_today)?></span>
 
                 </div>
 
@@ -68,7 +68,7 @@
 
                 <div class="number">
 
-                    <span></span>
+                    <span><?=rupiah($total_all)?></span>
 
                 </div>
 

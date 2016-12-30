@@ -58,6 +58,7 @@ class Customer extends My_controller
         $card = $this->model->getkode();
         $born_date = $this->input->post('born_date');
         $phone = $this->input->post('phone');
+        $email = $this->input->post('email');
         $address = $this->input->post('address');
 
         $data = array(
@@ -65,6 +66,7 @@ class Customer extends My_controller
             'name' => $name,
             'born_date' => $born_date,
             'phone' => $phone,
+            'email' => $email,
             'address' => $address,
         );
 
@@ -100,6 +102,7 @@ class Customer extends My_controller
         $card = $this->model->getkode();
         $born_date = $this->input->post('born_date');
         $phone = $this->input->post('phone');
+        $email = $this->input->post('email');
         $address = $this->input->post('address');
 
         $id = $this->input->post('id');
@@ -109,13 +112,16 @@ class Customer extends My_controller
             'name' => $name,
             'born_date' => $born_date,
             'phone' => $phone,
+            'email' => $email,
             'address' => $address,
         );
 
         $condition['id']= $id;
         $result = $this->model->update($id,$data);
+
         if($result)
         {
+            helper_log('edit','Melakukan edit customer '.$name);
             alert(2);
             redirect('master/customer');
         }
@@ -196,6 +202,7 @@ class Customer extends My_controller
                 "born_date"=> date('Y-m-d',$this->libexcel->convertDate($rowData[0][1])),
                 "phone"=> $rowData[0][2],
                 "address"=> $rowData[0][3],
+                "email"=> $rowData[0][4],
                 "card" => $this->model->getkode()
             );
 

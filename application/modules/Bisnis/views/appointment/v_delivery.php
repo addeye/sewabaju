@@ -62,8 +62,14 @@
                     <td>
                         <ol>
                             <?php foreach($tritem as $row): ?>
-                            <li><?=$row->mbaju->name?></li>
+                            <li><input type="checkbox" <?=$row->rent_status==1?'checked':''?> disabled> <?=$row->mbaju->name?></li>
                             <?php endforeach; ?>
+                            <?php foreach($dpromo as $row):
+                                foreach($row->trpromo as $trp):
+                                ?>
+                                <li><?=$trp->mbaju?$trp->mbaju->name:'- Belum Milih -'?></li>
+                            <?php endforeach;
+                                endforeach; ?>
                             <?php foreach($trmade as $row): ?>
                                 <li><?=$row->disc?></li>
                             <?php endforeach; ?>
@@ -99,7 +105,11 @@
                 <tbody>
                 <tr>
                     <td><div style="height: 100px;"></div></td>
-                    <td></td>
+                    <td>
+                        <div style="padding-top: 70px;">
+                            <img src="<?=$appointment->ttd?>" class="img-responsive" alt="Responsive image">
+                        </div>
+                    </td>
                 </tr>
                 </tbody>
             </table>

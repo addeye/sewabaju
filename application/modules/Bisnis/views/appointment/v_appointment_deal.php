@@ -24,6 +24,15 @@
                     <input type="hidden" id="discvoucher" value="<?=$deal?$deal->disc_voucher:0?>" name="discvoucher">
                     <input type="hidden" name="promo" id="promodeal" value="<?=$deal?$deal->promo:0?>">
 
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-left">
+                                <a href="<?=$link_back?>" class="btn bold yellow">Kembali</a>
+                                <button type="submit" class="btn btn-success">Simpan</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-3 control-label">Proses</label>
                         <?php foreach(proses() as $key=>$row): ?>
@@ -120,29 +129,6 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-3 control-label">Deposit</label>
-                        <div class="col-sm-3">
-                            <input type="number" id="deposit" class="form-control" name="deposit" value="<?=$deal?$deal->deposit:''?>" required>
-                            <p class="help-block" id="label-deposit"></p>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" style="font-size: large; padding-top: 20px;">Fitting</label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" name="fitting" value="1" <?=$deal?$deal->fitting==1?'checked':'':''?>>
-                        </label>
-                    </div>
-                    <hr>
-                    <div class="form-group">
-                        <div class="col-sm-2">
-                            <button type="submit" class="btn btn-success">Simpan</button>
-                        </div>
-                        <div class="col-sm-2">
-                            <a href="<?=$link_back?>" class="btn bold yellow">Kembali</a>
-                        </div>
-                    </div>
                 </form>
                 <hr>
             </div>
@@ -152,7 +138,31 @@
         <div class="portlet box red">
             <div class="portlet-title">
                 <div class="caption font-dark">
-                   <input id="promo-check" value="1" <?=$deal?$deal->promo==1?'checked':'':''?> name="promo" type="checkbox"> <span>PROMO</span>
+                    Deposit Transaksi
+                </div>
+                <div class="tools"></div>
+            </div>
+            <div class="portlet-body">
+                <div id="deposit-form">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-xs-6">
+                                <input type="number" id="deposit" class="form-control" name="deposit">
+                                <p class="help-block" id="label-deposit"></p>
+                            </div>
+                            <div class="col-xs-1">
+                                <button class="btn btn-info btn-adddeposit"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="list-deposit"></div>
+                </div>
+            </div>
+        </div>
+        <div class="portlet box red">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                   <span>PROMO</span>
                 </div>
                 <div class="tools"></div>
             </div>
@@ -333,6 +343,11 @@
 <input type="hidden" id="urldelalljobs" value="<?=$link_del_alljobs?>">
 <input type="hidden" id="urldelidjobs" value="<?=$link_del_idjobs?>">
 
+<input type="hidden" id="urldeposit" value="<?=$link_deposit?>">
+<input type="hidden" id="urladddeposit" value="<?=$link_adddeposit?>">
+<input type="hidden" id="urldelalldeposit" value="<?=$link_del_alldeposit?>">
+<input type="hidden" id="urldeliddeposit" value="<?=$link_del_iddeposit?>">
+
 <input type="hidden" id="urlmade" value="<?=$link_made?>">
 <input type="hidden" id="urladdmade" value="<?=$link_addmade?>">
 <input type="hidden" id="urldelallmade" value="<?=$link_del_allmade?>">
@@ -362,7 +377,7 @@
     function rent()
     {
         $("#baju-form,#accessories-form,#jobs-form,#promo-form").show();
-        $('#made-form,#baju-form-sale,#rent-form').hide();
+        $('#made-form,#baju-form-sale,#rent-form,#fittingdateform').hide();
         $('#promo-check').attr("checked", true);
         $('.select2').select2();
     }
@@ -430,6 +445,7 @@
         made();
         promo();
         voucher();
+        deposit();
         totaltransaksi();
 
         var bajuform = $('#baju-form');
@@ -461,6 +477,11 @@
             addjobs();
             jobs();
             totaltransaksi();
+        });
+        $('.btn-adddeposit').click(function(){
+            adddeposit();
+            deposit();
+//            totaltransaksi();
         });
         $('.btn-addmade').click(function(){
             addmade();
@@ -655,6 +676,24 @@
             });
     }
 
+    function deposit()
+    {
+        var urldeposit = $('#urldeposit').val();
+        var appointment_id = $('#appointment_id').val();
+        $.ajax({
+            beforeSend:function(){
+                $("#loading").modal('show');
+            },
+            url: urldeposit+'/'+appointment_id,
+            type : 'get',
+            cache: false,
+        })
+            .success(function(data) {
+                $('#list-deposit').html(data);
+                $("#loading").modal('hide');
+            });
+    }
+
     function made()
     {
         var urlmade = $('#urlmade').val();
@@ -704,8 +743,8 @@
             data : {baju_id:baju_id,appointment_id:appointment_id,customer_id:customer_id},
             cache: false,
         })
-            .success(function() {
-                console.log('success');
+            .success(function(data) {
+                formtritem(data);
             });
     }
 
@@ -756,6 +795,23 @@
             url: urladdjobs,
             type : 'post',
             data : {job:job,appointment_id:appointment_id,price:price},
+            cache: false,
+        })
+            .success(function() {
+                console.log('success');
+            });
+    }
+
+    function adddeposit()
+    {
+        var appointment_id = $('#appointment_id').val();
+        var deposit = $('#deposit').val();
+        var urladddeposit = $('#urladddeposit').val();
+
+        $.ajax({
+            url: urladddeposit,
+            type : 'post',
+            data : {deposit:deposit,appointment_id:appointment_id},
             cache: false,
         })
             .success(function() {
@@ -848,6 +904,21 @@
             });
     }
 
+    function delalldeposit()
+    {
+        var urldelalldeposit = $('#urldelalldeposit').val();
+        var appointment_id = $('#appointment_id').val();
+        $.ajax({
+            url: urldelalldeposit+'/'+appointment_id,
+            type : 'get',
+            cache: false,
+        })
+            .success(function() {
+                console.log('success');
+                deposit();
+            });
+    }
+
     function delallmade()
     {
         var urldelallmade = $('#urldelallmade').val();
@@ -910,6 +981,21 @@
             });
     }
 
+    function delperiddeposit(id)
+    {
+        var urldeliddeposit = $('#urldeliddeposit').val();
+        $.ajax({
+            url: urldeliddeposit+'/'+id,
+            type : 'get',
+            cache: false,
+        })
+            .success(function() {
+                console.log('success');
+                deposit();
+//                totaltransaksi();
+            });
+    }
+
     function delperidmade(id)
     {
         var urldelidmade = $('#urldelidmade').val();
@@ -956,6 +1042,7 @@
         })
             .success(function(data) {
                 $('#dtotal').val(data.total);
+                $('#down_payment').val(data.dp);
                 $('#ptotal').html(data.labeltotal);
                 $('#ptotaldp').html(data.labeldp);
             })

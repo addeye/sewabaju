@@ -10,7 +10,7 @@
                 <div class="tools"></div>
             </div>
             <div class="portlet-body table-responsive">
-                <table id="myTable" class="table table-actions-wrapper">
+                <table id="myTable" class="table table-hover">
                     <thead>
                     <tr>
                         <th>No</th>
@@ -28,41 +28,23 @@
                     foreach ($data as $row): ?>
                         <tr>
                             <td><?= $no++; ?></td>
-                            <td><a href="<?= $link_edit . $row->id ?>"><?= $row->code ?></a></td>
-                            <td><?= $row->date ?></td>
+                            <td><a href="javascript:void(0);" onclick="invoice(<?=$row->id?>)"><?= $row->code ?></a></td>
+                            <td><?= tgl_indo_waktu($row->date) ?></td>
                             <td><?= $row->mcustomer->name ?></td>
                             <td><?= $row->note ?></td>
                             <td><u><?= status_customer()[$row->status] ?></u></td>
                             <td>
-                                <button data-toggle="tooltip" data-placement="top" title="Invoice" id="<?= $row->id ?>" type="button" onclick="invoice(this.id)"
-                                        class="btn btn-info btn-invoice" <?= $row->status == STATUS_APPOINTMENT ? 'disabled' : '' ?>>
-                                    <span class="glyphicon glyphicon-file"></span></button>
                                 <button data-toggle="tooltip" data-placement="top" title="Delivery" id="<?= $row->id ?>" type="button" onclick="delivery(this.id)"
-                                        class="btn btn-info btn-invoice" <?= empty($row->pickuped) ? 'disabled' : '' ?>>
+                                        class="btn btn-info btn-invoice" <?= empty($row->pickuped) ? 'disabled' : '' ?> >
                                     <span class="glyphicon glyphicon-send"></span></button>
                             </td>
                             <td>
+                                <a href="<?= $link_edit . $row->id ?>" class="btn btn-success"><i class="fa fa-edit"></i></a>
                                 <a data-toggle="tooltip" data-placement="top" title="Detail Appointment" href="<?= $link_deal . $row->id ?>" class="btn btn-success"><span
                                         class="glyphicon glyphicon-list"></span></a>
                                 <button data-toggle="tooltip" data-placement="top" title="Cancel" type="button" href="#" class="btn btn-danger del" href="javascript:void(0);"
                                         id="<?= $row->id ?>"><span class="glyphicon glyphicon-trash"></span></button>
-
-                                <?php if ($row->status == STATUS_SIAP_AMBIL) { ?>
-                                    <button data-toggle="tooltip" data-placement="top" title="Pick Up" id="<?= $row->link_change ?>"
-                                            onclick="confirmstatus(this.id,<?= $row->mdeal->remaining_payment ?>)"
-                                            class="btn btn-warning"><span class="glyphicon glyphicon-export
-"></span></button>
-                                    <a data-toggle="tooltip" data-placement="top" title="<?=$row->status_data?>" class="btn btn-default" href="<?= $link_ttdpickup ?><?= $row->id ?>"><span class="glyphicon glyphicon-edit"></span></a>
-
-                                <?php } elseif ($row->status == STATUS_DIPINJAM) { ?>
-                                    <button data-toggle="tooltip" data-placement="top" title="Return" id="<?= $row->link_change ?>" data-id="<?= $row->id ?>"
-                                            onclick="confirmreturn(this.id,<?= $row->mdeal->deposit ?>,<?= $row->id ?>)"
-                                            class="btn btn-warning"><span class="glyphicon glyphicon-import"></span>
-                                    </button>
-                                    <a data-toggle="tooltip" data-placement="top" title="TTD <?=$row->status_data?>" class="btn btn-default" href="<?= $link_ttdreturn ?><?= $row->id ?>"><span class="glyphicon glyphicon-edit"></span></a>
-                                <?php } ?>
-                                <a data-toggle="tooltip" data-placement="top" title="TTD Invoice" class="btn btn-default" href="<?= $link_ttd ?><?= $row->id ?>"><span class="glyphicon glyphicon-pencil"></span></a>
-
+                                <a data-toggle="tooltip" data-placement="top" title="Detail Process" class="btn btn-default" href="<?= $link_process ?><?= $row->id ?>"><span class="glyphicon glyphicon-list-alt"></span></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

@@ -21,6 +21,7 @@ class Appointment_model extends Base_model
     protected $d_promo = 'd_promo';
     protected $tr_promo = 'tr_promo';
     protected $mvoucher = 'm_voucher';
+    protected $tr_deposit = 'tr_deposit';
 
     public function __construct()
     {
@@ -31,13 +32,16 @@ class Appointment_model extends Base_model
     public function getAll()
     {
         $condition['deleted']='0';
-        $condition['status !='] = 5;
+        $condition['status !='] = STATUS_COMPLETE;
 
         $pagedata = $this->getData($this->table,$condition)->result();
         foreach($pagedata as $key=>$row)
         {
             $pagedata[$key]->mcustomer = $this->cmodel->getId($row->customer_id);
             $pagedata[$key]->mdeal = $this->getData($this->mdeal,array('appointment_id'=>$row->id))->row();
+            $pagedata[$key]->tritem = $this->getData($this->tr_item,array('appointment_id'=>$row->id))->result();
+            $pagedata[$key]->trpromo = $this->getData($this->tr_promo,array('appointment_id'=>$row->id))->result();
+            $pagedata[$key]->trdeposit = $this->getData($this->tr_deposit,array('appointment_id'=>$row->id,'back_status'=>0))->row();
         }
         if($pagedata)
         {
@@ -143,7 +147,7 @@ class Appointment_model extends Base_model
         $result = $this->addData($this->tr_item,$data);
         if($result)
         {
-            return TRUE;
+            return $this->getLastInsertId();
         }
         return FALSE;
     }
@@ -510,6 +514,16 @@ class Appointment_model extends Base_model
         return [];
     }
 
+    public function getTrPromoByAppointment($appointment_id)
+    {
+        $result = $this->getData($this->tr_promo,array('appointment_id'=>$appointment_id))->row();
+        if($result)
+        {
+            return $result;
+        }
+        return [];
+    }
+
     public function updateTrPromo($id,$data=array())
     {
         $result = $this->updateData($this->tr_promo,$data,array('id'=>$id));
@@ -523,6 +537,82 @@ class Appointment_model extends Base_model
     public function getDiscVoucher($kode)
     {
         $result = $this->getData($this->mvoucher,array('code'=>$kode))->row();
+        if($result)
+        {
+            return $result;
+        }
+        return [];
+    }
+
+    public function addTrDeposit($data=array())
+    {
+        $result = $this->addData($this->tr_deposit,$data);
+        if($result)
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function getTrDeposit($appointment_id)
+    {
+        $result = $this->getData($this->tr_deposit,array('appointment_id'=>$appointment_id))->result();
+        if($result)
+        {
+            return $result;
+        }
+        return [];
+    }
+
+    public function getTrDepositNotLunas($appointment_id)
+    {
+        $condition = array(
+            'appointment_id'=>$appointment_id,
+            'back_status' => '0',
+        );
+
+        $result = $this->getData($this->tr_deposit,$condition)->row();
+        if($result)
+        {
+            return $result;
+        }
+        return [];
+    }
+
+    public function getTrDepositId($id)
+    {
+        $result = $this->getData($this->tr_deposit,array('id'=>$id))->row();
+        if($result)
+        {
+            return $result;
+        }
+        return [];
+    }
+
+    public function updateTrDeposit($id,$data=array())
+    {
+        $result = $this->updateData($this->tr_deposit,$data,array('id'=>$id));
+        if($result)
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function deleteTrDeposit($id)
+    {
+        $result = $this->deleteData($this->tr_deposit,array('id'=>$id));
+        if($result)
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function getTrDepositByAppointment($appointment_id)
+    {
+        $condition['appointment_id']=$appointment_id;
+        $result = $this->getData($this->tr_deposit,$condition)->result();
         if($result)
         {
             return $result;

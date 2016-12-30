@@ -170,6 +170,13 @@
                         </a>
                     </li>
 
+                    <li class="nav-item <?= $this->session->flashdata('child_menu_active') == 'log' ? 'active': '';?> ">
+                        <a href="<?=base_url('setting/log')?>" class="nav-link">
+                            <i class="icon-clock"></i> Log
+                            <span class="arrow"></span>
+                        </a>
+                    </li>
+
                     <li class="nav-item <?= $this->session->flashdata('child_menu_active') == 'company' ? 'active': '';?> ">
                         <a href="<?=base_url('setting/company')?>" class="nav-link">
                             <i class="icon-settings"></i> Company

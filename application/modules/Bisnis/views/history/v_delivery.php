@@ -87,7 +87,11 @@
                 <tbody>
                 <tr>
                     <td><div style="height: 100px;"></div></td>
-                    <td></td>
+                    <td>
+                        <div style="padding-top: 70px;">
+                            <img src="<?=$appointment->ttd?>" class="img-responsive" alt="Responsive image">
+                        </div>
+                    </td>
                 </tr>
                 </tbody>
             </table>

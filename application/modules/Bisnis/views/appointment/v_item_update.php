@@ -23,7 +23,7 @@
 
                         <div class="input-icon">
 
-                            <input name="fitting_date" class="form-control date-picker" size="16" type="text" value="<?=$d->fitting_date?>">
+                            <input id="txtenddate" name="fitting_date" class="form-control" size="16" type="text" value="<?=$d->fitting_date?>">
 
                         </div>
 
@@ -38,7 +38,7 @@
 
                         <div class="input-icon">
 
-                            <input name="rent_date" class="form-control date-picker" size="16" type="text" value="<?=$d->rent_date?>">
+                            <input id="txtenddate" name="rent_date" class="form-control" size="16" type="text" value="<?=$d->rent_date?>">
 
                         </div>
 
@@ -84,11 +84,22 @@
     </div>
 
 </div>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/redmond/jquery-ui.css">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.js"></script>
+
 <script type="text/javascript">
 
     jQuery(document).ready(function() {
+        $("#txtstartdate").datepicker({
+            minDate: 0,
+            onSelect: function(date) {
+                $("#txtenddate").datepicker('option', 'minDate', date);
+            }
+        });
 
-        ComponentsDateTimePickers.init();
+        $("#txtenddate").datepicker({});
         $('.select2').select2();
     });
 

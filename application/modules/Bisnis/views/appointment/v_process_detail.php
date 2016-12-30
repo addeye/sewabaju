@@ -1,96 +1,245 @@
 <div class="row ">
-    <?=$this->session->flashdata('pesan')?>
-    <div class="col-md-12">
+    <?= $this->session->flashdata('pesan') ?>
+    <div class="col-md-7">
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box red">
+            <form class="form" method="post" action="<?=$link_act?>">
+                <input type="hidden" name="appointment_id" value="<?=$appointment_id?>">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Signature <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a data-toggle="tooltip" data-placement="top" title="TTD INVOICE" class="btn btn-default" href="<?= $link_ttd ?><?=$appointment_id?>">TTD Invoice</a></li>
+                            <li><a data-toggle="tooltip" data-placement="top" title="TTD PICK UP" class="btn btn-default" href="<?= $link_ttdpickup ?><?=$appointment_id?>">TTD Pickup</a></li>
+                            <li><a data-toggle="tooltip" data-placement="top" title="TTD RETURN" class="btn btn-default" href="<?= $link_ttdreturn ?><?=$appointment_id?>">TTD Return</a></li>
+                        </ul>
+                    </div>
+                    <div class="pull-right">
+                        <a href="<?= $link_back ?>" class="btn btn-warning"><i class="fa fa-arrow-circle-left"></i> Kembali</a>
+                        <button type="submit" class="btn btn-success">Simpan</button>
+                    </div>
+                </div>
+                <div class="tools"></div>
+            </div>
+                <div class="portlet-body">
+                    <h3>Fitting Baju</h3>
+                    <table class="table table-actions-wrapper">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Tanggal</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php $no = 1;
+                        if ($tritem) {
+                            foreach ($tritem as $row): ?>
+                                <tr>
+                                    <td><?= $no++ ?></td>
+                                    <td><?= $row->mbaju->name ?></td>
+                                    <td><?= tgl_indo($row->fitting_date) ?></td>
+                                    <td><input type="checkbox" name="item_fitting_status[]" value="<?=$row->id?>" <?= $row->fitting_status == 1 ? 'checked' : '' ?>>
+                                    </td>
+                                </tr>
+                            <?php endforeach;
+                        } ?>
+
+                        <?php if ($trmade) { ?>
+                            <tr>
+                                <td><?=$no++;?></td>
+                                <td>
+                                    <ul>
+                                    <?php foreach ($trmade as $row): ?>
+                                        <li><?=$row->disc?> | <?=rupiah($row->price)?></li>
+                                    <?php endforeach; ?>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <?=$mappointment->mdeal->date_fitting?>
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="appoitment_fitting_status" value="1" <?=$mappointment->mdeal->fitting==1?'checked':''?>>
+                                </td>
+                            </tr>
+                        <?php } ?>
+
+                        <?php if ($dpromo) {
+                            foreach ($dpromo as $row):
+                                foreach ($row->trpromo as $tr):
+                                    ?>
+                                    <tr>
+                                        <td><?= $no++ ?></td>
+                                        <td><?= $tr->mbaju ? $tr->mbaju->name : 'Belum Milih' ?></td>
+                                        <td><?= $tr->fitting_date?tgl_indo($tr->fitting_date):'' ?></td>
+                                        <td><input type="checkbox" name="promo_fitting_status[]" value="<?=$tr->id?>" <?= $tr->fitting_status == 1 ? 'checked' : '' ?>>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                endforeach;
+                            endforeach;
+                        } ?>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="portlet-body">
+                    <h3>Pick Up Baju</h3>
+                    <table class="table table-actions-wrapper">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Tanggal</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php $no = 1;
+                        if ($tritem) {
+                            foreach ($tritem as $row): ?>
+                                <tr>
+                                    <td><?= $no++ ?></td>
+                                    <td><?= $row->mbaju->name ?></td>
+                                    <td><?= tgl_indo($row->rent_date) ?></td>
+                                    <td><input type="checkbox" name="item_rent_status[]" value="<?=$row->id?>" <?= $row->rent_status == 1 ? 'checked' : '' ?>>
+                                    </td>
+                                </tr>
+                            <?php endforeach;
+                        } ?>
+
+                        <?php if ($dpromo) {
+                            foreach ($dpromo as $row):
+                                foreach ($row->trpromo as $tr):
+                                    ?>
+                                    <tr>
+                                        <td><?= $no++ ?></td>
+                                        <td><?= $tr->mbaju ? $tr->mbaju->name : 'Belum Milih' ?></td>
+                                        <td><?= $tr->rent_date?tgl_indo($tr->rent_date):'' ?></td>
+                                        <td><input type="checkbox" name="promo_rent_status[]" value="<?=$tr->id?>" <?= $tr->rent_status == 1 ? 'checked' : '' ?>>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                endforeach;
+                            endforeach;
+                        } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-sm-5">
         <div class="portlet box red">
             <div class="portlet-title">
                 <div class="caption font-dark">
-                    <a href="<?=$link_add?>" class="btn sbold blue"><i class="fa fa-plus"></i> Tambah Data</a>
-                    <a href="<?=$link_import?>" class="btn sbold blue"><i class="fa fa-plus"></i> Import</a>
+                    Return Baju
                 </div>
-                <div class="tools"> </div>
             </div>
             <div class="portlet-body">
-                <table id="myTable" class="table table-actions-wrapper">
+                <table class="table table-actions-wrapper">
                     <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Nama</th>
+                        <th>Tanggal</th>
                         <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <?php $no=1; foreach($data as $row):?>
-                        <tr>
-                            <td><?=$row->id?></td>
-                            <td><?=$row->name?></td>
-                            <td>
-                                <a href="<?=$link_edit.$row->id?>" class="btn btn-success">Edit</a>
-                                <button type="button" href="#" class="btn btn-danger del" href="javascript:void(0);" id="<?=$row->id?>">Del</button>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
+                    <?php $no = 1;
+                    if ($tritem) {
+                        foreach ($tritem as $row): ?>
+                            <tr>
+                                <td><?= $no++ ?></td>
+                                <td><?= $row->mbaju->name ?></td>
+                                <td><?= tgl_indo($row->back_date) ?></td>
+                                <td>
+                                    <a href="<?=site_url('bisnis/appointment/return_sewa/'.$row->id.'/item')?>" class="btn btn-success"><i class="glyphicon glyphicon-share-alt"></i></a>
+                                </td>
+                            </tr>
+                        <?php endforeach;
+                    } ?>
+
+                    <?php if ($dpromo) {
+                        foreach ($dpromo as $row):
+                            foreach ($row->trpromo as $tr):
+                                ?>
+                                <tr>
+                                    <td><?= $no++ ?></td>
+                                    <td><?= $tr->mbaju ? $tr->mbaju->name : 'Belum Milih' ?></td>
+                                    <td><?= $tr->back_date?tgl_indo($tr->back_date):'' ?></td>
+                                    <td>
+                                        <a href="<?=site_url('bisnis/appointment/return_sewa/'.$tr->id.'/promo')?>" class="btn btn-success"><i class="glyphicon glyphicon-share-alt"></i></a>
+                                    </td>
+                                </tr>
+                                <?php
+                            endforeach;
+                        endforeach;
+                    } ?>
                     </tbody>
                 </table>
-
-                <div id="mymodal" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
-
-                    <div class="modal-body">
-
-                        <p> Anda yakin ingin menghapus data? </p>
-
-                    </div>
-
-                    <div class="modal-footer">
-
-                        <button type="button" data-dismiss="modal" class="btn btn-outline red">Cancel</button>
-
-                        <button id="delete_all_trigger" type="submit" class="btn btn-outline dark danger act_del">Hapus</button>
-
-                    </div>
-
-                </div>
-                <!-- ajax -->
-
-                <div id="ajax-modal" class="modal fade" tabindex="-1"> </div>
             </div>
         </div>
-
-        <!-- END EXAMPLE TABLE PORTLET-->
-
-        <!-- END EXAMPLE TABLE PORTLET-->
-
+    </div>
+    <div class="col-sm-5">
+        <div class="portlet box red">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    Remaining Payment
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table class="table table-striped">
+                    <tr>
+                        <td>Jumlah</td>
+                        <td>Tanggal</td>
+                    </tr>
+                    <tr>
+                        <td><?=rupiah($mappointment->mdeal->remaining_payment)?></td>
+                        <td><?=tgl_indo($mappointment->mdeal->date_rp)?></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <div class="portlet box red">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    Deposit
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table class="table table-striped">
+                    <tr>
+                        <td>Deposit</td>
+                        <td>Minus</td>
+                        <td>Total</td>
+                        <td>Lunas</td>
+                    </tr>
+                    <?php foreach($trdeposit as $row): ?>
+                        <tr>
+                            <td><?=rupiah($row->deposit)?></td>
+                            <td><?=rupiah($row->minus)?></td>
+                            <td><?=rupiah($row->deposit - $row->minus)?></td>
+                            <td><?=deposit_status()[$row->back_status]?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
-
-<input type="hidden" id="iddel">
-<input type="hidden" id="url" value="<?=$link_delete?>">
 
 <!-- END PAGE CONTENT-->
 
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         $('#myTable').DataTable();
-
-        $('.del').click(function(){
-            $('#mymodal').modal('show');
-            $('#iddel').val(this.id);
-        });
-        $('.act_del').click(function(){
-            var $url = $('#url').val();
-            var id = $('#iddel').val();
-            $.ajax({
-                url : $url+'/'+id,
-                type: 'get',
-                cache: false,
-            })
-                .success(function(){
-                    /*optional stuff to do after success */
-                    $('#mymodal').modal('hide');
-                })
-                .done(function(){
-                    location.reload(true);
-                });
-        });
     });
 </script>

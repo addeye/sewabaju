@@ -43,11 +43,11 @@
 //        console.log(sig.jSignature('getData'));
         var url = $('#urlsignature').val();
         var id = $('#appointment_id').val();
-        var ttd_invoice = sig.jSignature('getData');
+        var ttd_pickup = sig.jSignature('getData');
         $.ajax({
             url: url,
             type : 'post',
-            data : {id : id, ttd_invoice:ttd_invoice },
+            data : {id : id, ttd_pickup:ttd_pickup },
             cache: false,
         })
             .success(function() {

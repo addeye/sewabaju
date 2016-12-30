@@ -200,7 +200,9 @@
                     </div>
                     <label class="col-xs-4 text-center">
                         <b>CLIENT ,</b>
-                        <hr class="style2">
+                        <div style="padding-top: 70px;">
+                            <img src="<?=$appointment->ttd_invoice?>" class="img-responsive" alt="Responsive image">
+                        </div>
                     </label>
                 </div>
             </div>

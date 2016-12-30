@@ -116,7 +116,7 @@
                 </div>
                 <div class="row">
                     <?php foreach(proses() as $key=>$row): ?>
-                        <div class="col-xs-3"><input type="radio" name="process" <?=$deal?$deal->process==$key?'checked':'':''?>> <?=$row?></div>
+                        <div class="col-xs-3"><input disabled type="radio" name="process" <?=$deal?$deal->process==$key?'checked':'':''?>> <?=$row?></div>
                     <?php endforeach;?>
                 </div>
                 <br>
@@ -145,6 +145,25 @@
                     <div class="col-xs-3">: <?=$deal?tgl_indo($deal->date_borrow):''?></div>
                     <div class="col-xs-3">Returned</div>
                     <div class="col-xs-3">: <?=$deal?tgl_indo($deal->date_back):''?></div>
+                    <br>
+                    <div class="col-xs-12">
+                        <table class="table table-bordered">
+                            <tr style="color: white; background-color: #000033;">
+                                <th>Products</th>
+                                <th>Fitting</th>
+                                <th>Sewa</th>
+                                <th>Kembali</th>
+                            </tr>
+                            <?php foreach($schedule as $row): ?>
+                                <tr>
+                                    <td class="col-xs-4"><?=$row['name']?></td>
+                                    <td><?=tgl_indo($row['tglfitting'])?></td>
+                                    <td><?=tgl_indo($row['tglsewa'])?></td>
+                                    <td><?=tgl_indo($row['tglkembali'])?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
                 </div>
                 <br>
                 <div class="row">
@@ -154,10 +173,10 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-6">
-                        <input type="radio" name="shipping" <?=$deal?$deal->shipping==1?'checked':'':''?>> Pick Up
+                        <input disabled type="radio" name="shipping" <?=$deal?$deal->shipping==1?'checked':'':''?>> Pick Up
                     </div>
                     <div class="col-xs-3">
-                        <input type="radio" name="shipping" <?=$deal?$deal->shipping==2?'checked':'':''?>> Shipped to
+                        <input disabled type="radio" name="shipping" <?=$deal?$deal->shipping==2?'checked':'':''?>> Shipped to
                     </div>
                     <div class="col-xs-3">
                         : <?=$deal?$deal->shipping_address:''?>
@@ -179,11 +198,11 @@
                 </div>
                 <div class="row">
                     <label class="col-xs-3">Down Payment</label>
-                    <div class="col-xs-6">: Rp. <?=$deal?rupiah($deal->down_payment):''?> (<?php foreach(pay() as $key=>$row):?><?=$deal?$key==$deal->pay_dp?'<strike>'.$row.'</strike>/':$row.'/':$row.'/'?><?php endforeach; ?>) Date : <?=$deal?$deal->date_dp?tgl_indo($deal->date_dp):'':''?></div>
+                    <div class="col-xs-6">: Rp. <?=$deal?rupiah($deal->down_payment):''?> (<?php foreach(pay() as $key=>$row):?><?=$deal?$key==$deal->pay_dp?$row:'/<strike>'.$row.'</strike>/':'<strike>'.$row.'</strike>/'?><?php endforeach; ?>) Date : <?=$deal?$deal->date_dp?tgl_indo($deal->date_dp):'':''?></div>
                 </div>
                 <div class="row">
                     <label class="col-xs-3">Sisa Pembayaran</label>
-                    <div class="col-xs-6">: Rp. <?=$deal?rupiah($deal->remaining_payment):''?> (<?php foreach(pay() as $key=>$row):?><?=$deal?$key==$deal->pay_rp?'<strike>'.$row.'</strike>/':$row.'/':$row.'/'?><?php endforeach; ?>) Date : <?=$deal?$deal->date_rp?tgl_indo($deal->date_rp):'':''?></div>
+                    <div class="col-xs-6">: Rp. <?=$deal?rupiah($deal->remaining_payment):''?> (<?php foreach(pay() as $key=>$row):?><?=$deal?$key==$deal->pay_rp?$row:'/<strike>'.$row.'</strike>/':'<strike>'.$row.'</strike>/'?><?php endforeach; ?>) Date : <?=$deal?$deal->date_rp?tgl_indo($deal->date_rp):'':''?></div>
                 </div>
             </div>
             </div>

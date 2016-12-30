@@ -9,6 +9,7 @@
 class Dashboard_model extends Base_model
 {
     protected $tritem = 'tr_item';
+    protected $trpromo = 'tr_promo';
     protected $mcustomer = 'm_customer';
     protected $mbaju = 'm_baju';
     protected $mdeal = 'm_deal';
@@ -47,6 +48,79 @@ class Dashboard_model extends Base_model
         if($data)
         {
             return $data;
+        }
+        return [];
+    }
+
+    public function getTrItem()
+    {
+        $result = $this->getData($this->mappointment,array('deleted'=>'0'))->result();
+        foreach($result as $k=>$row) {
+            $condition['back_status !='] = '1';
+            $condition['baju_id !='] = '0';
+            $condition['appointment_id'] = $row->id;
+            $result[$k]->tritem = $this->getData($this->tritem, $condition)->result();
+            foreach ($result[$k]->tritem as $key => $row) {
+                $result[$k]->tritem[$key]->mcustomer = $this->getData($this->mcustomer, array('id' => $row->customer_id))->row();
+                $result[$k]->tritem[$key]->mbaju = $this->getData($this->mbaju, array('id' => $row->baju_id))->row();
+            }
+        }
+
+        if($result)
+        {
+            return $result;
+        }
+        return [];
+    }
+
+    public function getTrPromo()
+    {
+        $result = $this->getData($this->mappointment,array('deleted'=>'0'))->result();
+        foreach($result as $k=>$row) {
+            $condition['back_status !='] = '1';
+            $condition['baju_id !='] = '0';
+            $condition['appointment_id'] = $row->id;
+            $result[$k]->trpromo = $this->getData($this->trpromo, $condition)->result();
+            foreach ($result[$k]->trpromo as $key => $row) {
+                $result[$k]->trpromo[$key]->mcustomer = $this->getData($this->mcustomer, array('id' => $row->customer_id))->row();
+                $result[$k]->trpromo[$key]->mbaju = $this->getData($this->mbaju, array('id' => $row->baju_id))->row();
+            }
+        }
+
+        if($result)
+        {
+            return $result;
+        }
+        return [];
+    }
+
+    public function getAppointmentDeal()
+    {
+        $condition['created_at'] = date('Y-m-d');
+        $condition['deleted !='] = '1';
+        $result = $this->getData($this->mappointment,$condition)->result();
+        foreach($result as $k=>$ap)
+        {
+            $result[$k]->mdeal = $this->getData($this->mdeal,array('appointment_id'=>$ap->id))->row();
+        }
+        if($result)
+        {
+            return $result;
+        }
+        return [];
+    }
+
+    public function getAppointment()
+    {
+        $condition['deleted !='] = '1';
+        $result = $this->getData($this->mappointment,$condition)->result();
+        foreach($result as $k=>$ap)
+        {
+            $result[$k]->mdeal = $this->getData($this->mdeal,array('appointment_id'=>$ap->id))->row();
+        }
+        if($result)
+        {
+            return $result;
         }
         return [];
     }

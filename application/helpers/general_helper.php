@@ -54,6 +54,7 @@ if(!function_exists('modul'))
             MODUL_LABARUGI_SEWA_BAJU => 'Laba Rugi',
             MODUL_OPERASIONAL_SEWA_BAJU => 'Operasional',
             MODUL_VOUCHER_SEWA_BAJU => 'Voucher',
+            MODUL_LOG_SEWA_BAJU => 'Log Activity',
         );
     }
 }
@@ -117,6 +118,31 @@ if(!function_exists('status_return'))
             RETURN_COMPLETE => 'Complete',
             RETURN_RUSAK => 'Rusak',
             RETURN_TELAT => 'Telat',
+        );
+    }
+}
+
+if(!function_exists('deposit_status'))
+{
+    function deposit_status()
+    {
+        return array(
+            DEPOSIT_STATUS_BELUM => 'Belum',
+            DEPOSIT_STATUS_SUDAH => 'Sudah'
+        );
+    }
+}
+
+if(!function_exists('log_status'))
+{
+    function log_status()
+    {
+        return array(
+            LOG_LOGIN => 'Login',
+            LOG_LOGOUT => 'Logout',
+            LOG_ADD => 'Add',
+            LOG_EDIT => 'Edit',
+            LOG_DELETE => 'Delete'
         );
     }
 }

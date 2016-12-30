@@ -23,6 +23,7 @@ define('MODUL_APPOINTMENT_SEWA_BAJU',13);
 define('MODUL_HISTORY_SEWA_BAJU',14);
 define('MODUL_OPERASIONAL_SEWA_BAJU',15);
 define('MODUL_VOUCHER_SEWA_BAJU',16);
+define('MODUL_LOG_SEWA_BAJU',17);
 
 //Status
 define('STATUS_APPOINTMENT',1);
@@ -52,3 +53,13 @@ define('PAY_TRANSFER',4);
 define('RETURN_COMPLETE',1);
 define('RETURN_RUSAK',2);
 define('RETURN_TELAT',3);
+
+define('DEPOSIT_STATUS_BELUM',0);
+define('DEPOSIT_STATUS_SUDAH',1);
+
+//Log
+define('LOG_LOGIN',0);
+define('LOG_LOGOUT',1);
+define('LOG_ADD',2);
+define('LOG_EDIT',3);
+define('LOG_DELETE',4);

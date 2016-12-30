@@ -31,6 +31,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 col-sm-offset-1 control-label">Email</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" name="email" value="<?=$d->email?>">
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 col-sm-offset-1 control-label">Alamat</label>
                         <div class="col-sm-5">
                             <textarea class="form-control" name="address" rows="3"><?=$d->address?></textarea>

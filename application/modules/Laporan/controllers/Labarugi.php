@@ -31,11 +31,24 @@ class Labarugi extends My_controller
 
         $data = array(
             'header_title' => 'Arus Kas',
-            'header_desc' => 'Master',
+            'header_desc' => 'Laporan',
+            'linkinvoice' => site_url('laporan/labarugi/invoice/'),
             'baju' => $baju,
             'total' => $total
         );
         $content = 'labarugi/v_labarugi_table';
+        $this->pinky->output($data,$content);
+    }
+
+    public function invoice($id)
+    {
+        $data = array(
+            'header_title' => 'Invoice List',
+            'header_desc' => 'Laporan',
+            'rowdata' => $this->model->getInvoice($id),
+            'linkback' => site_url('laporan/labarugi')
+        );
+        $content = 'labarugi/v_invoice_list';
         $this->pinky->output($data,$content);
     }
 }

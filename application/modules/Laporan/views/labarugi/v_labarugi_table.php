@@ -9,12 +9,9 @@
         <div class="portlet box red">
 
             <div class="portlet-title">
-
                 <div class="caption font-dark">
-                    <button onclick="loadOtherPage()" class="btn sbold blue"><i class="fa fa-print"></i> Print</button>
                 </div>
                 <div class="tools"> </div>
-
             </div>
 
             <div class="portlet-body">
@@ -26,6 +23,7 @@
                             <th>Harga Sewa</th>
                             <th>HPP Awal</th>
                             <th>Disewa</th>
+                            <th>Invoice</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -36,6 +34,9 @@
                                 <td>Rp. <?=rupiah($row->rent_price)?></td>
                                 <td>Rp. <?=rupiah($row->hpp_first)?></td>
                                 <td><?=$row->disewa?></td>
+                                <td>
+                                    <a href="<?=$linkinvoice.$row->id?>" class="btn btn-success"><i class="glyphicon glyphicon-th-list"></i></a>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>
