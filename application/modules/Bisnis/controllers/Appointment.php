@@ -232,6 +232,8 @@ class Appointment extends My_controller
             'link_total_transaksi' => site_url('bisnis/appointment/totalTransaksi'),
             'link_invoice' => site_url('bisnis/appointment/invoice/' . $id),
 
+            'link_lockdp' => site_url('bisnis/appointment/lockdp/'),
+
             'd' => $this->model->getId($id),
             'baju' => $this->model->getBaju(),
             'accessories' => $this->model->getAccessories(),
@@ -397,6 +399,16 @@ class Appointment extends My_controller
         $shipping_cost = $this->input->post('shipping_cost');
         $disc_voucher = $this->input->post('disc_voucher');
 
+        $app = $this->model->getId($appointment_id);
+        $lock_dp = 0;
+        $dp_old = 0;
+
+        if($app->mdeal)
+        {
+            $lock_dp = $app->mdeal->lock_dp;
+            $dp_old = $app->mdeal->down_payment;
+        }
+
         $total = array();
 //        $lop = 1;
         $ids = array();
@@ -428,7 +440,13 @@ class Appointment extends My_controller
 
         $grandtotal = array_sum($total);
         $grandtotal = ($grandtotal + $shipping_cost) - $disc_voucher;
+
         $dp = $grandtotal / 2;
+
+        if($lock_dp==1)
+        {
+            $dp = $dp_old;
+        }
 
         $data = array(
             'total' => $grandtotal,
@@ -1525,8 +1543,14 @@ class Appointment extends My_controller
             echo 0;
         }
 
+    }
 
-
+    public function lockdp($id)
+    {
+        $data = array(
+            'lock_dp'=>1
+        );
+        $this->model->UpdateDeal($id,$data);
     }
 
     public function sendmail()

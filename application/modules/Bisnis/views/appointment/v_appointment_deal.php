@@ -19,10 +19,11 @@
                 <form class="form-horizontal" method="post" action="<?=$link_act?>" onsubmit="unmask_number()">
                     <input type="hidden" id="customer_id" name="customer_id" value="<?=$d->customer_id?>">
                     <input type="hidden" id="appointment_id" name="appointment_id" value="<?=$d->id?>">
-                    <input type="hidden" name="id" value="<?=$deal?$deal->id:0?>">
+                    <input type="hidden" id="deal_id" name="id" value="<?=$deal?$deal->id:0?>">
                     <input type="hidden" id="codevoucher" value="<?=$deal?$deal->code_voucher:''?>" name="codevoucher">
                     <input type="hidden" id="discvoucher" value="<?=$deal?$deal->disc_voucher:0?>" name="discvoucher">
                     <input type="hidden" name="promo" id="promodeal" value="<?=$deal?$deal->promo:0?>">
+                    <input type="hidden" id="lock_dp" value="<?=$deal?$deal->lock_dp:0?>">
 
                     <div class="row">
                         <div class="col-md-12">
@@ -114,8 +115,8 @@
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-3 control-label">Down Payment</label>
                         <div class="col-sm-4">
-                            <input type="text" id="down_payment" class="form-control" name="down_payment" value="<?=$deal?$deal->down_payment:''?>" required>
-                            <p class="help-block" id="label-dp"></p>
+                            <input type="text" id="down_payment" class="form-control" name="down_payment" value="<?=$deal?$deal->down_payment:''?>" required <?=$deal?$deal->lock_dp==1?'disabled':'':''?>>
+                            <p style="padding-top: 5px;" class="help-block"><button type="button" id="lockdp" class="btn btn-success"><span class="glyphicon glyphicon-lock"></span> Lock</button></p>
                         </div>
                         <div class="col-sm-3">
                             <input type="text" class="form-control date-picker" name="date_dp" value="<?=$deal?$deal->date_dp:date('Y-m-d')?>">
@@ -404,6 +405,8 @@
 <input type="hidden" id="urltotaltransaksi" value="<?=$link_total_transaksi?>">
 <input type="hidden" id="urlinvoice" value="<?=$link_invoice?>">
 
+<input type="hidden" id="urllockdp" value="<?=$link_lockdp?>">
+
 <script src="<?php echo base_url('assets/pinky/global/scripts/jquery-ui.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/pinky/global/scripts/jquery.price_format.2.0.min.js') ?>"></script>
 
@@ -423,6 +426,7 @@
         $('#shipping_cost').val($('#shipping_cost').unmask());
         $('#dtotal').val($('#dtotal').unmask());
         $('#down_payment').val($('#down_payment').unmask());
+        $('#down_payment').removeAttr('disabled');
 
     }
 
@@ -588,6 +592,10 @@
             formmadebaju();
             bajumadeforrent();
             totaltransaksi();
+        });
+        $('#lockdp').click(function(){
+            $('#down_payment').attr('disabled','true');
+            lockdp();
         });
 
         $('#text-voucher').keyup(function()
@@ -1182,6 +1190,7 @@
     {
         var total = $('#dtotal').val();
         var dp = $('#down_payment').val();
+        console.log('ini dp nya'+dp);
         var hasil = Number(total - dp).toFixed();
         console.log(hasil);
         $('#remaining_payment').val(hasil);
@@ -1318,6 +1327,25 @@
                 formtritem(data);
                 bajumadeforrent();
                 totaltransaksi();
+            });
+    }
+
+    function lockdp()
+    {
+        var url = $('#urllockdp').val();
+        var deal_id = $('#deal_id').val();
+
+        $.ajax({
+            beforeSend:function(){
+                $("#loading").modal('show');
+            },
+            url: url+deal_id,
+            type : 'get',
+            cache: false,
+        })
+            .success(function() {
+                totaltransaksi();
+                $("#loading").modal('hide');
             });
     }
 

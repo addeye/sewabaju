@@ -52,6 +52,7 @@ class Welcome extends My_controller {
 						'start' => $row->fitting_date,
 						'end' => $row->back_date.'T23:59:00',
 						'description' => $row->mcustomer->name,
+						'appointment_id' => $row->appointment_id
 					);
 				}
 			}
@@ -68,6 +69,7 @@ class Welcome extends My_controller {
 						'start' => $row->fitting_date,
 						'end' => $row->back_date.'T23:59:00',
 						'description' => $row->mcustomer->name,
+						'appointment_id' => $row->appointment_id
 					);
 				}
 			}

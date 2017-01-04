@@ -168,6 +168,7 @@
 <div id="invoice" class="modal container fade modal-overflow in" tabindex="-1" aria-hidden="true">
 
 </div>
+
 <div id="delivery" class="modal container fade modal-overflow in" tabindex="-1" aria-hidden="true">
 
 </div>
@@ -213,6 +214,7 @@
                 });
         });
     });
+
     function invoice(id) {
         var urlinvoice = $('#urlinvoice').val();
         $.ajax({

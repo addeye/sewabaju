@@ -118,13 +118,10 @@
 
 </div>
 
-<div id="eventContent" title="Event Details" style="display:none;">
-    Start: <span id="startTime"></span><br>
-    End: <span id="endTime"></span><br><br>
-    <p id="eventInfo"></p>
-    <p><strong><a id="eventLink" href="" target="_blank">Read More</a></strong></p>
-</div>
+<div id="invoice" class="modal container fade modal-overflow in" tabindex="-1" aria-hidden="true">
 
+</div>
+<input type="hidden" id="urlinvoice" value="<?=site_url('bisnis/appointment/invoice/')?>">
 <script>
     var events_array = <?=$dcalendar?>
 </script>

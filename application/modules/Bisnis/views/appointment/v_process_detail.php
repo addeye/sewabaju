@@ -243,6 +243,10 @@
             </div>
         </div>
     </div>
+    <?php
+    if($mappointment->mdeal):
+    if($mappointment->mdeal->process==PROSES_MADE_FOR_SALE):
+    ?>
     <div class="col-sm-6">
         <div class="portlet box red">
             <div class="portlet-title">
@@ -268,6 +272,7 @@
             </div>
         </div>
     </div>
+    <?php endif; endif; ?>
     <div class="col-sm-5" style="display: none;">
         <div class="portlet box red">
             <div class="portlet-title">
