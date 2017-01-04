@@ -19,7 +19,7 @@ class Type extends My_controller
 
     public function index()
     {
-        role(MODUL_KATEGORI_SEWA_BAJU,'read');
+        role(MODUL_TYPE_SEWA_BAJU,'read');
 
         $data = array(
             'header_title' => 'Tipe',
@@ -37,7 +37,7 @@ class Type extends My_controller
 
     public function add()
     {
-        role(MODUL_KATEGORI_SEWA_BAJU,'create');
+        role(MODUL_TYPE_SEWA_BAJU,'create');
 
         $data = array(
             'header_title' => 'Form Tipe',
@@ -51,7 +51,7 @@ class Type extends My_controller
 
     public function do_add()
     {
-        role(MODUL_KATEGORI_SEWA_BAJU,'create');
+        role(MODUL_TYPE_SEWA_BAJU,'create');
 
         $name = $this->input->post('name');
 
@@ -62,6 +62,7 @@ class Type extends My_controller
         $result = $this->model->create($data);
         if($result)
         {
+            helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Type '.$name);
             alert();
             redirect('master/type');
         }
@@ -69,7 +70,7 @@ class Type extends My_controller
 
     public function update($id)
     {
-        role(MODUL_KATEGORI_SEWA_BAJU,'update');
+        role(MODUL_TYPE_SEWA_BAJU,'update');
 
         $data = array(
             'header_title' => 'Update Tipe',
@@ -85,7 +86,7 @@ class Type extends My_controller
 
     public function do_update()
     {
-        role(MODUL_KATEGORI_SEWA_BAJU,'update');
+        role(MODUL_TYPE_SEWA_BAJU,'update');
 
         $name = $this->input->post('name');
 
@@ -99,6 +100,7 @@ class Type extends My_controller
         $result = $this->model->update($id,$data);
         if($result)
         {
+            helper_log("edit", $this->session->userdata('name').LANG_EDIT_LOG.'Type '.$name);
             alert(2);
             redirect('master/type');
         }
@@ -106,19 +108,20 @@ class Type extends My_controller
 
     public function delete($id)
     {
-        role(MODUL_KATEGORI_SEWA_BAJU,'delete');
+        role(MODUL_TYPE_SEWA_BAJU,'delete');
 
         $data['status'] = '1';
         $result = $this->model->update($id,$data);
         if($result)
         {
+            helper_log("delete", $this->session->userdata('name').LANG_DELETE_LOG.'Type ID '.$id);
             alert(3);
         }
     }
 
     public function import()
     {
-        role(MODUL_KATEGORI_SEWA_BAJU,'create');
+        role(MODUL_TYPE_SEWA_BAJU,'create');
 
         $data = array(
             'header_title' => 'Import Type',
@@ -134,7 +137,7 @@ class Type extends My_controller
 
     public function do_import()
     {
-        role(MODUL_KATEGORI_SEWA_BAJU,'create');
+        role(MODUL_TYPE_SEWA_BAJU,'create');
 
         $this->load->library('Libexcel');
 
@@ -177,6 +180,7 @@ class Type extends My_controller
             delete_files($media['file_path']);
 
         }
+        helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Type Dengan Import');
         alert();
         redirect('master/type');
     }

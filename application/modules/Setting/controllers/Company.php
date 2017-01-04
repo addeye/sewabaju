@@ -73,6 +73,7 @@ class Company extends My_controller
         $result = $this->model->update($id,$data);
         if($result)
         {
+            helper_log("edit", $this->session->userdata('name').LANG_EDIT_LOG.'Company ');
             alert(2);
             redirect('setting/company');
         }

@@ -71,6 +71,7 @@ class Customer extends My_controller
         );
 
         $result = $this->model->create($data);
+        helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Customer '.$name);
         if($result)
         {
             alert();
@@ -121,7 +122,7 @@ class Customer extends My_controller
 
         if($result)
         {
-            helper_log('edit','Melakukan edit customer '.$name);
+            helper_log("edit", $this->session->userdata('name').LANG_EDIT_LOG.'Customer '.$name);
             alert(2);
             redirect('master/customer');
         }
@@ -133,6 +134,7 @@ class Customer extends My_controller
 
         $data['status'] = '1';
         $result = $this->model->update($id,$data);
+        helper_log("delete", $this->session->userdata('name').LANG_DELETE_LOG.'Customer ID '.$id);
         if($result)
         {
             alert(3);
@@ -212,6 +214,7 @@ class Customer extends My_controller
             $insert = $this->model->create($data);
         }
         unlink($media['full_path']);
+        helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Customer Dengan Import ');
         alert();
         redirect('master/customer');
     }

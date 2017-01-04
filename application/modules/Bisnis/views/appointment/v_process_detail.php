@@ -265,7 +265,7 @@
                         <td><?=$mappointment->mdeal?$mappointment->mdeal->back_deposit==1?'Lunas':'Belum':''?></td>
                         <td class="text-right"><?=$mappointment->mdeal?rupiah($mappointment->mdeal->deposit):''?></td>
                         <td class="text-right">
-                            <a href="#" class="btn btn-danger"><span class="glyphicon glyphicon-share-alt"></span></a>
+                            <a href="<?=site_url('bisnis/appointment/back_deposit_for_sale/'.$mappointment->id)?>" class="btn <?=$mappointment->mdeal->back_deposit==1?'btn-success':'btn-danger'?>"><span class="glyphicon glyphicon-share-alt"></span></a>
                         </td>
                     </tr>
                 </table>

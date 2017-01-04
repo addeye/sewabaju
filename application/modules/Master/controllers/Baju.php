@@ -116,6 +116,7 @@ class Baju extends My_controller
         }
 
         $result = $this->model->create($data);
+        helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Baju '.$name);
         if($result)
         {
             alert();
@@ -200,6 +201,7 @@ class Baju extends My_controller
         }
 
         $result = $this->model->update($id,$data);
+        helper_log("edit", $this->session->userdata('name').LANG_EDIT_LOG.'Baju '.$name);
         if($result)
         {
             alert(2);
@@ -214,6 +216,7 @@ class Baju extends My_controller
         $this->deletefileimages('baju',$id);
         $data['status'] = '1';
         $result = $this->model->update($id,$data);
+        helper_log("delete", $this->session->userdata('name').LANG_DELETE_LOG.'Baju ID '.$id);
         if($result)
         {
             alert(3);
@@ -336,6 +339,7 @@ class Baju extends My_controller
 
         }
         unlink($media['full_path']);
+        helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Baju Dengan Import');
         alert();
         redirect('master/baju');
     }

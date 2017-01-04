@@ -45,6 +45,7 @@ class Operasional extends My_controller
             'link_back' => site_url('bisnis/operasional'),
             'link_act' => site_url('bisnis/operasional/do_add'),
         );
+
         $content = 'operasional/v_operasional_add';
         $this->pinky->output($data, $content);
     }
@@ -66,6 +67,8 @@ class Operasional extends My_controller
             'cost' => $cost,
             'date' => $date,
         );
+
+        helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Operasional '.$name);
 
         $result = $this->model->create($data);
         if ($result) {
@@ -110,6 +113,7 @@ class Operasional extends My_controller
 
         $condition['id'] = $id;
         $result = $this->model->update($id, $data);
+        helper_log("edit", $this->session->userdata('name').LANG_EDIT_LOG.'Operasional '.$name);
         if ($result) {
             alert(2);
             redirect('bisnis/operasional');
@@ -119,7 +123,7 @@ class Operasional extends My_controller
     public function delete($id)
     {
         role(MODUL_OPERASIONAL_SEWA_BAJU, 'delete');
-
+        helper_log("delete", $this->session->userdata('name').LANG_DELETE_LOG.'Operasional ID '.$id);
         $data['status'] = '1';
         $result = $this->model->update($id, $data);
         if ($result) {
@@ -189,6 +193,7 @@ class Operasional extends My_controller
 
         }
         alert();
-        redirect('master/kategori');
+        helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Operasional Dengan Import ');
+        redirect('bisnis/operasional');
     }
 }

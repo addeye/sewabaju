@@ -71,6 +71,7 @@ class Promo extends My_controller
         $result = $this->model->create($data);
         if($result)
         {
+            helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Promo '.$name);
             alert();
             redirect('master/promo');
         }
@@ -117,6 +118,7 @@ class Promo extends My_controller
         $result = $this->model->update($id,$data);
         if($result)
         {
+            helper_log("edit", $this->session->userdata('name').LANG_EDIT_LOG.'Promo '.$name);
             alert(2);
             redirect('master/promo');
         }
@@ -130,6 +132,7 @@ class Promo extends My_controller
         $result = $this->model->update($id,$data);
         if($result)
         {
+            helper_log("delete", $this->session->userdata('name').LANG_DELETE_LOG.'Promo ID '.$id);
             alert(3);
         }
     }

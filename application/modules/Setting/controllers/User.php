@@ -76,6 +76,7 @@ class User extends My_controller
         $result = $this->model->create($data);
         if($result)
         {
+            helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'User '.$name);
             alert();
             redirect('setting/user');
         }
@@ -121,6 +122,7 @@ class User extends My_controller
         $result = $this->model->update($id,$data);
         if($result)
         {
+            helper_log("edit", $this->session->userdata('name').LANG_EDIT_LOG.'User '.$name);
             alert(2);
             redirect('setting/user');
         }
@@ -133,6 +135,7 @@ class User extends My_controller
         $result = $this->model->delete($id);
         if($result)
         {
+            helper_log("delete", $this->session->userdata('name').LANG_DELETE_LOG.'User ID'.$id);
             alert(3);
         }
     }

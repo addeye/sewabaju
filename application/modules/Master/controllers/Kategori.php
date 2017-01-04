@@ -62,6 +62,7 @@ class Kategori extends My_controller
         $result = $this->model->create($data);
         if($result)
         {
+            helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Kategori '.$name);
             alert();
             redirect('master/kategori');
         }
@@ -99,6 +100,7 @@ class Kategori extends My_controller
         $result = $this->model->update($id,$data);
         if($result)
         {
+            helper_log("edit", $this->session->userdata('name').LANG_EDIT_LOG.'Kategori '.$name);
             alert(2);
             redirect('master/kategori');
         }
@@ -112,6 +114,7 @@ class Kategori extends My_controller
         $result = $this->model->update($id,$data);
         if($result)
         {
+            helper_log("delete", $this->session->userdata('name').LANG_DELETE_LOG.'Kategori ID'.$id);
             alert(3);
         }
     }
@@ -177,6 +180,7 @@ class Kategori extends My_controller
             delete_files($media['file_path']);
 
         }
+        helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Kategori Dengan Import ');
         alert();
         redirect('master/kategori');
     }

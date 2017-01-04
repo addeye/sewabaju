@@ -62,7 +62,7 @@ class Role extends My_controller
 
             $this->model->update($id,$data);
         }
-
+        helper_log("edit", $this->session->userdata('name').LANG_EDIT_LOG.'Role Akses');
         alert();
         redirect('setting/role/access/'.$group_id);
     }
@@ -84,6 +84,7 @@ class Role extends My_controller
 
             $this->model->create($data);
         }
+        helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Role Akses');
         alert();
         redirect('setting/role/access/'.$group_id);
     }

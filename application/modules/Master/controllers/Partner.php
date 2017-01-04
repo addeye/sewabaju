@@ -71,6 +71,7 @@ class Partner extends My_controller
         $result = $this->model->create($data);
         if($result)
         {
+            helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Partner '.$name);
             alert();
             redirect('master/partner');
         }
@@ -116,6 +117,7 @@ class Partner extends My_controller
         $result = $this->model->update($id,$data);
         if($result)
         {
+            helper_log("edit", $this->session->userdata('name').LANG_EDIT_LOG.'Partner '.$name);
             alert(2);
             redirect('master/partner');
         }
@@ -129,6 +131,7 @@ class Partner extends My_controller
         $result = $this->model->update($id,$data);
         if($result)
         {
+            helper_log("delete", $this->session->userdata('name').LANG_DELETE_LOG.'Partner ID '.$id);
             alert(3);
         }
     }
@@ -199,6 +202,7 @@ class Partner extends My_controller
             $insert = $this->model->create($data);
         }
         unlink($media['full_path']);
+        helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Partner Dengan Import');
         alert();
         redirect('master/partner');
     }

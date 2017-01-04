@@ -78,6 +78,7 @@ class Group extends My_controller
 
         if($result)
         {
+            helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Group '.$name);
             alert();
             redirect('setting/group');
         }
@@ -115,6 +116,7 @@ class Group extends My_controller
         $result = $this->model->update($id,$data);
         if($result)
         {
+            helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Group '.$name);
             alert(2);
             redirect('setting/group');
         }
@@ -128,6 +130,7 @@ class Group extends My_controller
         $this->rmodel->deleteAllByIdLevel($id);
         if($result)
         {
+            helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Group ID'.$id);
             alert(3);
         }
     }

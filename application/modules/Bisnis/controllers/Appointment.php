@@ -1441,6 +1441,8 @@ class Appointment extends My_controller
             $this->model->update($appointment_id, $data_up);
         }
 
+        helper_log("edit", $this->session->userdata('name').LANG_EDIT_LOG.'Transaksi Detail Proses '.app_for_log($appointment_id)->code);
+
         alert();
         redirect('bisnis/appointment');
     }
@@ -1514,6 +1516,9 @@ class Appointment extends My_controller
             $this->model->updateTrItem($id, $data);
 
         }
+
+        helper_log("edit", $this->session->userdata('name').LANG_EDIT_LOG.'Transaksi Detail Proses Return Product '.app_for_log($appointment_id)->code);
+
         alert(2);
         redirect('bisnis/appointment/process_detail/' . $appointment_id);
     }
@@ -1593,6 +1598,20 @@ class Appointment extends My_controller
             'lock_dp'=>1
         );
         $this->model->UpdateDeal($id,$data);
+    }
+
+    public function back_deposit_for_sale($appointment_id)
+    {
+        $data = array(
+            'back_deposit' => 1,
+        );
+
+        $app = $this->model->getId($appointment_id);
+        $deal_id = $app->mdeal->id;
+
+        $this->model->UpdateDeal($deal_id,$data);
+        helper_log("edit", $this->session->userdata('name').LANG_EDIT_LOG.'Made For Sale (Deposit) '.app_for_log($appointment_id)->code);
+        redirect('bisnis/appointment/process_detail/'.$appointment_id);
     }
 
     public function sendmail()

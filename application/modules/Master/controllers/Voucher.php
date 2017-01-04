@@ -65,6 +65,7 @@ class Voucher extends My_controller
         $result = $this->model->create($data);
         if($result)
         {
+            helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Voucher '.$code);
             alert();
             redirect('master/voucher');
         }
@@ -106,6 +107,7 @@ class Voucher extends My_controller
         $result = $this->model->update($id,$data);
         if($result)
         {
+            helper_log("edit", $this->session->userdata('name').LANG_EDIT_LOG.'Voucher '.$code);
             alert(2);
             redirect('master/voucher');
         }
@@ -119,6 +121,7 @@ class Voucher extends My_controller
         $result = $this->model->update($id,$data);
         if($result)
         {
+            helper_log("delete", $this->session->userdata('name').LANG_ADD_LOG.'Voucher ID'.$id);
             alert(3);
         }
     }

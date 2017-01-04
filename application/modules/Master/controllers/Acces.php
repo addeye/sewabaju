@@ -68,7 +68,7 @@ class Acces extends My_controller
 //            'sale_price' => $sale_price,
             'partner' => $partner,
         );
-
+        helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Accessories '.$name);
         $result = $this->model->create($data);
         if($result)
         {
@@ -114,6 +114,7 @@ class Acces extends My_controller
 
         $condition['id']= $id;
         $result = $this->model->update($id,$data);
+        helper_log("edit", $this->session->userdata('name').LANG_EDIT_LOG.'Accessories '.$name);
         if($result)
         {
             alert(2);
@@ -124,7 +125,7 @@ class Acces extends My_controller
     public function delete($id)
     {
         role(MODUL_ACCESSORIES_SEWA_BAJU,'delete');
-
+        helper_log("delete", $this->session->userdata('name').LANG_DELETE_LOG.'Accessories ID '.$id);
         $data['status'] = '1';
         $result = $this->model->update($id,$data);
         if($result)
@@ -198,6 +199,7 @@ class Acces extends My_controller
 
         }
         unlink($media['full_path']);
+        helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Accessories Dengan Import ');
         alert();
         redirect('master/acces');
     }
