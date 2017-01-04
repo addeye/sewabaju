@@ -141,25 +141,27 @@
                     </label>
                 </div>
                 <div class="row">
-                    <div class="col-xs-3">Out</div>
-                    <div class="col-xs-3">: <?=$deal?tgl_indo($deal->date_borrow):''?></div>
-                    <div class="col-xs-3">Returned</div>
-                    <div class="col-xs-3">: <?=$deal?tgl_indo($deal->date_back):''?></div>
-                    <br>
+                    <div id="schedule" style="display: none;">
+                        <div class="col-xs-3">Out</div>
+                        <div class="col-xs-3">: <?=$deal->date_borrow?tgl_indo($deal->date_borrow):''?></div>
+                        <div class="col-xs-3">Returned</div>
+                        <div class="col-xs-3">: <?=$deal->date_back?tgl_indo($deal->date_back):''?></div>
+                        <br>
+                    </div>
                     <div class="col-xs-12">
                         <table class="table table-bordered">
                             <tr style="color: white; background-color: #000033;">
                                 <th>Products</th>
                                 <th>Fitting</th>
-                                <th>Sewa</th>
+                                <th>Sewa / Pickup</th>
                                 <th>Kembali</th>
                             </tr>
                             <?php foreach($schedule as $row): ?>
                                 <tr>
                                     <td class="col-xs-4"><?=$row['name']?></td>
-                                    <td><?=$row['tglfitting']?tgl_indo($row['tglfitting']):''?></td>
-                                    <td><?=$row['tglsewa']?tgl_indo($row['tglsewa']):''?></td>
-                                    <td><?=$row['tglkembali']?tgl_indo($row['tglkembali']):''?></td>
+                                    <td><?=$row['tglfitting']?$row['tglfitting']!='0000-00-00'?tgl_indo($row['tglfitting']):'':''?></td>
+                                    <td><?=$row['tglsewa']?$row['tglsewa']!='0000-00-00'?tgl_indo($row['tglsewa']):'':''?></td>
+                                    <td><?=$row['tglkembali']?$row['tglkembali']!='0000-00-00'?tgl_indo($row['tglkembali']):'':''?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>
@@ -232,7 +234,8 @@
                     <label class="col-xs-4 text-center">
                         <b>CLIENT ,</b>
                         <div style="padding-top: 70px;">
-                            <img src="<?=$appointment->ttd_invoice?>" class="img-responsive" alt="Responsive image">
+                            <img src="<?=$appointment->ttd_invoice?>" class="img-responsive" alt="">
+                            <p style="margin: -21px;"><?=$appointment->receiver_invoice?></p>
                         </div>
                     </label>
                 </div>

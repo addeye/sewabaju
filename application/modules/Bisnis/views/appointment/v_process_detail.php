@@ -115,6 +115,25 @@
                             <?php endforeach;
                         } ?>
 
+                        <?php if ($trmade) { ?>
+                            <tr>
+                                <td><?=$no++;?></td>
+                                <td>
+                                    <ul>
+                                        <?php foreach ($trmade as $row): ?>
+                                            <li><?=$row->disc?> | <?=rupiah($row->price)?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <?=$mappointment->mdeal->date_borrow?>
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="appoitment_rent_status" value="1" <?=$mappointment->mdeal->pickup==1?'checked':''?>>
+                                </td>
+                            </tr>
+                        <?php } ?>
+
                         <?php if ($dpromo) {
                             foreach ($dpromo as $row):
                                 foreach ($row->trpromo as $tr):
@@ -153,44 +172,50 @@
                         <th>No</th>
                         <th>Nama</th>
                         <th>Tanggal</th>
+                        <th>Minus</th>
                         <th>Deposit</th>
                         <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php $no = 1;
+                    if($mappointment->mdeal):
+                    if($mappointment->mdeal->process==PROSES_MADE_FOR_RENT or $mappointment->mdeal->process==PROSES_RENT):
                     if ($tritem) {
                         foreach ($tritem as $row): ?>
                             <tr>
                                 <td><?= $no++ ?></td>
                                 <td><?= $row->mbaju->name ?></td>
                                 <td><?= tgl_indo($row->back_date) ?></td>
+                                <td class="text-right"><?=rupiah($row->minus)?></td>
                                 <td class="text-right"><?=rupiah($row->deposit)?></td>
                                 <td>
-                                    <a href="<?=site_url('bisnis/appointment/return_sewa/'.$row->id.'/item')?>" class="btn btn-success"><i class="glyphicon glyphicon-share-alt"></i></a>
+                                    <a href="<?=site_url('bisnis/appointment/return_sewa/'.$row->id.'/item')?>" class="btn <?=$row->back_status=='1'?'btn-success':'btn-danger'?>"><i class="glyphicon glyphicon-share-alt"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach;
-                    } ?>
+                    }
+                    endif;
+                    endif;
+                    ?>
 
-                    <?php if ($dpromo) {
-                        foreach ($dpromo as $row):
-                            foreach ($row->trpromo as $tr):
+                    <?php if ($trpromo) {
+                            foreach ($trpromo as $tr):
                                 ?>
                                 <tr>
                                     <td><?= $no++ ?></td>
                                     <td><?= $tr->mbaju ? $tr->mbaju->name : 'Belum Dipilih' ?></td>
                                     <td><?= $tr->back_date?tgl_indo($tr->back_date):'' ?></td>
+                                    <td class="text-right"><?=$tr->deposit?rupiah($tr->minus):''?></td>
                                     <td class="text-right"><?=$tr->deposit?rupiah($tr->deposit):''?></td>
                                     <td>
                                         <?php if($tr->mbaju){?>
-                                        <a href="<?=site_url('bisnis/appointment/return_sewa/'.$tr->id.'/promo')?>" class="btn btn-success"><i class="glyphicon glyphicon-share-alt"></i></a>
+                                        <a href="<?=site_url('bisnis/appointment/return_sewa/'.$tr->id.'/promo')?>" class="btn <?=$tr->back_status=='1'?'btn-success':'btn-danger'?>"><i class="glyphicon glyphicon-share-alt"></i></a>
                                         <?php } ?>
                                     </td>
                                 </tr>
                                 <?php
                             endforeach;
-                        endforeach;
                     } ?>
                     </tbody>
                 </table>
@@ -207,12 +232,37 @@
             <div class="portlet-body">
                 <table class="table table-striped">
                     <tr>
-                        <td>Jumlah</td>
                         <td>Tanggal</td>
+                        <td class="text-right">Jumlah</td>
                     </tr>
                     <tr>
-                        <td><?=rupiah($mappointment->mdeal->remaining_payment)?></td>
-                        <td><?=tgl_indo($mappointment->mdeal->date_rp)?></td>
+                        <td><?=$mappointment->mdeal?tgl_indo($mappointment->mdeal->date_rp):''?></td>
+                        <td class="text-right"><?=$mappointment->mdeal?rupiah($mappointment->mdeal->remaining_payment):''?></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="portlet box red">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    Deposit
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table class="table table-striped">
+                    <tr>
+                        <td>Status</td>
+                        <td class="text-right">Jumlah</td>
+                        <td class="text-right">Action</td>
+                    </tr>
+                    <tr>
+                        <td><?=$mappointment->mdeal?$mappointment->mdeal->back_deposit==1?'Lunas':'Belum':''?></td>
+                        <td class="text-right"><?=$mappointment->mdeal?rupiah($mappointment->mdeal->deposit):''?></td>
+                        <td class="text-right">
+                            <a href="#" class="btn btn-danger"><span class="glyphicon glyphicon-share-alt"></span></a>
+                        </td>
                     </tr>
                 </table>
             </div>

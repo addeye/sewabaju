@@ -16,6 +16,11 @@
             </div>
             <div class="portlet-body">
                 <div id="signature"></div>
+                <div class="row">
+                    <div class="col-md-5 col-md-offset-3">
+                        <input class="form-control" type="text" id="name_receiver" placeholder="Nama Anda....">
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -43,11 +48,12 @@
 //        console.log(sig.jSignature('getData'));
         var url = $('#urlsignature').val();
         var id = $('#appointment_id').val();
+        var reciver = $('#name_receiver').val();
         var ttd_return = sig.jSignature('getData');
         $.ajax({
             url: url,
             type : 'post',
-            data : {id : id, ttd_return:ttd_return },
+            data : {id : id, ttd_return:ttd_return,receiver:reciver },
             cache: false,
         })
             .success(function() {

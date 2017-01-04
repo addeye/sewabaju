@@ -22,6 +22,9 @@ class Appointment_model extends Base_model
     protected $tr_promo = 'tr_promo';
     protected $mvoucher = 'm_voucher';
     protected $tr_deposit = 'tr_deposit';
+    protected $m_type = 'm_type';
+    protected $m_kategori = 'm_kategori';
+    protected $m_baju = 'm_baju';
 
     public function __construct()
     {
@@ -98,6 +101,17 @@ class Appointment_model extends Base_model
     {
         $kode = $this->getkodeunik($this->table,'APP');
         return $kode;
+    }
+
+    public function UpdateDeal($id,$data=array())
+    {
+        $condition['id'] = $id;
+        $result = $this->updateData($this->mdeal,$data,$condition);
+        if($result)
+        {
+            return TRUE;
+        }
+        return FALSE;
     }
 
     public function getBaju()
@@ -193,6 +207,21 @@ class Appointment_model extends Base_model
 
     public function delItemId($id)
     {
+        $condition['id'] = $id;
+        $result = $this->deleteData($this->tr_item,$condition);
+        if($result)
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function delItemIdformaster($id)
+    {
+        $tritem = $this->getTrItemById($id);
+        $baju_id = $tritem->baju_id;
+        $this->deleteData($this->m_baju,array('id'=>$baju_id));
+
         $condition['id'] = $id;
         $result = $this->deleteData($this->tr_item,$condition);
         if($result)
@@ -516,7 +545,11 @@ class Appointment_model extends Base_model
 
     public function getTrPromoByAppointment($appointment_id)
     {
-        $result = $this->getData($this->tr_promo,array('appointment_id'=>$appointment_id))->row();
+        $result = $this->getData($this->tr_promo,array('appointment_id'=>$appointment_id))->result();
+        foreach($result as $key=>$row)
+        {
+            $result[$key]->mbaju = $this->getData($this->table_baju,array('id'=>$row->baju_id))->row();
+        }
         if($result)
         {
             return $result;
@@ -618,5 +651,44 @@ class Appointment_model extends Base_model
             return $result;
         }
         return [];
+    }
+
+    public function getKategori()
+    {
+        $condition['status'] = 0;
+        $result = $this->getData($this->m_kategori,$condition)->result();
+        if($result)
+        {
+            return $result;
+        }
+        return [];
+    }
+
+    public function getType()
+    {
+        $condition['status'] = 0;
+        $result = $this->getData($this->m_type,$condition)->result();
+        if($result)
+        {
+            return $result;
+        }
+        return [];
+    }
+
+    /*Tambah Baju*/
+    public function addBaju($data=array())
+    {
+        $query = $this->addData($this->m_baju,$data);
+        if($query)
+        {
+            return $this->getLastInsertId();
+        }
+        return FALSE;
+    }
+
+    public function getkodeBaju()
+    {
+        $kode = $this->getkodeunik($this->m_baju,'BA');
+        return $kode;
     }
 }

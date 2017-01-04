@@ -17,8 +17,7 @@
                         <th>Code</th>
                         <th>Date</th>
                         <th>Customer</th>
-                        <th>Note</th>
-                        <th>Status</th>
+                        <th>Order</th>
                         <th>View</th>
                         <th>Action</th>
                     </tr>
@@ -31,12 +30,21 @@
                             <td><a href="javascript:void(0);" onclick="invoice(<?=$row->id?>)"><?= $row->code ?></a></td>
                             <td><?= tgl_indo_waktu($row->date) ?></td>
                             <td><?= $row->mcustomer->name ?></td>
-                            <td><?= $row->note ?></td>
-                            <td><u><?= status_customer()[$row->status] ?></u></td>
+                            <td><?= $row->mdeal?proses()[$row->mdeal->process]:'' ?></td>
                             <td>
                                 <button data-toggle="tooltip" data-placement="top" title="Delivery" id="<?= $row->id ?>" type="button" onclick="delivery(this.id)"
                                         class="btn btn-info btn-invoice">
                                     <span class="glyphicon glyphicon-send"></span></button>
+                                <?php
+                                if($row->mdeal):
+                                if($row->mdeal->process == PROSES_RENT or $row->mdeal->process == PROSES_MADE_FOR_RENT):
+                                    ?>
+                                <button data-toggle="tooltip" data-placement="top" title="Return" id="<?= $row->id ?>" type="button" onclick="return_invoice(this.id)"
+                                        class="btn btn-info btn-invoice">
+                                    <span class="glyphicon glyphicon-share"></span></button>
+                                <?php
+                                endif;
+                                endif; ?>
                             </td>
                             <td>
                                 <a href="<?= $link_edit . $row->id ?>" class="btn btn-success"><i class="fa fa-edit"></i></a>
@@ -164,10 +172,15 @@
 
 </div>
 
+<div id="returninvoice" class="modal container fade modal-overflow in" tabindex="-1" aria-hidden="true">
+
+</div>
+
 <input type="hidden" id="iddel">
 <input type="hidden" id="url" value="<?= $link_delete ?>">
 <input type="hidden" id="urlinvoice" value="<?= $link_invoice ?>">
 <input type="hidden" id="urldelivery" value="<?= $link_delivery ?>">
+<input type="hidden" id="urlreturninvoice" value="<?= $link_returninvoice ?>">
 <input type="hidden" id="urlajaxkembali" value="<?= $link_ajaxkembali ?>">
 
 <!-- END PAGE CONTENT-->
@@ -231,6 +244,23 @@
                 $('#delivery').html(data);
                 $("#loading").modal('hide');
                 $('#delivery').modal('show');
+            });
+    }
+
+    function return_invoice(id) {
+        var urlreturninvoice = $('#urlreturninvoice').val();
+        $.ajax({
+            beforeSend: function () {
+                $("#loading").modal('show');
+            },
+            url: urlreturninvoice + '/' + id,
+            type: 'get',
+            cache: false,
+        })
+            .success(function (data) {
+                $('#returninvoice').html(data);
+                $("#loading").modal('hide');
+                $('#returninvoice').modal('show');
             });
     }
 

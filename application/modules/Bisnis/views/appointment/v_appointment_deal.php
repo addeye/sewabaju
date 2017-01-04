@@ -16,7 +16,7 @@
                 <div class="tools"></div>
             </div>
             <div class="portlet-body">
-                <form class="form-horizontal" method="post" action="<?=$link_act?>">
+                <form class="form-horizontal" method="post" action="<?=$link_act?>" onsubmit="unmask_number()">
                     <input type="hidden" id="customer_id" name="customer_id" value="<?=$d->customer_id?>">
                     <input type="hidden" id="appointment_id" name="appointment_id" value="<?=$d->id?>">
                     <input type="hidden" name="id" value="<?=$deal?$deal->id:0?>">
@@ -46,7 +46,15 @@
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-3 control-label">Fitting</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control date-picker" name="date_fitting" placeholder="Tanggal Fitting" value="<?=$deal?$deal->date_fitting:''?>">
+                                <input id="date-fitting" type="text" class="form-control" name="date_fitting" placeholder="Tanggal Fitting" value="<?=$deal?$deal->date_fitting:''?>">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="pickupdateform" style="display: none;">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-3 control-label">Pickup</label>
+                            <div class="col-sm-4">
+                                <input id="datepickup" type="text" class="form-control" name="date_pickup" placeholder="Tanggal Pickup" value="<?=$deal?$deal->date_borrow:''?>">
                             </div>
                         </div>
                     </div>
@@ -54,10 +62,10 @@
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-3 control-label">Rent / Back</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control date-picker" name="date_borrow" placeholder="Tanggal Pinjam" value="<?=$deal?$deal->date_borrow:''?>">
+                                <input id="daterent" type="text" class="form-control" name="date_borrow" placeholder="Tanggal Pinjam" value="<?=$deal?$deal->date_borrow:''?>">
                             </div>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control date-picker" name="date_back" placeholder="Tanggal Kembali" value="<?=$deal?$deal->date_back:''?>">
+                                <input id="dateback" type="text" class="form-control" name="date_back" placeholder="Tanggal Kembali" value="<?=$deal?$deal->date_back:''?>">
                             </div>
                         </div>
                     </div>
@@ -65,6 +73,14 @@
                         <label for="inputEmail3" class="col-sm-3 control-label">Note</label>
                         <div class="col-sm-8">
                             <textarea name="note" class="form-control" rows="4" placeholder="Keterangan Deal"><?=$deal?$deal->note:''?></textarea>
+                        </div>
+                    </div>
+                    <div id="form-deposit" style="display: none;">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-3 control-label">Deposit</label>
+                            <div class="col-sm-4">
+                                <input id="deposit" type="text" placeholder="Jumlah Deposit" class="form-control" name="deposit" value="<?=$deal?$deal->deposit:''?>">
+                            </div>
                         </div>
                     </div>
                     <hr>
@@ -84,21 +100,21 @@
                     </div>
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-3 control-label">Shipping Cost</label>
-                        <div class="col-sm-3">
-                            <input type="number" id="shipping_cost" class="form-control shipping_cost" name="shipping_cost" value="<?=$deal?$deal->shipping_cost:''?>">
+                        <div class="col-sm-4">
+                            <input type="text" id="shipping_cost" class="form-control shipping_cost" name="shipping_cost" value="<?=$deal?$deal->shipping_cost:''?>">
                         </div>
                     </div>
                     <hr>
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-3 control-label">Total</label>
-                        <div class="col-sm-3">
-                            <input type="number" id="dtotal" class="form-control" name="total" required>
+                        <div class="col-sm-4">
+                            <input type="text" id="dtotal" class="form-control" name="total" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-3 control-label">Down Payment</label>
-                        <div class="col-sm-3">
-                            <input type="number" id="down_payment" class="form-control" name="down_payment" value="<?=$deal?$deal->down_payment:''?>" required>
+                        <div class="col-sm-4">
+                            <input type="text" id="down_payment" class="form-control" name="down_payment" value="<?=$deal?$deal->down_payment:''?>" required>
                             <p class="help-block" id="label-dp"></p>
                         </div>
                         <div class="col-sm-3">
@@ -114,8 +130,8 @@
                     </div>
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-3 control-label">Remaining Payment</label>
-                        <div class="col-sm-3">
-                            <input type="number" class="form-control" id="remaining_payment" name="remaining_payment" value="<?=$deal?$deal->remaining_payment:''?>" required>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="remaining_payment" name="remaining_payment" value="<?=$deal?$deal->remaining_payment:''?>" required>
                             <p class="help-block" id="label-remaining"></p>
                         </div>
                         <div class="col-sm-3">
@@ -287,6 +303,13 @@
                     <div id="list-made"></div>
                     <hr>
                 </div>
+                <div id="maderent-form" style="display: none">
+                    <div class="form-horizontal">
+                        <button type="button" class="btn btn-primary btn-lg btn-block btn-addform-baju"><span class="glyphicon glyphicon-plus"></span> Made For Rent</button>
+                    </div>
+                    <div id="list-madeforrent"></div>
+                    <hr>
+                </div>
                 <div class="form-horizontal">
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-3 control-label">Kode Voucher</label>
@@ -323,15 +346,20 @@
     </div>
 </div>
 
-<div id="invoice" class="modal container fade modal-overflow in" tabindex="-1" aria-hidden="true">
+<div id="form-made" class="modal container fade modal-overflow in" tabindex="-1" aria-hidden="true">
+    <div id="form-madecontent">
 
+    </div>
 </div>
 
 <input type="hidden" id="urlbaju" value="<?=$link_baju?>">
+<input type="hidden" id="urlbajumaderent" value="<?=$link_bajumaderent?>">
+<input type="hidden" id="urlbajusale" value="<?=$link_bajusale?>">
 <input type="hidden" id="urladdbaju" value="<?=$link_addbaju?>">
 <input type="hidden" id="urladdbajusale" value="<?=$link_addbajusale?>">
 <input type="hidden" id="urldelallbaju" value="<?=$link_del_allitem?>">
 <input type="hidden" id="urldelidbaju" value="<?=$link_del_iditem?>">
+<input type="hidden" id="urldelidbajuformaster" value="<?=$link_del_iditemformaster?>">
 
 <input type="hidden" id="urlaccessories" value="<?=$link_accessories?>">
 <input type="hidden" id="urladdaccessories" value="<?=$link_addaccessories?>">
@@ -364,12 +392,51 @@
 <input type="hidden" id="urlformtritem" value="<?=$link_formtritem?>">
 <input type="hidden" id="urlupdatetritem" value="<?=$link_updatetritem?>">
 
+<input type="hidden" id="urlformtritemsale" value="<?=$link_formtritemsale?>">
+<input type="hidden" id="urlupdatetritemsale" value="<?=$link_updatetritemsale?>">
+
+<input type="hidden" id="urlmadeforrent" value="<?=$link_madeforrentact?>">
+
+<input type="hidden" id="urlformmadesale" value="<?=$link_formmadesale?>">
+
 <input type="hidden" id="urlvoucher" value="<?=$link_urlvoucher?>">
 
 <input type="hidden" id="urltotaltransaksi" value="<?=$link_total_transaksi?>">
 <input type="hidden" id="urlinvoice" value="<?=$link_invoice?>">
 
+<script src="<?php echo base_url('assets/pinky/global/scripts/jquery-ui.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/pinky/global/scripts/jquery.price_format.2.0.min.js') ?>"></script>
+
 <script type="text/javascript">
+
+    var rupiah ={prefix: 'Rp. ', thousandsSeparator: '.', centsLimit: 0};
+
+    function mask_number()
+    {
+        $('#deposit,#remaining_payment,#shipping_cost,#dtotal,#down_payment').priceFormat(rupiah);
+    }
+
+    function unmask_number()
+    {
+        $('#deposit').val($('#deposit').unmask());
+        $('#remaining_payment').val($('#remaining_payment').unmask());
+        $('#shipping_cost').val($('#shipping_cost').unmask());
+        $('#dtotal').val($('#dtotal').unmask());
+        $('#down_payment').val($('#down_payment').unmask());
+
+    }
+
+    Date.prototype.yyyymmdd = function() {
+        var mm = this.getMonth() + 1; // getMonth() is zero-based
+        var dd = this.getDate();
+
+        return [this.getFullYear(),
+            (mm>9 ? '-' : '0') + mm,
+            (dd>9 ? '-' : '0') + dd
+        ].join('');
+    };
+
+    var date = new Date();
 
     function toRp(a,b,c,d,e){e=function(f){return f.split('').reverse().join('')};b=e(parseInt(a,10).toString());for(c=0,d='';c<b.length;c++){d+=b[c];if((c+1)%3===0&&c!==(b.length-1)){d+='.';}}return'Rp.\t'+e(d)+',00'}
     function toAngka(rp){return parseInt(rp.replace(/,.*|\D/g,''),10)}
@@ -377,23 +444,23 @@
     function rent()
     {
         $("#baju-form,#accessories-form,#jobs-form,#promo-form").show();
-        $('#made-form,#baju-form-sale,#rent-form,#fittingdateform').hide();
+        $('#made-form,#baju-form-sale,#rent-form,#fittingdateform,#form-deposit,#pickupdateform,#maderent-form').hide();
         $('#promo-check').attr("checked", true);
         $('.select2').select2();
     }
 
     function madeforRent()
     {
-        $('#baju-form,#accessories-form,#jobs-form,#baju-form-sale,#promo-form').hide();
-        $("#made-form,#rent-form,#fittingdateform").show();
+        $('#baju-form,#accessories-form,#jobs-form,#baju-form-sale,#promo-form,#pickupdateform,#made-form,#rent-form,#fittingdateform,#form-deposit').hide();
+        $("#maderent-form").show();
         $('.select2').select2();
         $('#promo-check').attr("checked", false);
     }
 
     function madeforSale()
     {
-        $("#baju-form,#accessories-form,#jobs-form,#rent-form,#baju-form-sale,#promo-form").hide();
-        $('#made-form,#fittingdateform').show();
+        $("#baju-form,#accessories-form,#jobs-form,#rent-form,#baju-form-sale,#promo-form,#maderent-form").hide();
+        $('#fittingdateform,#form-deposit,#pickupdateform,#made-form').show();
         $('#promo-check').attr("checked", false);
         $('.select2').select2();
     }
@@ -401,7 +468,7 @@
     function sale()
     {
         $('#baju-form-sale, #jobs-form').show();
-        $("#made-form,#accessories-form,#rent-form,#baju-form,#promo-form").hide();
+        $("#made-form,#accessories-form,#rent-form,#baju-form,#promo-form,#fittingdateform,#form-deposit,#maderent-form").hide();
         $('#promo-check').attr("checked", false);
         $('.select2').select2();
     }
@@ -419,6 +486,24 @@
     }
 
     jQuery(document).ready(function() {
+
+        $( "#date-fitting" ).datepicker({
+            format :	'yyyy-mm-dd',
+            autoclose : true,
+            startDate: date.yyyymmdd(),
+        }).on('changeDate', function(e) {
+            $('#daterent,#datepickup').datepicker({
+                format :	'yyyy-mm-dd',
+                autoclose : true,
+                startDate: $("#date-fitting").val(),
+            }).on('changeDate', function(e){
+                $('#dateback').datepicker({
+                    format :	'yyyy-mm-dd',
+                    autoclose : true,
+                    startDate: $("#daterent").val(),
+                });
+            });
+        });
 
         console.log('tes '+$('input:radio:checked').val());
         if($('input:radio:checked').val()==1)
@@ -439,6 +524,7 @@
         }
 
         baju();
+        bajumadeforrent();
         bajusale();
         accessories();
         jobs();
@@ -454,7 +540,7 @@
         var madeform = $('made-form');
         var processInput = $('.process-input');
 
-        ComponentsDateTimePickers.init();
+//        ComponentsDateTimePickers.init();
 
         disabled_address(<?=$deal?$deal->shipping:'1'?>);
 
@@ -495,6 +581,12 @@
         });
 
         $('.btn-addvoucher').click(function(){
+            totaltransaksi();
+        });
+
+        $('.btn-addform-baju').click(function(){
+            formmadebaju();
+            bajumadeforrent();
             totaltransaksi();
         });
 
@@ -624,7 +716,7 @@
 
     function bajusale()
     {
-        var urlbaju = $('#urlbaju').val();
+        var urlbaju = $('#urlbajusale').val();
         var appointment_id = $('#appointment_id').val();
         $.ajax({
             beforeSend:function(){
@@ -636,6 +728,24 @@
         })
             .success(function(data) {
                 $('#list-baju-sale').html(data);
+                $("#loading").modal('hide');
+            });
+    }
+
+    function bajumadeforrent()
+    {
+        var urlbaju = $('#urlbajumaderent').val();
+        var appointment_id = $('#appointment_id').val();
+        $.ajax({
+            beforeSend:function(){
+                $("#loading").modal('show');
+            },
+            url: urlbaju+'/'+appointment_id,
+            type : 'get',
+            cache: false,
+        })
+            .success(function(data) {
+                $('#list-madeforrent').html(data);
                 $("#loading").modal('hide');
             });
     }
@@ -951,6 +1061,21 @@
             });
     }
 
+    function delperidformaster(id)
+    {
+        var urldelidbaju = $('#urldelidbajuformaster').val();
+        $.ajax({
+            url: urldelidbaju+'/'+id,
+            type : 'get',
+            cache: false,
+        })
+            .success(function() {
+                console.log('success');
+                bajumadeforrent();
+                totaltransaksi();
+            });
+    }
+
     function delperidacc(id)
     {
         var urldelidaccessories = $('#urldelidaccessories').val();
@@ -1048,6 +1173,7 @@
             })
             .done(function(){
                 calculate();
+                mask_number();
             });
 
     }
@@ -1109,6 +1235,21 @@
             });
     }
 
+    function formtritemsale(id)
+    {
+        var urlform = $('#urlformtritemsale').val();
+        $.ajax({
+            url: urlform+'/'+id,
+            type : 'get',
+            cache: false,
+            dataType: "html"
+        })
+            .success(function(data) {
+                $('#form-item').html(data);
+                $('#itemform').modal('show');
+            });
+    }
+
     function updatetritem()
     {
         var urlupdate = $('#urlupdatetritem').val();
@@ -1122,6 +1263,61 @@
         })
             .success(function(data) {
                 $('#itemform').modal('hide');
+            });
+    }
+
+    function updatetritemsale()
+    {
+        var urlupdate = $('#urlupdatetritemsale').val();
+        var data = $('#formitemsale').serializeArray();
+
+        $.ajax({
+            url: urlupdate,
+            type : 'post',
+            cache: false,
+            data: data
+        })
+            .success(function(data) {
+                $('#itemform').modal('hide');
+            });
+    }
+
+    function formmadebaju()
+    {
+        var urlform = $('#urlformmadesale').val();
+        var id = $('#appointment_id').val();
+
+        $.ajax({
+            url: urlform+'/'+id,
+            type : 'get',
+            cache: false,
+            dataType: "html"
+        })
+            .success(function(data) {
+                $('#form-madecontent').html(data);
+                $('#form-made').modal('show');
+            });
+    }
+
+    function bajumaderent()
+    {
+        var urlupdate = $('#urlmadeforrent').val();
+        var data = $('#formmaderent').serializeArray();
+        console.log(data);
+//        alert('deye');
+
+        $.ajax({
+            url: urlupdate,
+            type : 'post',
+            cache: false,
+            data: data
+        })
+            .success(function(data) {
+                $('#form-made').modal('hide');
+                console.log(data);
+                formtritem(data);
+                bajumadeforrent();
+                totaltransaksi();
             });
     }
 

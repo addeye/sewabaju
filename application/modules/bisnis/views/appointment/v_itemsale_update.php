@@ -12,7 +12,7 @@
 
         <div class="well well-lg">
 
-            <form id="formitem" class="form-horizontal" action="" method="post" role="form">
+            <form id="formitemsale" class="form-horizontal" action="" method="post" role="form">
                 <input type="hidden" name="id" value="<?= $d->id ?>">
 
                 <div class="form-group">
@@ -33,7 +33,7 @@
                 </div>
                 <div class="form-group">
 
-                    <label for="customer_tanggal_lahir" class="col-md-4 control-label">Tanggal Pinjam</label>
+                    <label for="customer_tanggal_lahir" class="col-md-4 control-label">Tanggal Pickup</label>
 
                     <div class="col-md-8">
 
@@ -47,39 +47,6 @@
                     </div>
 
                 </div>
-                <div class="form-group">
-
-                    <label for="customer_tanggal_lahir" class="col-md-4 control-label">Tanggal Kembali</label>
-
-                    <div class="col-md-8">
-
-                        <div class="input-icon">
-
-                            <input id="datebackf" name="back_date" class="form-control" size="16" type="text"
-                                   value="<?= $d->back_date ?>">
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label for="customer_tanggal_lahir" class="col-md-4 control-label">Deposit</label>
-
-                    <div class="col-md-8">
-
-                        <div class="input-icon">
-
-                            <input name="deposit" class="form-control" size="16" type="text" value="<?= $d->deposit ?>">
-
-                        </div>
-
-                    </div>
-
-                </div>
-
                 <hr>
 
 
@@ -87,7 +54,7 @@
 
                     <div class="col-md-12">
 
-                        <button type="button" onclick="updatetritem()" class="pull-right btn blue">Simpan</button>
+                        <button type="button" onclick="updatetritemsale()" class="pull-right btn blue">Simpan</button>
 
                     </div>
 

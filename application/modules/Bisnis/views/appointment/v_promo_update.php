@@ -38,7 +38,7 @@
 
                         <div class="input-icon">
 
-                            <input id="date-fitting" name="fitting_date" class="form-control" size="16" type="text" value="<?=$d->fitting_date?>">
+                            <input id="date-fittingfp" name="fitting_date" class="form-control" size="16" type="text" value="<?=$d->fitting_date?>">
 
                         </div>
 
@@ -53,7 +53,7 @@
 
                         <div class="input-icon">
 
-                            <input id="daterent" name="rent_date" class="form-control" size="16" type="text" value="<?=$d->rent_date?>">
+                            <input id="daterentfp" name="rent_date" class="form-control" size="16" type="text" value="<?=$d->rent_date?>">
 
                         </div>
 
@@ -68,7 +68,7 @@
 
                         <div class="input-icon">
 
-                            <input id="dateback" name="back_date" class="form-control" size="16" type="text" value="<?=$d->back_date?>">
+                            <input id="datebackfp" name="back_date" class="form-control" size="16" type="text" value="<?=$d->back_date?>">
 
                         </div>
 
@@ -130,20 +130,20 @@
 
     var date = new Date();
 
-    $( "#date-fitting" ).datepicker({
+    $( "#date-fittingfp" ).datepicker({
         format :	'yyyy-mm-dd',
         autoclose : true,
         startDate: date.yyyymmdd(),
     }).on('changeDate', function(e) {
-        $('#daterent').datepicker({
+        $('#daterentfp').datepicker({
             format :	'yyyy-mm-dd',
             autoclose : true,
-            startDate: $("#date-fitting").val(),
+            startDate: $("#date-fittingfp").val(),
         }).on('changeDate', function(e){
-            $('#dateback').datepicker({
+            $('#datebackfp').datepicker({
                 format :	'yyyy-mm-dd',
                 autoclose : true,
-                startDate: $("#daterent").val(),
+                startDate: $("#daterentfp").val(),
             });
         });
     });

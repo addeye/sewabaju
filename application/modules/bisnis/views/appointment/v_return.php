@@ -41,12 +41,12 @@
         </div>
         <div class="col-xs-6">
             <div class="text-left">
-                <p>NAME : <?=$deal?$deal->mcustomer->name:''?></p>
+                <p>NAME : <?=$deal?$deal->mcustomer->name:'';?></p>
             </div>
         </div>
         <div class="col-xs-6">
             <div class="text-right">
-                <p>HP : <?=$deal?$deal->mcustomer->phone:''?></p>
+                <p>HP : <?=$deal?$deal->mcustomer->phone:'';?></p>
             </div>
         </div>
         <div class="col-xs-12">
@@ -62,12 +62,12 @@
                     <td>
                         <ol>
                             <?php foreach($tritem as $row): ?>
-                            <li><input type="checkbox" <?=$row->rent_status==1?'checked':''?> disabled> <?=$row->mbaju->name?></li>
+                            <li><input type="checkbox" <?=$row->back_status==1?'checked':''?> disabled> <?=$row->mbaju->name?></li>
                             <?php endforeach; ?>
                             <?php foreach($dpromo as $row):
                                 foreach($row->trpromo as $trp):
                                 ?>
-                                <li><input type="checkbox" <?=$trp->rent_status==1?'checked':''?> disabled> <?=$trp->mbaju?$trp->mbaju->name:'- Belum Dipilih -'?></li>
+                                <li><input type="checkbox" <?=$trp->back_status==1?'checked':''?> disabled> <?=$trp->mbaju?$trp->mbaju->name:'- Belum Dipilih -'?></li>
                             <?php endforeach;
                                 endforeach; ?>
                             <?php foreach($trmade as $row): ?>
@@ -91,7 +91,7 @@
         </div>
         <div class="col-xs-12">
             <div class="text-left">
-                <p><?=$appointment->title?> : <?=$appointment->date_delivery?tgl_indo($appointment->date_delivery):''?></p>
+                <p><?=$appointment->title?> : <?=$appointment->date_delivery?tgl_indo($appointment->date_delivery):'';?></p>
             </div>
         </div>
         <div class="col-xs-12">
@@ -107,8 +107,8 @@
                     <td><div style="height: 100px;"></div></td>
                     <td>
                         <div style="padding-top: 70px;">
-                            <img src="<?=$appointment->ttd_pickup?>" class="img-responsive" alt="">
-                            <p style="font-size: 20px; margin-top: -20px;" class="text-center"><?=$appointment->receiver_pickup?></p>
+                            <img src="<?=$appointment->ttd_return?>" class="img-responsive" alt="">
+                            <p style="font-size: 20px; margin-top: -20px;" class="text-center"><?=$appointment->receiver_return?></p>
                         </div>
                     </td>
                 </tr>
@@ -125,6 +125,7 @@
 <?php
 $ids = $deal?$deal->appointment_id:0;
 ?>
+
 <input type="hidden" id="urlcetakdelivery" value="<?=base_url('bisnis/appointment/delivery_print/'.$ids)?>">
 
 <script>

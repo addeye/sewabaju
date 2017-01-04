@@ -33,6 +33,7 @@ class Appointment extends My_controller
             'link_deal' => site_url('bisnis/appointment/deal/'),
             'link_invoice' => site_url('bisnis/appointment/invoice/'),
             'link_delivery' => site_url('bisnis/appointment/delivery/'),
+            'link_returninvoice' => site_url('bisnis/appointment/returninvoice/'),
             'link_ajaxkembali' => site_url('bisnis/appointment/ajax_kembali/'),
             'link_ttd' => site_url('bisnis/appointment/signature/'),
             'link_ttdpickup' => site_url('bisnis/appointment/signaturepickup/'),
@@ -181,10 +182,13 @@ class Appointment extends My_controller
             'link_act' => site_url('bisnis/appointment/do_deal'),
 
             'link_baju' => site_url('bisnis/appointment/viewbaju'),
+            'link_bajumaderent' => site_url('bisnis/appointment/viewbajumaderent'),
+            'link_bajusale' => site_url('bisnis/appointment/viewbajusale'),
             'link_addbaju' => site_url('bisnis/appointment/addbaju'),
             'link_addbajusale' => site_url('bisnis/appointment/addbajusale'),
             'link_del_allitem' => site_url('bisnis/appointment/delete_item'),
             'link_del_iditem' => site_url('bisnis/appointment/delete_itemid'),
+            'link_del_iditemformaster' => site_url('bisnis/appointment/delete_itemidformaster'),
 
             'link_accessories' => site_url('bisnis/appointment/viewaccessories'),
             'link_addaccessories' => site_url('bisnis/appointment/addaccessories'),
@@ -217,6 +221,12 @@ class Appointment extends My_controller
             'link_formtritem' => site_url('bisnis/appointment/form_item'),
             'link_updatetritem' => site_url('bisnis/appointment/update_tritem'),
 
+            'link_formtritemsale' => site_url('bisnis/appointment/form_itemsale'),
+            'link_updatetritemsale' => site_url('bisnis/appointment/update_tritemsale'),
+
+            'link_formmadesale' => site_url('bisnis/appointment/form_madesale'),
+            'link_madeforrentact' => site_url('bisnis/appointment/do_form_madesale'),
+
             'link_urlvoucher' => site_url('bisnis/appointment/voucher'),
 
             'link_total_transaksi' => site_url('bisnis/appointment/totalTransaksi'),
@@ -242,6 +252,7 @@ class Appointment extends My_controller
         $appointment_id = $this->input->post('appointment_id');
         $customer_id = $this->input->post('customer_id');
         $date_borrow = $this->input->post('date_borrow');
+        $date_pickup = $this->input->post('date_pickup');
         $date_back = $this->input->post('date_back');
         $date_fitting = $this->input->post('date_fitting');
         $down_payment = $this->input->post('down_payment');
@@ -252,7 +263,7 @@ class Appointment extends My_controller
         $pay_rp = $this->input->post('pay_rp');
         $total = $this->input->post('total');
         $note = $this->input->post('note');
-//        $deposit = $this->input->post('deposit');
+        $deposit = $this->input->post('deposit');
         $fitting = $this->input->post('fitting');
         $process = $this->input->post('process');
         $shipping = $this->input->post('shipping');
@@ -284,7 +295,7 @@ class Appointment extends My_controller
             'pay_rp' => $pay_rp,
             'total' => $total,
             'note' => $note,
-//            'deposit' => $deposit,
+            'deposit' => $deposit,
             'fitting' => $fitting,
             'process' => $process,
             'shipping' => $shipping,
@@ -294,6 +305,10 @@ class Appointment extends My_controller
             'code_voucher' => $code_voucher,
             'disc_voucher' => $disc_voucher,
         );
+
+        if ($date_pickup) {
+            $data['date_borrow'] = $date_pickup;
+        }
 
         $result = $this->dmodel->create($data);
         if ($result) {
@@ -307,6 +322,7 @@ class Appointment extends My_controller
         $appointment_id = $this->input->post('appointment_id');
         $customer_id = $this->input->post('customer_id');
         $date_borrow = $this->input->post('date_borrow');
+        $date_pickup = $this->input->post('date_pickup');
         $date_back = $this->input->post('date_back');
         $date_fitting = $this->input->post('date_fitting');
         $down_payment = $this->input->post('down_payment');
@@ -317,7 +333,7 @@ class Appointment extends My_controller
         $pay_rp = $this->input->post('pay_rp');
         $total = $this->input->post('total');
         $note = $this->input->post('note');
-//        $deposit = $this->input->post('deposit');
+        $deposit = $this->input->post('deposit');
         $fitting = $this->input->post('fitting');
         $process = $this->input->post('process');
         $shipping = $this->input->post('shipping');
@@ -328,6 +344,8 @@ class Appointment extends My_controller
         $disc_voucher = $this->input->post('discvoucher');
 
         $id = $this->input->post('id');
+
+//        return var_dump($date_borrow);
 
         $data = array(
             'appointment_id' => $appointment_id,
@@ -343,7 +361,7 @@ class Appointment extends My_controller
             'pay_rp' => $pay_rp,
             'total' => $total,
             'note' => $note,
-//            'deposit' => $deposit,
+            'deposit' => $deposit,
             'fitting' => $fitting,
             'process' => $process,
             'shipping' => $shipping,
@@ -353,6 +371,10 @@ class Appointment extends My_controller
             'code_voucher' => $code_voucher,
             'disc_voucher' => $disc_voucher,
         );
+
+        if ($date_pickup) {
+            $data['date_borrow'] = $date_pickup;
+        }
 
         if ($this->input->post('fitting')) {
             $data_up = array(
@@ -427,14 +449,35 @@ class Appointment extends My_controller
 
     public function viewbaju($appointment_id)
     {
-        $total=array();
+        $total = array();
         $data['tritem'] = $this->model->getTrItem($appointment_id);
-        foreach($data['tritem'] as $key=>$row)
-        {
+        foreach ($data['tritem'] as $key => $row) {
             $total[] = $row->total;
         }
         $data['total'] = array_sum($total);
         $this->load->view('appointment/v_list_baju', $data);
+    }
+
+    public function viewbajusale($appointment_id)
+    {
+        $total = array();
+        $data['tritem'] = $this->model->getTrItem($appointment_id);
+        foreach ($data['tritem'] as $key => $row) {
+            $total[] = $row->total;
+        }
+        $data['total'] = array_sum($total);
+        $this->load->view('appointment/v_list_bajusale', $data);
+    }
+
+    public function viewbajumaderent($appointment_id)
+    {
+        $total = array();
+        $data['tritem'] = $this->model->getTrItem($appointment_id);
+        foreach ($data['tritem'] as $key => $row) {
+            $total[] = $row->total;
+        }
+        $data['total'] = array_sum($total);
+        $this->load->view('appointment/v_list_bajumaderent', $data);
     }
 
     public function addbaju()
@@ -495,6 +538,15 @@ class Appointment extends My_controller
     public function delete_itemid($id)
     {
         $result = $this->model->delItemId($id);
+        if ($result) {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function delete_itemidformaster($id)
+    {
+        $result = $this->model->delItemIdformaster($id);
         if ($result) {
             return TRUE;
         }
@@ -699,15 +751,21 @@ class Appointment extends My_controller
         }
 
         foreach ($dpromo as $dp) {
+            $product[] = array(
+                'name' => '<b>' . $dp->mpromo->name . '</b>',
+                'qty' => '',
+                'total' => rupiah($dp->price),
+            );
+
             foreach ($dp->trpromo as $row) {
                 $product[] = array(
                     'name' => $row->mbaju ? $row->mbaju->name : 'Belum Dipilih',
                     'qty' => $row->qty,
-                    'total' => rupiah($row->total),
+                    'total' => '',
                 );
 
                 $schedule[] = array(
-                    'name' => $row->mbaju?$row->mbaju->name:'Belum Dipilih',
+                    'name' => $row->mbaju ? $row->mbaju->name : 'Belum Dipilih',
                     'qty' => $row->qty,
                     'total' => rupiah($row->total),
                     'tglfitting' => $row->fitting_date,
@@ -717,27 +775,59 @@ class Appointment extends My_controller
             }
         }
 
-        foreach ($traccessories as $row) {
+        if ($traccessories) {
             $product[] = array(
-                'name' => $row->maccessories->name,
-                'qty' => $row->qty,
-                'total' => rupiah($row->total),
+                'name' => '<b>ACCESSORIES</b>',
+                'qty' => '',
+                'total' => '',
             );
+
+            foreach ($traccessories as $row) {
+                $product[] = array(
+                    'name' => $row->maccessories->name,
+                    'qty' => $row->qty,
+                    'total' => rupiah($row->total),
+                );
+            }
         }
 
-        foreach ($trjobs as $row) {
+        if ($trjobs) {
             $product[] = array(
-                'name' => $row->job,
-                'qty' => '-',
-                'total' => rupiah($row->price)
+                'name' => '<b>JOBS</b>',
+                'qty' => '',
+                'total' => '',
             );
+            foreach ($trjobs as $row) {
+                $product[] = array(
+                    'name' => $row->job,
+                    'qty' => '-',
+                    'total' => rupiah($row->price)
+                );
+            }
         }
 
-        foreach ($trmade as $row) {
+        if ($trmade) {
             $product[] = array(
-                'name' => $row->disc,
-                'qty' => '-',
-                'total' => rupiah($row->price)
+                'name' => '<b>MADE</b>',
+                'qty' => '',
+                'total' => '',
+            );
+
+            foreach ($trmade as $row) {
+                $product[] = array(
+                    'name' => $row->disc,
+                    'qty' => '-',
+                    'total' => rupiah($row->price)
+                );
+            }
+
+            $schedule[] = array(
+                'name' => 'Made',
+                'qty' => '',
+                'total' => '',
+                'tglfitting' => $data['deal']->date_fitting,
+                'tglsewa' => $data['deal']->date_borrow,
+                'tglkembali' => $data['deal']->date_back,
             );
         }
 
@@ -799,7 +889,10 @@ class Appointment extends My_controller
         $result = json_encode($result);
         if ($result) {
             echo $result;
+        } else {
+            echo json_encode(array('cancel' => ''));
         }
+
     }
 
     public function pickup($appointment_id)
@@ -882,6 +975,23 @@ class Appointment extends My_controller
 
         $data['company'] = $this->model->getCompany();
         $this->load->view('appointment/v_delivery', $data);
+    }
+
+    public function returninvoice($appointment_id)
+    {
+        $data['deal'] = $this->dmodel->getDataByAppointment($appointment_id);
+        $data['appointment'] = $this->model->getId($appointment_id);
+        $data['appointment']->title = 'DATE OF RETURN';
+        $data['appointment']->date_delivery = $data['appointment']->status == STATUS_DIPINJAM ? $data['appointment']->pickuped : $data['appointment']->returned;
+        $data['appointment']->ttd = $data['appointment']->status == STATUS_DIPINJAM ? $data['appointment']->ttd_pickup : $data['appointment']->ttd_return;
+        $data['traccessories'] = $this->model->getTrAccessories($appointment_id);
+        $data['tritem'] = $this->model->getTrItem($appointment_id);
+        $data['dpromo'] = $this->model->getDpromo($appointment_id);
+        $data['trjobs'] = $this->model->getTrJobs($appointment_id);
+        $data['trmade'] = $this->model->getTrMade($appointment_id);
+
+        $data['company'] = $this->model->getCompany();
+        $this->load->view('appointment/v_return', $data);
     }
 
     public function delivery_print($appointment_id)
@@ -997,6 +1107,14 @@ class Appointment extends My_controller
         $this->load->view('appointment/v_item_update', $data);
     }
 
+    public function form_itemsale($id)
+    {
+        $data = array(
+            'd' => $this->model->getTrItemById($id)
+        );
+        $this->load->view('appointment/v_itemsale_update', $data);
+    }
+
     public function update_tritem()
     {
         $data = array(
@@ -1010,13 +1128,24 @@ class Appointment extends My_controller
         $this->model->updateTrItem($id, $data);
     }
 
+    public function update_tritemsale()
+    {
+        $data = array(
+            'fitting_date' => $this->input->post('fitting_date'),
+            'rent_date' => $this->input->post('rent_date'),
+        );
+        $id = $this->input->post('id');
+
+        $this->model->updateTrItem($id, $data);
+    }
+
     public function signature($id)
     {
         $data = array(
             'header_title' => 'Signature',
             'header_desc' => 'Master',
             'urlsignature' => site_url('bisnis/appointment/update_signature'),
-            'urlback' => site_url('bisnis/appointment/process_detail/'.$id),
+            'urlback' => site_url('bisnis/appointment/process_detail/' . $id),
             'id' => $id
         );
         $content = 'appointment/v_signature';
@@ -1029,7 +1158,7 @@ class Appointment extends My_controller
             'header_title' => 'Signature',
             'header_desc' => 'Master',
             'urlsignature' => site_url('bisnis/appointment/update_signaturepickup'),
-            'urlback' => site_url('bisnis/appointment/process_detail/'.$id),
+            'urlback' => site_url('bisnis/appointment/process_detail/' . $id),
             'id' => $id
         );
         $content = 'appointment/v_signaturepickup';
@@ -1042,7 +1171,7 @@ class Appointment extends My_controller
             'header_title' => 'Signature',
             'header_desc' => 'Master',
             'urlsignature' => site_url('bisnis/appointment/update_signaturereturn'),
-            'urlback' => site_url('bisnis/appointment/process_detail/'.$id),
+            'urlback' => site_url('bisnis/appointment/process_detail/' . $id),
             'id' => $id
         );
         $content = 'appointment/v_signaturereturn';
@@ -1053,7 +1182,8 @@ class Appointment extends My_controller
     {
         $id = $this->input->post('id');
         $data = array(
-            'ttd_invoice' => $this->input->post('ttd_invoice')
+            'ttd_invoice' => $this->input->post('ttd_invoice'),
+            'receiver_invoice' => $this->input->post('receiver')
         );
         $this->model->update($id, $data);
     }
@@ -1063,6 +1193,7 @@ class Appointment extends My_controller
         $id = $this->input->post('id');
         $data = array(
             'ttd_pickup' => $this->input->post('ttd_pickup'),
+            'receiver_pickup' => $this->input->post('receiver'),
             'pickuped' => date('Y-m-d')
         );
         $this->model->update($id, $data);
@@ -1073,6 +1204,7 @@ class Appointment extends My_controller
         $id = $this->input->post('id');
         $data = array(
             'ttd_return' => $this->input->post('ttd_return'),
+            'receiver_return' => $this->input->post('receiver'),
             'returned' => date('Y-m-d')
         );
         $this->model->update($id, $data);
@@ -1099,8 +1231,11 @@ class Appointment extends My_controller
         $data = array(
             'header_title' => 'Process Detail',
             'header_desc' => 'Master',
+
             'dpromo' => $this->model->getDpromo($appointment_id),
             'tritem' => $this->model->getTrItem($appointment_id),
+            'trpromo' => $this->model->getTrPromoByAppointment($appointment_id),
+
             'trdeposit' => $this->model->getTrDeposit($appointment_id),
             'trmade' => $this->model->getTrMade($appointment_id),
             'mappointment' => $this->model->getId($appointment_id),
@@ -1112,7 +1247,28 @@ class Appointment extends My_controller
             'link_ttdreturn' => site_url('bisnis/appointment/signaturereturn/'),
         );
 
-//        return var_dump($data);
+        $tritem_minus = array();
+        $trpromo_minus = array();
+        $tritem_deposit = array();
+        $trpromo_deposit = array();
+
+        foreach ($data['tritem'] as $keyitem => $row) {
+            $tritem_minus[] = $row->minus;
+            $tritem_deposit[] = $row->deposit;
+        }
+
+        foreach ($data['trpromo'] as $keypromo => $row) {
+            $trpromo_minus[] = $row->minus;
+            $trpromo_deposit[] = $row->deposit;
+        }
+        $tot_deposit = array_sum($tritem_deposit) + array_sum($trpromo_deposit);
+        $tot_minus = array_sum($tritem_minus) + array_sum($trpromo_minus);
+
+        $tot_dikembalikan = $tot_deposit - $tot_minus;
+
+        $data['total_deposit'] = $tot_deposit;
+        $data['total_minus'] = $tot_minus;
+        $data['total_dikembalikan'] = $tot_dikembalikan;
 
         $content = 'appointment/v_process_detail';
         $this->pinky->output($data, $content);
@@ -1129,6 +1285,7 @@ class Appointment extends My_controller
         $item_back_status = $this->input->post('item_back_status');
 
         $appoitment_fitting_status = $this->input->post('appoitment_fitting_status');
+        $appoitment_rent_status = $this->input->post('appoitment_rent_status');
 
         $appointment_id = $this->input->post('appointment_id');
 
@@ -1144,11 +1301,9 @@ class Appointment extends My_controller
             $this->model->update($appointment_id, $data_up);
         }
 
-        if($appoitment_fitting_status)
-        {
-            $result = $this->dmodel-> updateByApp($appointment_id,array('fitting'=>1));
-            if($result)
-            {
+        if ($appoitment_fitting_status) {
+            $result = $this->dmodel->updateByApp($appointment_id, array('fitting' => 1));
+            if ($result) {
                 $data_up = array(
                     'status' => STATUS_SIAP_AMBIL,
                 );
@@ -1167,6 +1322,16 @@ class Appointment extends My_controller
             );
 
             $this->model->update($appointment_id, $data_up);
+        }
+
+        if ($appoitment_rent_status) {
+            $result = $this->dmodel->updateByApp($appointment_id, array('pickup' => 1));
+            if ($result) {
+                $data_up = array(
+                    'status' => STATUS_DIPINJAM,
+                );
+                $this->model->update($appointment_id, $data_up);
+            }
         }
 
         if ($promo_back_status) {
@@ -1220,7 +1385,7 @@ class Appointment extends My_controller
         redirect('bisnis/appointment');
     }
 
-    public function return_sewa($id,$jenis)
+    public function return_sewa($id, $jenis)
     {
         $data = array(
             'header_title' => 'Return Baju',
@@ -1230,13 +1395,12 @@ class Appointment extends My_controller
             'jenis' => $jenis,
         );
 
-        if($jenis=='item')
-        {
+        if ($jenis == 'item') {
             $data['rowdata'] = $this->model->getTrItemById($id);
-        }
-        else
-        {
+        } elseif ($jenis == 'promo') {
             $data['rowdata'] = $this->model->getTrPromoId($id);
+        } else {
+            $data['rowdata'] = $this->model->getId($id);
         }
 
         $content = 'appointment/v_return_sewa';
@@ -1248,34 +1412,121 @@ class Appointment extends My_controller
         $jenis = $this->input->post('jenis');
         $status_return = $this->input->post('status_return');
         $hari_telat = $this->input->post('hari_telat');
-        $denda = $this->input->post('denda');
+        $denda = $this->input->post('pinalty');
         $keterangan = $this->input->post('keterangan');
         $id = $this->input->post('id');
 
         $deposit = $this->input->post('deposit');
         $tot_hari_telat = $hari_telat * 100000;
-        $minus = $deposit-($tot_hari_telat+$denda);
+        $minus = $tot_hari_telat + $denda;
+
+//        return var_dump($jenis);
 
         $appointment_id = $this->input->post('appointment_id');
 
         $data = array(
             'status_return' => $status_return,
+            'back_status' => 1,
             'hari_telat' => $hari_telat,
             'denda' => $denda,
             'keterangan' => $keterangan,
             'minus' => $minus
         );
 
-        if($jenis=='promo')
+        if($jenis == 'promo')
         {
-            $this->model->updateTrPromo($id,$data);
+            $this->model->updateTrPromo($id, $data);
+        }
+        elseif($jenis == 'made')
+        {
+            $datadeal = array(
+                'returned' => $status_return,
+                'hari_telat' => $hari_telat,
+                'pinalty' => $denda,
+                'return_note' => $keterangan,
+                'minus' => $minus
+
+            );
+            $this->model->UpdateDeal($id, $datadeal);
+        }
+        elseif($jenis == 'item')
+        {
+            $this->model->updateTrItem($id, $data);
+
+        }
+        alert(2);
+        redirect('bisnis/appointment/process_detail/' . $appointment_id);
+    }
+
+    /*View Made for rent add baju*/
+
+    public function form_madesale($id)
+    {
+        $data = array(
+//            'd' => $this->model->getTrItemById($id),
+            'kategori' => $this->model->getKategori(),
+            'type' => $this->model->getType(),
+            'app' => $this->model->getId($id)
+        );
+        $this->load->view('appointment/v_form_made', $data);
+    }
+
+    /*Do add baju */
+
+    public function do_form_madesale()
+    {
+        $name = $this->input->post('name');
+        $code = $this->model->getkodeBaju();
+        $colour = $this->input->post('colour');
+        $type = $this->input->post('type');
+        $kategori = $this->input->post('kategori');
+        $hpp_first = $this->input->post('hpp_first');
+        $rent_price = $this->input->post('rent_price');
+        $sale_price = $this->input->post('sale_price');
+        $qty = 1;
+        $note = $this->input->post('note');
+        $new_item = 1;
+
+        $appointment_id = $this->input->post('appointment_id');
+        $customer_id = $this->input->post('customer_id');
+
+        $data = array(
+            'code' => $code,
+            'name' => $name,
+            'colour' => $colour,
+            'type' => $type,
+            'kategori' => $kategori,
+            'hpp_price' => $hpp_first,
+            'hpp_first' => $hpp_first,
+            'rent_price' => $rent_price,
+            'sale_price' => $sale_price,
+            'qty' => $qty,
+            'note' => $note,
+            'new_item' => $new_item
+        );
+
+        $dataitem = array(
+            'appointment_id' => $appointment_id,
+            'customer_id' => $customer_id,
+            'qty' => $qty,
+            'price' => $rent_price,
+            'total' => $rent_price * $qty,
+        );
+        $getId = $this->model->addBaju($data);
+        $dataitem['baju_id'] = $getId;
+
+        $iditem =  $this->model->addItem($dataitem);
+        if($iditem)
+        {
+            echo $iditem;
         }
         else
         {
-            $this->model->updateTrItem($id,$data);
+            echo 0;
         }
-        alert(2);
-        redirect('bisnis/appointment/process_detail/'.$appointment_id);
+
+
+
     }
 
     public function sendmail()
