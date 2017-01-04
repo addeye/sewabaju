@@ -44,4 +44,22 @@ class Privilege_model extends Base_model
         }
         return FALSE;
     }
+
+    public function appDetailById($id)
+    {
+        $m_appointment = 'm_appointment';
+        $m_deal = 'm_deal';
+        $m_customer = 'm_customer';
+
+        $condition['id'] = $id;
+        $result = $this->getData($m_appointment,$condition)->row();
+        $result->mdeal = $this->getData($m_deal,array('appointment_id'=>$id))->row();
+        $result->mcustomer = $this->getData($m_customer,array('id'=>$result->customer_id))->row();
+
+        if($result)
+        {
+            return $result;
+        }
+        return [];
+    }
 }

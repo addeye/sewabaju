@@ -24,7 +24,6 @@ class Auth extends CI_Controller
         $username = $this->input->post('username');
         $password = $this->input->post('password');
 
-
         $result = $this->auth_model->check($username,$password);
         if($result->num_rows())
         {
@@ -38,7 +37,9 @@ class Auth extends CI_Controller
             $this->session->set_userdata($data);
 
             $this->auth_model->time_log($row->id);
-            
+
+            helper_log("login", $this->session->userdata('name').LANG_LOGIN_LOG);
+
             redirect('/');
         }
         else
@@ -50,7 +51,7 @@ class Auth extends CI_Controller
 
     public function logout()
     {
-//        helper_log("logout", "melakukan logout");
+        helper_log("logout", $this->session->userdata('name').LANG_LOGOUT_LOG);
         $this->session->sess_destroy();
         redirect('auth/login');
     }

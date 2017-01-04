@@ -63,3 +63,10 @@ define('LOG_LOGOUT',1);
 define('LOG_ADD',2);
 define('LOG_EDIT',3);
 define('LOG_DELETE',4);
+
+//Log Word
+define('LANG_EDIT_LOG',' Melakukan Edit Data Pada ');
+define('LANG_ADD_LOG',' Melakukan Tambah Data Pada ');
+define('LANG_DELETE_LOG',' Melakukan Hapus Data Pada ');
+define('LANG_LOGIN_LOG',' Melakukan Login ');
+define('LANG_LOGOUT_LOG',' Melakukan Logout ');

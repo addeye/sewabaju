@@ -42,39 +42,6 @@ if(!function_exists('helper_log'))
     }
 }
 
-if(!function_exists('savebarang'))
-{
-    function savebarang($id,$data=array(),$act=1)
-    {
-        $CI = & get_instance();
-
-        //load model log
-        $CI->load->model('log_model');
-
-        //call data
-        $row = $CI->log_model->getBarangById($id);
-        $old_stock = $row->stock;
-
-        switch ($act)
-        {
-            case 1:
-                $data['stock'] = $data['stock']+$old_stock;
-                //save to database
-                $CI->log_model->savebarang($id,$data);
-                break;
-            case 0:
-                $data['stock'] = $old_stock-$data['stock'];
-                //save to database
-                $CI->log_model->savebarang($id,$data);
-                break;
-        }
-
-        //save to database
-//        $CI->log_model->savebarang($id,$data);
-
-    }
-}
-
 if(!function_exists('role'))
 {
     function role($modul,$act)
@@ -91,5 +58,16 @@ if(!function_exists('role'))
             redirect('welcome/denied');
         }
         return TRUE;
+    }
+}
+
+if(!function_exists('app_for_log'))
+{
+    function app_for_log($id)
+    {
+        $CI = & get_instance();
+
+        $result = $CI->privilege_model->appDetailById($id);
+        return $result;
     }
 }

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 04, 2017 at 05:24 AM
+-- Generation Time: Jan 04, 2017 at 10:51 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -241,7 +241,8 @@ INSERT INTO `m_baju` (`id`, `code`, `name`, `colour`, `type`, `kategori`, `hpp_p
 (99, 'BA00092', 'WAYAN BAJU', 'PINK', 1, 1, 10000000, 10000000, 3000000, NULL, 5000000, 1, 0, 0, 'default.jpg', 'Wayan buat pakek baju', 1, 0),
 (100, 'BA00100', 'Wayan 2 Baju', 'BROWN', 1, 1, 10000000, 10000000, 3000000, NULL, 5000000, 1, 0, 0, 'default.jpg', 'Wayan Buat Baju 2 Untuk disewa', 1, 0),
 (101, 'BA00101', 'Wayan Baju 3', 'RED', 1, 1, 10000000, 10000000, 3000000, NULL, 5000000, 1, 0, 0, 'default.jpg', 'Wayan Buat Baju 3 untuk disewa', 1, 0),
-(102, 'BA00102', 'Wayan Baju 4', 'PINK', 6, 1, 10000000, 10000000, 3000000, NULL, 5000000, 1, 0, 0, 'default.jpg', 'Wayan Buat Sewa Baju 4 Untuk Acara', 1, 0);
+(102, 'BA00102', 'Wayan Baju 4', 'PINK', 6, 1, 10000000, 10000000, 3000000, NULL, 5000000, 1, 0, 0, 'default.jpg', 'Wayan Buat Sewa Baju 4 Untuk Acara', 1, 0),
+(104, 'BA00103', 'Wayan Baju 56', 'PINK', 1, 1, 10000000, 10000000, 3500000, NULL, 5000000, 1, 0, 0, 'default.jpg', 'Wayan buat baju dengan banyak manik-manik', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -320,6 +321,7 @@ CREATE TABLE `m_deal` (
   `down_payment` int(11) NOT NULL,
   `date_dp` date DEFAULT NULL,
   `pay_dp` tinyint(1) DEFAULT NULL,
+  `lock_dp` tinyint(1) NOT NULL DEFAULT '0',
   `remaining_payment` int(11) DEFAULT NULL,
   `date_rp` date DEFAULT NULL,
   `pay_rp` tinyint(1) DEFAULT NULL,
@@ -347,14 +349,14 @@ CREATE TABLE `m_deal` (
 -- Dumping data for table `m_deal`
 --
 
-INSERT INTO `m_deal` (`id`, `appointment_id`, `customer_id`, `date_borrow`, `date_back`, `date_fitting`, `down_payment`, `date_dp`, `pay_dp`, `remaining_payment`, `date_rp`, `pay_rp`, `total`, `shipping`, `shipping_cost`, `shipping_address`, `note`, `process`, `fitting`, `pickup`, `returned`, `deposit`, `back_deposit`, `return_note`, `hari_telat`, `pinalty`, `minus`, `promo`, `code_voucher`, `disc_voucher`) VALUES
-(1, 1, 3, '0000-00-00', '0000-00-00', '0000-00-00', 11250000, '2016-12-30', 1, 11250000, '2016-12-30', 1, 22500000, 1, NULL, NULL, 'Deal dengan sewa 3 baju', 1, NULL, 0, 0, NULL, 0, '', 0, 0, 0, 0, '', 0),
-(2, 4, 3, '0000-00-00', '0000-00-00', '0000-00-00', 6000000, '2017-01-02', 1, 6000000, '2017-01-05', 1, 12000000, 1, NULL, NULL, 'Dealing', 1, NULL, 0, 0, NULL, 0, '', 0, 0, 0, 0, '', 0),
-(3, 3, 2, '2017-01-06', '2017-01-31', '2017-01-05', 1500000, '2017-01-02', 1, 1500000, '2017-01-02', 1, 3000000, 1, NULL, NULL, 'Deal membuat baju gamis cantik', 2, 1, 1, 3, 600000, 0, 'Barang telat kembali selama 3 hari', 3, 0, 300000, 0, '', 0),
-(4, 5, 4, '2017-01-10', '0000-00-00', '2017-01-06', 2700000, '2017-01-02', 1, 2700000, '2017-01-06', 1, 5400000, 1, NULL, NULL, 'Deal dengan membuat dan dibeli', 3, 1, 1, 0, 500000, 0, '', 0, 0, 0, 0, '', 0),
-(5, 7, 5, '0000-00-00', '0000-00-00', '0000-00-00', 2500000, '2017-01-03', 1, 2500000, '2017-01-03', 1, 5000000, 1, NULL, NULL, 'Beli baju ', 4, NULL, 0, 0, 0, 0, '', 0, 0, 0, 0, '', 0),
-(6, 8, 8, '0000-00-00', '0000-00-00', '0000-00-00', 6000000, '2017-01-04', 1, 6000000, '2017-01-04', 1, 12000000, 1, NULL, NULL, 'Deal dengan sewa baju buat dari awal', 2, NULL, 0, 0, 0, 0, '', 0, 0, 0, 0, '', 0),
-(7, 9, 7, '2017-01-09', '0000-00-00', '2017-01-06', 4500000, '2017-01-04', 1, 4500000, '2017-01-04', 1, 9000000, 1, NULL, NULL, 'Buat baju untuk karnaval', 3, 1, 1, 0, 1000000, 0, '', 0, 0, 0, 0, '', 0);
+INSERT INTO `m_deal` (`id`, `appointment_id`, `customer_id`, `date_borrow`, `date_back`, `date_fitting`, `down_payment`, `date_dp`, `pay_dp`, `lock_dp`, `remaining_payment`, `date_rp`, `pay_rp`, `total`, `shipping`, `shipping_cost`, `shipping_address`, `note`, `process`, `fitting`, `pickup`, `returned`, `deposit`, `back_deposit`, `return_note`, `hari_telat`, `pinalty`, `minus`, `promo`, `code_voucher`, `disc_voucher`) VALUES
+(1, 1, 3, '0000-00-00', '0000-00-00', '0000-00-00', 11250000, '2016-12-30', 1, 0, 11250000, '2016-12-30', 1, 22500000, 1, NULL, NULL, 'Deal dengan sewa 3 baju', 1, NULL, 0, 0, NULL, 0, '', 0, 0, 0, 0, '', 0),
+(2, 4, 3, '0000-00-00', '0000-00-00', '0000-00-00', 6000000, '2017-01-02', 1, 0, 6000000, '2017-01-05', 1, 12000000, 1, NULL, NULL, 'Dealing', 1, NULL, 0, 0, NULL, 0, '', 0, 0, 0, 0, '', 0),
+(3, 3, 2, '2017-01-06', '2017-01-31', '2017-01-05', 1500000, '2017-01-02', 1, 0, 1500000, '2017-01-02', 1, 3000000, 1, NULL, NULL, 'Deal membuat baju gamis cantik', 2, 1, 1, 3, 600000, 0, 'Barang telat kembali selama 3 hari', 3, 0, 300000, 0, '', 0),
+(4, 5, 4, '2017-01-10', '0000-00-00', '2017-01-06', 2700000, '2017-01-02', 1, 0, 2700000, '2017-01-06', 1, 5400000, 1, NULL, NULL, 'Deal dengan membuat dan dibeli', 3, 1, 1, 0, 500000, 0, '', 0, 0, 0, 0, '', 0),
+(5, 7, 5, '0000-00-00', '0000-00-00', '0000-00-00', 2500000, '2017-01-03', 1, 0, 2500000, '2017-01-03', 1, 5000000, 1, NULL, NULL, 'Beli baju ', 4, NULL, 0, 0, 0, 0, '', 0, 0, 0, 0, '', 0),
+(6, 8, 8, '0000-00-00', '0000-00-00', '0000-00-00', 6000000, '2017-01-04', 1, 1, 9500000, '2017-01-04', 1, 15500000, 1, NULL, NULL, 'Deal dengan sewa baju buat dari awal', 2, NULL, 0, 0, 0, 0, '', 0, 0, 0, 0, '', 0),
+(7, 9, 7, '2017-01-09', '0000-00-00', '2017-01-06', 4500000, '2017-01-04', 1, 1, 4700000, '2017-01-04', 1, 9200000, 1, NULL, NULL, 'Buat baju untuk karnaval', 3, NULL, 1, 0, 1000000, 0, '', 0, 0, 0, 0, '', 0);
 
 -- --------------------------------------------------------
 
@@ -417,7 +419,11 @@ CREATE TABLE `m_log` (
 --
 
 INSERT INTO `m_log` (`id`, `name`, `tipe`, `activity`, `created_at`) VALUES
-(1, 'Admin', 3, 'Melakukan edit customer Mokhamad Ariadi', '2016-12-30 19:35:46');
+(1, 'Admin', 3, 'Melakukan edit customer Mokhamad Ariadi', '2016-12-30 19:35:46'),
+(2, 'Admin', 1, 'Adminmelakukan logout', '2017-01-04 15:29:03'),
+(3, 'Admin', 0, 'Adminmelakukan Login', '2017-01-04 15:29:09'),
+(4, 'Admin', 1, 'Admin Melakukan Logout', '2017-01-04 16:06:19'),
+(5, 'Admin', 0, 'Admin Melakukan Login', '2017-01-04 16:06:23');
 
 -- --------------------------------------------------------
 
@@ -611,7 +617,7 @@ CREATE TABLE `m_user` (
 --
 
 INSERT INTO `m_user` (`id`, `name`, `username`, `password`, `active`, `group_id`, `log_time`) VALUES
-(1, 'Admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', 1, 1, '2017-01-04 08:55:47'),
+(1, 'Admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', 1, 1, '2017-01-04 16:06:22'),
 (2, 'Mokhamad Ariadi', 'addeye', '9ac9eea9811866dd5c520099a889c091', 1, 2, '2016-12-06 09:09:48'),
 (3, 'Sales', 'sales', '9ed083b1436e5f40ef984b28255eef18', 1, 3, '2016-12-06 12:20:50');
 
@@ -723,7 +729,8 @@ INSERT INTO `tr_item` (`id`, `appointment_id`, `deal_id`, `customer_id`, `baju_i
 (22, 8, NULL, 8, 99, 1, 3000000, 3000000, NULL, 0, '2017-01-05', '2017-01-09', '2017-01-31', 1, 1, 0, 0, 0, 0, '', 300000, 0),
 (23, 8, NULL, 8, 100, 1, 3000000, 3000000, NULL, 0, '2017-01-07', '2017-01-09', '2017-01-31', 1, 1, 0, 0, 0, 0, '', 300000, 0),
 (24, 8, NULL, 8, 101, 1, 3000000, 3000000, NULL, 0, '2017-01-04', '2017-01-07', '2017-01-31', 1, 1, 0, 0, 0, 0, '', 300000, 0),
-(25, 8, NULL, 8, 102, 1, 3000000, 3000000, NULL, 0, '2017-01-07', '2017-01-09', '2017-01-31', 1, 1, 1, 3, 1, 0, 'Barang sudah kembali tapi telat dan tidak ada yang rusak', 300000, 100000);
+(25, 8, NULL, 8, 102, 1, 3000000, 3000000, NULL, 0, '2017-01-07', '2017-01-09', '2017-01-31', 1, 1, 1, 3, 1, 0, 'Barang sudah kembali tapi telat dan tidak ada yang rusak', 300000, 100000),
+(27, 8, NULL, 8, 104, 1, 3500000, 3500000, NULL, 0, '2017-01-12', '2017-01-13', '2017-01-31', 0, 0, 0, 0, 0, 0, '', 300000, 0);
 
 -- --------------------------------------------------------
 
@@ -771,7 +778,8 @@ INSERT INTO `tr_made` (`id`, `appointment_id`, `disc`, `price`) VALUES
 (6, 5, 'Tambah Manik-manik', 200000),
 (7, 9, 'Baju Batman', 3000000),
 (8, 9, 'Baju Ultramen', 3000000),
-(9, 9, 'Baju Ipin Upin', 3000000);
+(9, 9, 'Baju Ipin Upin', 3000000),
+(13, 9, 'Jahit', 200000);
 
 -- --------------------------------------------------------
 
@@ -981,7 +989,7 @@ ALTER TABLE `m_appointment`
 -- AUTO_INCREMENT for table `m_baju`
 --
 ALTER TABLE `m_baju`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 --
 -- AUTO_INCREMENT for table `m_company`
 --
@@ -1011,7 +1019,7 @@ ALTER TABLE `m_kategori`
 -- AUTO_INCREMENT for table `m_log`
 --
 ALTER TABLE `m_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `m_operasional`
 --
@@ -1061,7 +1069,7 @@ ALTER TABLE `tr_deposit`
 -- AUTO_INCREMENT for table `tr_item`
 --
 ALTER TABLE `tr_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT for table `tr_jobs`
 --
@@ -1071,7 +1079,7 @@ ALTER TABLE `tr_jobs`
 -- AUTO_INCREMENT for table `tr_made`
 --
 ALTER TABLE `tr_made`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `tr_promo`
 --

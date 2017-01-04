@@ -86,6 +86,8 @@ class Appointment extends My_controller
             'created_at' => $created_at
         );
 
+        helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.$code);
+
         $result = $this->model->create($data);
         if ($result) {
             alert();
@@ -110,6 +112,7 @@ class Appointment extends My_controller
 
     public function do_update()
     {
+        $code = $this->input->post('code');
         $date = $this->input->post('date');
         $customer_id = $this->input->post('customer_id');
         $note = $this->input->post('note');
@@ -125,6 +128,9 @@ class Appointment extends My_controller
         );
 
         $result = $this->model->update($id, $data);
+
+        helper_log("add", $this->session->userdata('name').LANG_EDIT_LOG.$code);
+
         if ($result) {
             alert(2);
             redirect('bisnis/appointment');
@@ -133,6 +139,10 @@ class Appointment extends My_controller
 
     public function delete($id)
     {
+        $app = $this->mode->getId($id);
+
+        helper_log("delete", $this->session->userdata('name').LANG_DELETE_LOG.$app->code);
+
         $data['deleted'] = '1';
         $data['cancel'] = $cancel = $this->input->post('cancel');
         $result = $this->model->update($id, $data);
@@ -165,6 +175,8 @@ class Appointment extends My_controller
             'phone' => $phone,
             'address' => $address,
         );
+
+        helper_log("delete", $this->session->userdata('name').LANG_ADD_LOG.'Customer '.$name);
 
         $result = $this->cmodel->create($data);
         if ($result) {
@@ -312,6 +324,8 @@ class Appointment extends My_controller
             $data['date_borrow'] = $date_pickup;
         }
 
+        helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.app_for_log($appointment_id)->code);
+
         $result = $this->dmodel->create($data);
         if ($result) {
             alert();
@@ -386,6 +400,8 @@ class Appointment extends My_controller
             $this->model->update($appointment_id, $data_up);
         }
 
+        helper_log("edit", $this->session->userdata('name').LANG_EDIT_LOG.app_for_log($appointment_id)->code);
+
         $result = $this->dmodel->update($id, $data);
         if ($result) {
             alert();
@@ -457,14 +473,6 @@ class Appointment extends My_controller
         echo json_encode($data);
     }
 
-    public function changeTrItem($ids = array())
-    {
-        foreach ($ids as $id) {
-
-        }
-    }
-
-
     public function viewbaju($appointment_id)
     {
         $total = array();
@@ -516,6 +524,8 @@ class Appointment extends My_controller
             'price' => $baju_price,
             'total' => $qty * $baju_price
         );
+
+        helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Transaksi '.app_for_log($appointment_id)->code);
 
         $lastid = $this->model->addItem($data);
         echo $lastid;

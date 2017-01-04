@@ -11,6 +11,7 @@
             <div class="portlet-body">
                 <form class="form-horizontal" method="post" action="<?=$link_act?>" role="post">
                     <input type="hidden" name="id" value="<?=$d->id?>">
+                    <input type="hidden" name="code" value="<?=$d->code?>">
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 col-sm-offset-1 control-label">Tanggal</label>
                         <div class="col-sm-3">
