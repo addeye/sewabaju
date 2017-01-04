@@ -551,11 +551,15 @@ class Appointment extends My_controller
             'total' => $qty * $baju_price
         );
 
+        helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Transaksi Sale '.app_for_log($appointment_id)->code);
+
         $this->model->addItem($data);
     }
 
     public function delete_item($appointment_id)
     {
+        helper_log("delete", $this->session->userdata('name').LANG_DELETE_LOG.'Transaksi Detail Product '.app_for_log($appointment_id)->code);
+
         $result = $this->model->delAllTrItem($appointment_id);
         if ($result) {
             return TRUE;
@@ -565,6 +569,8 @@ class Appointment extends My_controller
 
     public function delete_itemid($id)
     {
+        helper_log("delete", $this->session->userdata('name').LANG_DELETE_LOG.'Transaksi Product Per Id');
+
         $result = $this->model->delItemId($id);
         if ($result) {
             return TRUE;
@@ -574,6 +580,8 @@ class Appointment extends My_controller
 
     public function delete_itemidformaster($id)
     {
+        helper_log("delete", $this->session->userdata('name').LANG_DELETE_LOG.'Transaksi Made For Rent Product Per ID');
+
         $result = $this->model->delItemIdformaster($id);
         if ($result) {
             return TRUE;
@@ -606,12 +614,16 @@ class Appointment extends My_controller
             'total' => $qty * $accessories_price
         );
 
+        helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Transaksi Detail Accesories');
+
         $this->model->addAccessories($data);
 
     }
 
     public function delete_accessories($appointment_id)
     {
+        helper_log("delete", $this->session->userdata('name').LANG_DELETE_LOG.'Transaksi Detail Accesoriess Semua '.app_for_log($appointment_id)->code);
+
         $result = $this->model->delAllTrAccessories($appointment_id);
         if ($result) {
             return TRUE;
@@ -621,6 +633,8 @@ class Appointment extends My_controller
 
     public function delete_accessoriesid($id)
     {
+        helper_log("delete", $this->session->userdata('name').LANG_DELETE_LOG.'Transaksi Detail Accesoriess Per ID');
+
         $result = $this->model->delAccessoriesId($id);
         if ($result) {
             return TRUE;
@@ -646,12 +660,15 @@ class Appointment extends My_controller
             'price' => $price,
         );
 
+        helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Transaksi Detail Jobs '.app_for_log($appointment_id)->code);
+
         $this->model->addJobs($data);
 
     }
 
     public function delete_jobs($appointment_id)
     {
+        helper_log("delete", $this->session->userdata('name').LANG_DELETE_LOG.'Transaksi Detail Jobs Semua '.app_for_log($appointment_id)->code);
         $result = $this->model->delAllTrJobs($appointment_id);
         if ($result) {
             return TRUE;
@@ -661,6 +678,8 @@ class Appointment extends My_controller
 
     public function delete_jobsid($id)
     {
+        helper_log("delete", $this->session->userdata('name').LANG_DELETE_LOG.'Transaksi Detail Jobs Per ID');
+
         $result = $this->model->delJobsId($id);
         if ($result) {
             return TRUE;
@@ -685,12 +704,16 @@ class Appointment extends My_controller
             'date' => date('Y-m-d')
         );
 
+        helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Transaksi Deposit '.app_for_log($appointment_id)->code);
+
         $this->model->addTrDeposit($data);
 
     }
 
     public function delete_deposit($appointment_id)
     {
+        helper_log("delete", $this->session->userdata('name').LANG_DELETE_LOG.'Transaksi Detail Deposit Semua '.app_for_log($appointment_id)->code);
+
         $result = $this->model->getTrDepositByAppointment($appointment_id);
         if ($result) {
             return TRUE;
@@ -700,6 +723,7 @@ class Appointment extends My_controller
 
     public function delete_depositid($id)
     {
+        helper_log("delete", $this->session->userdata('name').LANG_DELETE_LOG.'Transaksi Detail Deposit Per ID ');
         $result = $this->model->deleteTrDeposit($id);
         if ($result) {
             return TRUE;
@@ -725,12 +749,15 @@ class Appointment extends My_controller
             'price' => $price,
         );
 
+        helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Transaksi Detail Made '.app_for_log($appointment_id)->code);
+
         $this->model->addmade($data);
 
     }
 
     public function delete_made($appointment_id)
     {
+        helper_log("delete", $this->session->userdata('name').LANG_DELETE_LOG.'Transaksi Detail Made '.app_for_log($appointment_id)->code);
         $result = $this->model->delAllTrMade($appointment_id);
         if ($result) {
             return TRUE;
@@ -740,6 +767,7 @@ class Appointment extends My_controller
 
     public function delete_madeid($id)
     {
+        helper_log("delete", $this->session->userdata('name').LANG_DELETE_LOG.'Transaksi Detail Made Per ID ');
         $result = $this->model->delMadeId($id);
         if ($result) {
             return TRUE;
@@ -1061,10 +1089,11 @@ class Appointment extends My_controller
         $lastid = $this->model->addPromo($data);
 
         $datapromo = $this->model->getPromoById($promo_id);
+        $appointment_id = $this->input->post('appointment_id');
 
         for ($i = 1; $i <= $datapromo->qty; $i++) {
             $data_trpromo = array(
-                'appointment_id' => $this->input->post('appointment_id'),
+                'appointment_id' => $appointment_id,
                 'dpromo_id' => $lastid,
                 'customer_id' => $this->input->post('customer_id'),
                 'baju_id' => 0,
@@ -1075,10 +1104,12 @@ class Appointment extends My_controller
 
             $this->model->addTrPromo($data_trpromo);
         }
+        helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.'Transaksi Detail Promo '.app_for_log($appointment_id)->code);
     }
 
     public function delete_promo($appointment_id)
     {
+        helper_log("delete", $this->session->userdata('name').LANG_DELETE_LOG.'Transaksi Detail Promo Semua '.app_for_log($appointment_id)->code);
         $result = $this->model->delDpromoAll($appointment_id);
         if ($result) {
             return TRUE;
@@ -1088,6 +1119,7 @@ class Appointment extends My_controller
 
     public function delete_promoid($id)
     {
+        helper_log("delete", $this->session->userdata('name').LANG_DELETE_LOG.'Transaksi Detail Promo Per ID ');
         $result = $this->model->delDpromo($id);
         if ($result) {
             return TRUE;
