@@ -11,6 +11,7 @@
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Signature <span class="caret"></span>
                         </button>
+                        <a href="<?=site_url('bisnis/appointment/change_complete/'.$appointment_id)?>" class="btn btn-success">Complete</a>
                         <ul class="dropdown-menu">
                             <li><a data-toggle="tooltip" data-placement="top" title="TTD INVOICE" class="btn btn-default" href="<?= $link_ttd ?><?=$appointment_id?>">TTD Invoice</a></li>
                             <li><a data-toggle="tooltip" data-placement="top" title="TTD PICK UP" class="btn btn-default" href="<?= $link_ttdpickup ?><?=$appointment_id?>">TTD Pickup</a></li>

@@ -391,7 +391,7 @@ class Appointment_model extends Base_model
     public function getHistory()
     {
         $condition['deleted']='0';
-        $condition['status'] = 5;
+        $condition['status'] = STATUS_COMPLETE;
 
         $pagedata = $this->getData($this->table,$condition)->result();
         foreach($pagedata as $key=>$row)

@@ -1614,6 +1614,16 @@ class Appointment extends My_controller
         redirect('bisnis/appointment/process_detail/'.$appointment_id);
     }
 
+    public function change_complete($appointment_id)
+    {
+        $data = array(
+            'status' => STATUS_COMPLETE
+        );
+        $this->model->update($appointment_id,$data);
+        alert(2);
+        redirect('bisnis/appointment/process_detail/'.$appointment_id);
+    }
+
     public function sendmail()
     {
         $this->load->library('email');
