@@ -46,6 +46,7 @@ class Role extends My_controller
         $id = $this->input->post('id');
 
 //        return var_dump($id);
+//        helper_log("edit", $this->session->userdata('name').LANG_EDIT_LOG.'Role Akses ');
 
         foreach($id as $key=>$val)
         {
@@ -62,7 +63,7 @@ class Role extends My_controller
 
             $this->model->update($id,$data);
         }
-        helper_log("edit", $this->session->userdata('name').LANG_EDIT_LOG.'Role Akses');
+
         alert();
         redirect('setting/role/access/'.$group_id);
     }
