@@ -88,8 +88,9 @@ class Appointment extends My_controller
 
         helper_log("add", $this->session->userdata('name').LANG_ADD_LOG.$code);
 
-        $result = $this->model->create($data);
-        if ($result) {
+        $app_id = $this->model->create($data);
+        if ($app_id) {
+            $this->sendmail_appointment($app_id);
             alert();
             redirect('bisnis/appointment');
         }
@@ -1643,46 +1644,61 @@ class Appointment extends My_controller
         redirect('bisnis/appointment/process_detail/'.$appointment_id);
     }
 
-    public function sendmail()
+    protected function mailing($subject,$body,$emailuser)
     {
         $this->load->library('email');
 
-        $subject = 'This is a test';
-        $message = '<p>This message has been sent for testing purposes.</p>';
-
-// Get full html:
-        $body = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=' . strtolower(config_item('charset')) . '" />
-    <title>' . html_escape($subject) . '</title>
-    <style type="text/css">
-        body {
-            font-family: Arial, Verdana, Helvetica, sans-serif;
-            font-size: 16px;
-        }
-    </style>
-</head>
-<body>
-' . $message . '
-</body>
-</html>';
-// Also, for getting full html you may use the following internal method:
-//$body = $this->email->full_html($subject, $message);
-
-        $result = $this->email
+        $this->email
             ->from('infosewabaju@jasa-programmer-jakarta.com')
-            ->reply_to('ari_l2k@yahoo.com')// Optional, an account where a human being reads.
-            ->to('mokhamad27@gmail.com')
+            ->reply_to($emailuser)// Optional, an account where a human being reads.
+            ->to($emailuser)
             ->subject($subject)
             ->message($body)
             ->send();
+    }
 
-        var_dump($result);
-        echo '<br />';
-        echo $this->email->print_debugger();
+    public function sendmail_appointment($appointment_id)
+    {
+        $app = $this->model->getId($appointment_id);
+        $emailuser = $app->mcustomer->email;
 
-        exit;
+        $data['tgl'] = $app->date;
+
+        $subject = 'Appointment';
+        $body = $this->load->view('pinky/email/appointment',$data,TRUE);
+        $this->mailing($subject,$body,$emailuser);
+    }
+
+    public function sendmail_deal($appointment_id)
+    {
+        $app = $this->model->getId($appointment_id);
+        $emailuser = $app->mcustomer->email;
+
+        $subject = 'Deal Transaksi';
+        $body = $this->load->view('pinky/email/dealing','',TRUE);
+        $this->mailing($subject,$body,$emailuser);
+    }
+
+    public function sendmail_completed($appointment_id)
+    {
+        $app = $this->model->getId($appointment_id);
+        $emailuser = $app->mcustomer->email;
+
+        $subject = 'Completed Transaksi';
+        $body = $this->load->view('pinky/email/completed','',TRUE);
+        $this->mailing($subject,$body,$emailuser);
+    }
+
+    public function sendmail_thanks($appointment_id)
+    {
+        $app = $this->model->getId($appointment_id);
+        $emailuser = $app->mcustomer->email;
+
+        $data['tgl'] = $app->date;
+
+        $subject = 'Terimakasih';
+        $body = $this->load->view('pinky/email/thanks',$data,TRUE);
+        $this->mailing($subject,$body,$emailuser);
     }
 
 }

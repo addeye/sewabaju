@@ -25,6 +25,7 @@ class Appointment_model extends Base_model
     protected $m_type = 'm_type';
     protected $m_kategori = 'm_kategori';
     protected $m_baju = 'm_baju';
+    protected $m_customer = 'm_customer';
 
     public function __construct()
     {
@@ -58,6 +59,7 @@ class Appointment_model extends Base_model
         $condition['id']=$id;
         $pagedata = $this->getData($this->table,$condition)->row();
         $pagedata->mdeal = $this->getData($this->mdeal,array('appointment_id'=>$id))->row();
+        $pagedata->mcustomer = $this->getData($this->m_customer,array('id'=>$pagedata->customer_id))->row();
         if($pagedata)
         {
             return $pagedata;
@@ -70,7 +72,7 @@ class Appointment_model extends Base_model
         $query = $this->addData($this->table,$data);
         if($query)
         {
-            return TRUE;
+            return $this->getLastInsertId();
         }
         return FALSE;
     }

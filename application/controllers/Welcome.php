@@ -43,7 +43,7 @@ class Welcome extends My_controller {
 
 		foreach($tritem as $rows)
 		{
-			if($rows->tritem)
+			if(isset($rows->tritem))
 			{
 				foreach($rows->tritem as $row)
 				{

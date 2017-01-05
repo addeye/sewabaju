@@ -59,10 +59,15 @@ class Dashboard_model extends Base_model
             $condition['back_status !='] = '1';
             $condition['baju_id !='] = '0';
             $condition['appointment_id'] = $row->id;
-            $result[$k]->tritem = $this->getData($this->tritem, $condition)->result();
-            foreach ($result[$k]->tritem as $key => $row) {
-                $result[$k]->tritem[$key]->mcustomer = $this->getData($this->mcustomer, array('id' => $row->customer_id))->row();
-                $result[$k]->tritem[$key]->mbaju = $this->getData($this->mbaju, array('id' => $row->baju_id))->row();
+            $mdeal = $this->getData($this->mdeal,array('appointment_id'=>$row->id))->row();
+            if($mdeal->process != PROSES_SALE)
+            {
+                $result[$k]->tritem = $this->getData($this->tritem, $condition)->result();
+                foreach ($result[$k]->tritem as $key => $row)
+                {
+                    $result[$k]->tritem[$key]->mcustomer = $this->getData($this->mcustomer, array('id' => $row->customer_id))->row();
+                    $result[$k]->tritem[$key]->mbaju = $this->getData($this->mbaju, array('id' => $row->baju_id))->row();
+                }
             }
         }
 
