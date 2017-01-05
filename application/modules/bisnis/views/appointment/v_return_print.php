@@ -2,40 +2,22 @@
 /**
  * Created by PhpStorm.
  * User: deyelovi
- * Date: 21/11/2016
- * Time: 13:30
+ * Date: 11/11/2016
+ * Time: 2:52
  */
 ?>
+<html>
+<head>
+    <link href="<?php echo base_url(); ?>assets/pinky/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
-<div class="container-fluid">
+    <link href="<?php echo base_url(); ?>assets/pinky/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="<?php echo base_url(); ?>assets/pinky/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body onload="window.print()">
+<div class="container">
     <div class="row">
-        <div class="col-xs-12">
-            <div class="row hidden-print all-button pull-right">
-
-                <div class="col-xs-12">
-
-                    <button type="button" class="btn red hidden-print uppercase print-btn" onclick="loadOtherPage()">
-
-                        <i class="fa fa-print"></i> Print
-
-                    </button>
-
-                    <a href="<?=base_url('bisnis/appointment/add')?>" class="btn blue hidden-print uppercase print-btn">
-
-                        <i class="fa fa-plus"></i> Baru
-
-                    </a>
-
-                    <a href="<?=base_url('bisnis/appointment')?>" class="btn green hidden-print uppercase print-btn">
-
-                        <i class="fa fa-bars"></i> List
-
-                    </a>
-
-                </div>
-
-            </div>
-        </div>
         <div class="text-center">
             <img width="20%" src="<?=base_url('uploads/logo/'.$company->logo)?>" class="img-rounded">
         </div>
@@ -62,14 +44,14 @@
                     <td>
                         <ol>
                             <?php foreach($tritem as $row): ?>
-                            <li><input type="checkbox" <?=$row->back_status==1?'checked':''?> disabled> <?=$row->mbaju->name?></li>
+                                <li><input type="checkbox" <?=$row->back_status==1?'checked':''?> disabled> <?=$row->mbaju->name?></li>
                             <?php endforeach; ?>
                             <?php foreach($dpromo as $row):
                                 foreach($row->trpromo as $trp):
-                                ?>
-                                <li><input type="checkbox" <?=$trp->back_status==1?'checked':''?> disabled> <?=$trp->mbaju?$trp->mbaju->name:'- Belum Dipilih -'?></li>
-                            <?php endforeach;
-                                endforeach; ?>
+                                    ?>
+                                    <li><input type="checkbox" <?=$trp->back_status==1?'checked':''?> disabled> <?=$trp->mbaju?$trp->mbaju->name:'- Belum Dipilih -'?></li>
+                                <?php endforeach;
+                            endforeach; ?>
                             <?php foreach($trmade as $row): ?>
                                 <li><?=$row->disc?></li>
                             <?php endforeach; ?>
@@ -78,7 +60,7 @@
                     <td>
                         <ol>
                             <?php foreach($traccessories as $row): ?>
-                            <li><?=$row->maccessories->name?></li>
+                                <li><?=$row->maccessories->name?></li>
                             <?php endforeach; ?>
                             <?php foreach($trjobs as $row): ?>
                                 <li><?=$row->job?></li>
@@ -122,19 +104,5 @@
         </div>
     </div>
 </div>
-<?php
-$ids = $deal?$deal->appointment_id:0;
-?>
-
-<input type="hidden" id="urlcetakdelivery" value="<?=base_url('bisnis/appointment/returninvoice_print/'.$ids)?>">
-
-<script>
-    function loadOtherPage() {
-        var urlcetakdelivery = $("#urlcetakdelivery").val();
-        $("<iframe>")                             // create a new iframe element
-            .hide()                               // make it invisible
-            .attr("src", urlcetakdelivery) // point the iframe to the page you want to print
-            .appendTo("body");                    // add iframe to the DOM to cause it to load the page
-    }
-</script>
-
+</body>
+</html>

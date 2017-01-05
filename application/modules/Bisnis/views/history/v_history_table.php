@@ -10,14 +10,13 @@
                 <div class="tools"> </div>
             </div>
             <div class="portlet-body">
-                    <table id="myTable" class="table table-actions-wrapper">
+                    <table id="myTable" class="table table-hover">
                         <thead>
                         <tr>
                             <th>No</th>
                             <th>Code</th>
                             <th>Customer</th>
-                            <th>Note</th>
-                            <th>Return</th>
+                            <th>Order</th>
                             <th>View</th>
                         </tr>
                         </thead>
@@ -25,13 +24,21 @@
                         <?php $no=1; foreach($data as $row):?>
                             <tr>
                                 <td><?=$no++;?></td>
-                                <td><?=$row->code?></td>
+                                <td><a href="javascript:void(0);" onclick="invoice(<?=$row->id?>)"><?=$row->code?></a></td>
                                 <td><?=$row->mcustomer->name?></td>
-                                <td><?=$row->note?></td>
-                                <td><?=tgl_indo($row->returned)?></td>
+                                <td><?=proses()[$row->mdeal->process]?></td>
                                 <td>
-                                    <button id="<?=$row->id?>" type="button" onclick="invoice(this.id)" class="btn btn-info btn-invoice" <?=$row->status==1?'disabled':''?>>Invoice</button>
                                     <button id="<?=$row->id?>" type="button" onclick="delivery(this.id)" class="btn btn-info btn-invoice" <?=empty($row->pickuped)?'disabled':''?>>Delivery</button>
+                                    <?php
+                                    if($row->mdeal):
+                                        if($row->mdeal->process == PROSES_RENT or $row->mdeal->process == PROSES_MADE_FOR_RENT):
+                                            ?>
+                                            <button data-toggle="tooltip" data-placement="top" title="Return" id="<?= $row->id ?>" type="button" onclick="return_invoice(this.id)"
+                                                    class="btn btn-info btn-invoice">
+                                                <span class="glyphicon glyphicon-share"></span></button>
+                                            <?php
+                                        endif;
+                                    endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

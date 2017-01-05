@@ -85,7 +85,7 @@ class Aruskas extends My_controller
                     $tempData[] = array(
                         'invoice' => $row->mappointment->code,
                         'tanggal' => $row->date_dp,
-                        'keterangan' => 'Status - '.status_customer()[$row->mappointment->status],
+                        'keterangan' => proses()[$row->process],
                         'debit' => 'Rp. '. rupiah($debit),
                         'kredit' => 'Rp. '.rupiah($totkredit),
                         'piutang' => 'Rp. '.rupiah($piutang)

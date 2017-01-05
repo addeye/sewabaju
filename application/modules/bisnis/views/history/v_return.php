@@ -12,7 +12,7 @@
         <div class="col-xs-12">
             <div class="row hidden-print all-button pull-right">
 
-                <div class="col-xs-12">
+                <div class="col-xs-12" style="display: none;">
 
                     <button type="button" class="btn red hidden-print uppercase print-btn" onclick="loadOtherPage()">
 
@@ -126,7 +126,7 @@
 $ids = $deal?$deal->appointment_id:0;
 ?>
 
-<input type="hidden" id="urlcetakdelivery" value="<?=base_url('bisnis/appointment/returninvoice_print/'.$ids)?>">
+<input type="hidden" id="urlcetakdelivery" value="<?=base_url('bisnis/appointment/delivery_print/'.$ids)?>">
 
 <script>
     function loadOtherPage() {

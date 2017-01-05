@@ -1020,7 +1020,7 @@ class Appointment extends My_controller
     {
         $data['deal'] = $this->dmodel->getDataByAppointment($appointment_id);
         $data['appointment'] = $this->model->getId($appointment_id);
-        $data['appointment']->title = $data['appointment']->status == STATUS_DIPINJAM ? 'DATE OF PICK UP' : 'DATE OF RETURN';
+        $data['appointment']->title = 'DATE OF PICK UP';
         $data['appointment']->date_delivery = $data['appointment']->status == STATUS_DIPINJAM ? $data['appointment']->pickuped : $data['appointment']->returned;
         $data['appointment']->ttd = $data['appointment']->status == STATUS_DIPINJAM ? $data['appointment']->ttd_pickup : $data['appointment']->ttd_return;
         $data['traccessories'] = $this->model->getTrAccessories($appointment_id);
@@ -1050,14 +1050,33 @@ class Appointment extends My_controller
         $this->load->view('appointment/v_return', $data);
     }
 
+    public function returninvoice_print($appointment_id)
+    {
+        $data['deal'] = $this->dmodel->getDataByAppointment($appointment_id);
+        $data['appointment'] = $this->model->getId($appointment_id);
+        $data['appointment']->title = 'DATE OF RETURN';
+        $data['appointment']->date_delivery = $data['appointment']->status == STATUS_DIPINJAM ? $data['appointment']->pickuped : $data['appointment']->returned;
+        $data['appointment']->ttd = $data['appointment']->status == STATUS_DIPINJAM ? $data['appointment']->ttd_pickup : $data['appointment']->ttd_return;
+        $data['traccessories'] = $this->model->getTrAccessories($appointment_id);
+        $data['tritem'] = $this->model->getTrItem($appointment_id);
+        $data['dpromo'] = $this->model->getDpromo($appointment_id);
+        $data['trjobs'] = $this->model->getTrJobs($appointment_id);
+        $data['trmade'] = $this->model->getTrMade($appointment_id);
+
+        $data['company'] = $this->model->getCompany();
+        $this->load->view('appointment/v_return_print', $data);
+    }
+
     public function delivery_print($appointment_id)
     {
         $data['deal'] = $this->dmodel->getDataByAppointment($appointment_id);
         $data['appointment'] = $this->model->getId($appointment_id);
-        $data['appointment']->title = $data['appointment']->status == STATUS_DIPINJAM ? 'DATE OF PICK UP' : 'DATE OF RETURN';
+        $data['appointment']->title = 'DATE OF PICK UP';
         $data['appointment']->date_delivery = $data['appointment']->status == STATUS_DIPINJAM ? $data['appointment']->pickuped : $data['appointment']->returned;
+        $data['appointment']->ttd = $data['appointment']->status == STATUS_DIPINJAM ? $data['appointment']->ttd_pickup : $data['appointment']->ttd_return;
         $data['traccessories'] = $this->model->getTrAccessories($appointment_id);
         $data['tritem'] = $this->model->getTrItem($appointment_id);
+        $data['dpromo'] = $this->model->getDpromo($appointment_id);
         $data['trjobs'] = $this->model->getTrJobs($appointment_id);
         $data['trmade'] = $this->model->getTrMade($appointment_id);
 

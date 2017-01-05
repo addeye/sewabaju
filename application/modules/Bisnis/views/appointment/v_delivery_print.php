@@ -23,20 +23,20 @@
         </div>
         <div class="col-xs-6">
             <div class="text-left">
-                <p>NAME : <?=$deal->mcustomer->name?></p>
+                <p>NAME : <?=$deal?$deal->mcustomer->name:''?></p>
             </div>
         </div>
         <div class="col-xs-6">
             <div class="text-right">
-                <p>HP : <?=$deal->mcustomer->phone?></p>
+                <p>HP : <?=$deal?$deal->mcustomer->phone:''?></p>
             </div>
         </div>
-        <div class="col-sm-12">
+        <div class="col-xs-12">
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th class="col-sm-6 text-center">GOWN</th>
-                    <th class="col-sm-6 text-center">ACCESSORIES</th>
+                    <th class="col-xs-6 text-center">GOWN</th>
+                    <th class="col-xs-6 text-center">ACCESSORIES</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -44,8 +44,14 @@
                     <td>
                         <ol>
                             <?php foreach($tritem as $row): ?>
-                                <li><?=$row->mbaju->name?></li>
+                                <li><input type="checkbox" <?=$row->rent_status==1?'checked':''?> disabled> <?=$row->mbaju->name?></li>
                             <?php endforeach; ?>
+                            <?php foreach($dpromo as $row):
+                                foreach($row->trpromo as $trp):
+                                    ?>
+                                    <li><input type="checkbox" <?=$trp->rent_status==1?'checked':''?> disabled> <?=$trp->mbaju?$trp->mbaju->name:'- Belum Dipilih -'?></li>
+                                <?php endforeach;
+                            endforeach; ?>
                             <?php foreach($trmade as $row): ?>
                                 <li><?=$row->disc?></li>
                             <?php endforeach; ?>
@@ -67,7 +73,7 @@
         </div>
         <div class="col-xs-12">
             <div class="text-left">
-                <p><b><?=$appointment->title?></b> : <?=tgl_indo($appointment->date_delivery)?></p>
+                <p><?=$appointment->title?> : <?=$appointment->date_delivery?tgl_indo($appointment->date_delivery):''?></p>
             </div>
         </div>
         <div class="col-xs-12">
@@ -81,12 +87,17 @@
                 <tbody>
                 <tr>
                     <td><div style="height: 100px;"></div></td>
-                    <td></td>
+                    <td>
+                        <div style="padding-top: 70px;">
+                            <img src="<?=$appointment->ttd_pickup?>" class="img-responsive" alt="">
+                            <p style="font-size: 20px; margin-top: -20px;" class="text-center"><?=$appointment->receiver_pickup?></p>
+                        </div>
+                    </td>
                 </tr>
                 </tbody>
             </table>
         </div>
-        <div class="col-sm-12">
+        <div class="col-xs-12">
             <div class="text-center">
                 <p>Mohon untuk memeriksa KONDISI DAN kelengkapan barang. Term and condition applied</p>
             </div>
