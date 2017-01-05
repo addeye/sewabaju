@@ -31,7 +31,7 @@ if(!function_exists('helper_log'))
         // paramter
         $param['name']      = $CI->session->userdata('name');
         $param['tipe']      = $log_tipe;
-        $param['activity']      = $str;
+        $param['activity']  = $str;
 
         //load model log
         $CI->load->model('log_model');
