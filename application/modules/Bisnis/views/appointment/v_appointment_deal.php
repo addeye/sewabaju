@@ -38,7 +38,7 @@
                         <label for="inputEmail3" class="col-sm-3 control-label">Proses</label>
                         <?php foreach(proses() as $key=>$row): ?>
                             <label class="radio-inline">
-                                <input type="radio" name="process" class="process-input" value="<?=$key?>" <?=$deal?$deal->process==$key?'checked':'':''?>> <?=$row?>
+                                <input type="radio" name="process" class="process-input" value="<?=$key?>" <?=$deal?$deal->process==$key?'checked':'disabled':''?> > <?=$row?>
                             </label>
                         <?php endforeach; ?>
                     </div>

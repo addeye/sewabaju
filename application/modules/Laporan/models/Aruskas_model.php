@@ -129,6 +129,7 @@ class Aruskas_model extends Base_model
         {
             $data = $this->getData($this->mappointemnt,array('id'=>$row))->row();
             $data->mcustomer = $this->getData($this->mcustomer,array('id'=>$data->customer_id))->row();
+            $data->mdeal = $this->getData($this->mdeal,array('appointment_id'=>$row))->row();
             $appointmentData[] = $data;
         }
 

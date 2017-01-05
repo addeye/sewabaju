@@ -95,6 +95,16 @@ class Customer extends My_controller
         $this->pinky->output($data,$content);
     }
 
+    public function show($id)
+    {
+        $data = array(
+            'd' => $this->model->getId($id)
+        );
+
+        $content = 'customer/v_customer_show';
+        $this->load->view($content,$data);
+    }
+
     public function do_update()
     {
         role(MODUL_CUSTOMER_SEWA_BAJU,'update');
