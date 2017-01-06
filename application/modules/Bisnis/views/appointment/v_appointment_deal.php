@@ -416,7 +416,7 @@
 
     function mask_number()
     {
-        $('#deposit,#remaining_payment,#shipping_cost,#dtotal,#down_payment,#price-jobs,#price-made').priceFormat(rupiah);
+        $('#deposit,#remaining_payment,#shipping_cost,#dtotal,#down_payment,#price-jobs,#price-made,#depositff,#despoitpromo').priceFormat(rupiah);
     }
 
     function unmask_number()
@@ -1295,6 +1295,7 @@
             .success(function(data) {
                 $('#form-promo').html(data);
                 $('#promoform').modal('show');
+                mask_number();
             });
     }
 
@@ -1302,6 +1303,12 @@
     {
         var urlupdate = $('#urlupdatetrpromo').val();
         var data = $('#formpromo').serializeArray();
+        var deposit = $('#despoitpromo').unmask();
+        data.push({
+            name:"deposit",
+            value: deposit
+        });
+//        console.log(data);
 
         $.ajax({
             url: urlupdate,
@@ -1328,6 +1335,7 @@
             .success(function(data) {
                 $('#form-item').html(data);
                 $('#itemform').modal('show');
+                mask_number();
             });
     }
 
@@ -1350,6 +1358,11 @@
     {
         var urlupdate = $('#urlupdatetritem').val();
         var data = $('#formitem').serializeArray();
+        var depositff = $('#depositff').unmask();
+        data.push({
+            name:"deposit",
+            value: depositff
+        });
 
         $.ajax({
             url: urlupdate,

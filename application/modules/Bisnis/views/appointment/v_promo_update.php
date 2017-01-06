@@ -83,7 +83,7 @@
 
                         <div class="input-icon">
 
-                            <input name="deposit" class="form-control" size="16" type="text" value="<?=$d->deposit?>">
+                            <input name="depositpromo" id="despoitpromo" class="form-control" size="16" type="text" value="<?=$d->deposit?>">
 
                         </div>
 
