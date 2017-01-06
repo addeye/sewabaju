@@ -188,15 +188,15 @@
                     <div class="form-horizontal">
                         <div class="form-group">
                             <div class="col-xs-10">
-                                <select class="form-control select2" id="promo_id" name="promo_id">
-                                    <option value="">Pilih Promo</option>
+                                <select class="form-control select2" id="promo_id" name="promo_id" onchange="promo_form_btn(this.value)">
+                                    <option value="0">Pilih Promo</option>
                                     <?php foreach($promo as $row): ?>
                                         <option value="<?=$row->id?>"><?=$row->name?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
                             <div class="col-xs-1">
-                                <button class="btn btn-info btn-addpromo"><i class="fa fa-plus"></i></button>
+                                <button disabled class="btn btn-info btn-addpromo"><i class="fa fa-plus"></i></button>
                             </div>
                         </div>
                     </div>
@@ -217,15 +217,15 @@
                     <div class="form-horizontal">
                         <div class="form-group">
                             <div class="col-xs-10">
-                                <select class="form-control select2" id="baju_id" name="baju_id">
-                                    <option value="">Pilih Baju</option>
+                                <select class="form-control select2" id="baju_id" name="baju_id" onchange="baju_form_btn(this.value)">
+                                    <option value="0">Pilih Baju</option>
                                     <?php foreach($baju as $row): ?>
                                         <option value="<?=$row->id?>"><?=$row->name?> - <?=$row->colour?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
                             <div class="col-xs-1">
-                                <button class="btn btn-info btn-addbaju"><i class="fa fa-plus"></i></button>
+                                <button disabled class="btn btn-info btn-addbaju"><i class="fa fa-plus"></i></button>
                             </div>
                         </div>
                     </div>
@@ -236,15 +236,15 @@
                     <div class="form-horizontal">
                         <div class="form-group">
                             <div class="col-xs-10">
-                                <select class="form-control select2" id="baju_id_sale" name="baju_id_sale">
-                                    <option value="">Pilih Baju</option>
+                                <select class="form-control select2" id="baju_id_sale" name="baju_id_sale" onchange="baju_formsale_btn(this.value)">
+                                    <option value="0">Pilih Baju</option>
                                     <?php foreach($baju as $row): ?>
                                         <option value="<?=$row->id?>"><?=$row->name?> - <?=$row->colour?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
                             <div class="col-xs-1">
-                                <button class="btn btn-info btn-addbaju-sale"><i class="fa fa-plus"></i></button>
+                                <button disabled class="btn btn-info btn-addbaju-sale"><i class="fa fa-plus"></i></button>
                             </div>
                         </div>
                     </div>
@@ -255,15 +255,15 @@
                     <div class="form-horizontal">
                         <div class="form-group">
                             <div class="col-xs-10">
-                                <select class="form-control select2" id="accessories_id" name="accessories_id">
-                                    <option value="">Pilih Acessories</option>
+                                <select class="form-control select2" id="accessories_id" name="accessories_id" onchange="accessories_form_btn(this.value)">
+                                    <option value="0">Pilih Acessories</option>
                                     <?php foreach($accessories as $row): ?>
                                         <option value="<?=$row->id?>"><?=$row->name?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
                             <div class="col-xs-1">
-                                <button class="btn btn-info btn-addacc"><i class="fa fa-plus"></i></button>
+                                <button disabled class="btn btn-info btn-addacc"><i class="fa fa-plus"></i></button>
                             </div>
                         </div>
                     </div>
@@ -277,10 +277,10 @@
                                 <textarea id="text-jobs" class="form-control" placeholder="Jobs.."></textarea>
                             </div>
                             <div class="col-xs-4">
-                                <input type="number" placeholder="Harga" class="form-control" id="price-jobs">
+                                <input type="text" placeholder="Harga" class="form-control" id="price-jobs" onkeyup="job_form_btn(this.value)">
                             </div>
                             <div class="col-xs-1">
-                                <button class="btn btn-info btn-addjobs"><i class="fa fa-plus"></i></button>
+                                <button disabled class="btn btn-info btn-addjobs"><i class="fa fa-plus"></i></button>
                             </div>
                         </div>
                     </div>
@@ -294,10 +294,10 @@
                                 <input type="text" id="text-disc" class="form-control" placeholder="Diskripsi ..">
                             </div>
                             <div class="col-sm-4">
-                                <input type="number" placeholder="Harga.." class="form-control" id="price-made">
+                                <input type="text" placeholder="Harga.." class="form-control" id="price-made" onkeyup="made_form_btn(this.value)">
                             </div>
                             <div class="col-sm-1">
-                                <button class="btn btn-info btn-addmade"><i class="fa fa-plus"></i></button>
+                                <button disabled class="btn btn-info btn-addmade"><i class="fa fa-plus"></i></button>
                             </div>
                         </div>
                     </div>
@@ -315,12 +315,12 @@
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-3 control-label">Kode Voucher</label>
                         <div class="col-sm-5">
-                            <input type="text" id="text-voucher" class="form-control" placeholder="Kode Voucher.." value="<?=$deal?$deal->code_voucher:''?>">
+                            <input type="text" id="text-voucher" class="form-control" placeholder="Kode Voucher.." value="<?=$deal?$deal->code_voucher:''?>" onkeyup="kode_voucher_btn(this.value)">
                             <p id="help-voucher" class="help-block">Validasi kode</p>
                             <input type="hidden" id="nilai-disc">
                         </div>
                         <div class="col-xs-1">
-                            <button class="btn btn-info btn-addvoucher"><i class="fa fa-plus"></i></button>
+                            <button disabled class="btn btn-info btn-addvoucher"><i class="fa fa-plus"></i></button>
                         </div>
                     </div>
                 </div>
@@ -416,7 +416,7 @@
 
     function mask_number()
     {
-        $('#deposit,#remaining_payment,#shipping_cost,#dtotal,#down_payment').priceFormat(rupiah);
+        $('#deposit,#remaining_payment,#shipping_cost,#dtotal,#down_payment,#price-jobs,#price-made').priceFormat(rupiah);
     }
 
     function unmask_number()
@@ -486,6 +486,93 @@
         else
         {
             $('.shipping_address,.shipping_cost').attr('disabled','disabled');
+        }
+    }
+
+    /*Function Disable*/
+    function promo_form_btn(val)
+    {
+        if(val!='0')
+        {
+            $('.btn-addpromo').removeAttr('disabled');
+        }
+        else
+        {
+            $('.btn-addpromo').attr('disabled','disabled');
+        }
+    }
+
+    function baju_form_btn(val)
+    {
+        if(val!='0')
+        {
+            $('.btn-addbaju').removeAttr('disabled');
+        }
+        else
+        {
+            $('.btn-addbaju').attr('disabled','disabled');
+        }
+    }
+
+    function baju_formsale_btn(val)
+    {
+        if(val!='0')
+        {
+            $('.btn-addbaju-sale').removeAttr('disabled');
+        }
+        else
+        {
+            $('.btn-addbaju-sale').attr('disabled','disabled');
+        }
+
+    }
+
+    function accessories_form_btn(val)
+    {
+        if(val!='0')
+        {
+            $('.btn-addacc').removeAttr('disabled');
+        }
+        else
+        {
+            $('.btn-addacc').attr('disabled','disabled');
+        }
+    }
+
+    function job_form_btn(val)
+    {
+        if(val!='')
+        {
+            $('.btn-addjobs').removeAttr('disabled');
+        }
+        else
+        {
+            $('.btn-addjobs').attr('disabled','disabled');
+        }
+    }
+
+    function made_form_btn(val)
+    {
+        if(val!='')
+        {
+            $('.btn-addmade').removeAttr('disabled');
+        }
+        else
+        {
+            $('.btn-addmade').attr('disabled','disabled');
+        }
+
+    }
+
+    function kode_voucher_btn(val)
+    {
+        if(val!='')
+        {
+            $('.btn-addvoucher').removeAttr('disabled');
+        }
+        else
+        {
+            $('.btn-addvoucher').attr('disabled','disabled');
         }
     }
 
@@ -906,7 +993,7 @@
     {
         var appointment_id = $('#appointment_id').val();
         var job = $('#text-jobs').val();
-        var price = $('#price-jobs').val();
+        var price = $('#price-jobs').unmask();
         var urladdjobs = $('#urladdjobs').val();
 
         $.ajax({
@@ -941,7 +1028,7 @@
     {
         var appointment_id = $('#appointment_id').val();
         var disc = $('#text-disc').val();
-        var price = $('#price-made').val();
+        var price = $('#price-made').unmask();
         var urladdmade = $('#urladdmade').val();
 
         $.ajax({
